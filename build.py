@@ -219,7 +219,7 @@ def credits_page(d):
                              "annual_per_month": p.get("annual_per_month", p["monthly"])} for p in opts])
     cards = "".join(plan_card(p, link, monthly_only, cur) for p in plans)
     # Centered rows so a short last row sits in the middle, never hanging on the left.
-    cols = ("*:w-full *:max-w-md xl:*:max-w-none xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5  # 5 never splits evenly: one per row, then all 5 in one row
+    cols = ("max-xl:flex-col max-xl:items-center *:w-full *:max-w-md xl:*:max-w-none xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5  # 5 never splits evenly: one per row, then all 5 in one row
             else "*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if len(plans) == 4  # 2+2, then 4 in a row
             else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
     toggle = "" if monthly_only else f"""
