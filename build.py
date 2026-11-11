@@ -16,6 +16,7 @@ ROOT = pathlib.Path(__file__).parent
 DIST = ROOT / "dist"
 SITE = "https://aistackprices.com"
 e = html.escape
+CHROME = {}  # header/footer links and latest checked date, filled in main()
 
 
 def cheapest(plans, credits_needed, annual):
@@ -61,6 +62,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 
 def page(title, desc, path, body, schema=None):
+    NAV, FOOT_PRICING, FOOT_SITE, LATEST_SHORT = CHROME["nav"], CHROME["pricing"], CHROME["site"], CHROME["latest"]
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
     return f"""<!doctype html>
 <html lang="en" class="bg-[#090A0F]"><head><meta charset="utf-8">
@@ -71,15 +73,23 @@ def page(title, desc, path, body, schema=None):
 {FONT}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css">{ld}</head>
 <body class="min-h-screen bg-[#090A0F] font-[Geist,system-ui,sans-serif] text-slate-300 antialiased">
 <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[480px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.18),transparent)]"></div>
-<header class="relative border-b border-slate-800/80">
- <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
-  <a href="/" class="flex items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
+<header class="sticky top-0 z-30 border-b border-slate-800/80 bg-[#090A0F]/70 backdrop-blur-md">
+ <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
+  <a href="/" class="flex shrink-0 items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
    <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
+  <nav aria-label="Main" class="hidden items-center gap-6 text-sm text-slate-400 md:flex">{NAV}</nav>
+  <span class="hidden items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3 py-1 text-xs text-slate-300 lg:inline-flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Prices checked {LATEST_SHORT}</span>
  </div>
+ <nav aria-label="Main" class="flex justify-between gap-4 overflow-x-auto border-t border-slate-800/60 px-5 py-2 text-[13px] whitespace-nowrap text-slate-400 md:hidden">{NAV}</nav>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
 <footer class="relative mt-24 border-t border-slate-800/80">
- <p class="mx-auto max-w-6xl px-5 py-10 text-sm text-slate-500">AI Stack Prices is independent and not affiliated with any company listed. Prices are copied from each vendor's official pricing page on the date shown. Confirm on the vendor's site before you buy.</p>
+ <div class="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm text-slate-500 md:grid-cols-[2fr_1fr_1fr]">
+  <div><p class="flex items-center gap-2 font-semibold text-white"><img src="/mark.svg" alt="" width="20" height="20" class="h-5 w-5">AI Stack Prices</p>
+   <p class="mt-3 max-w-md">Independent and not affiliated with any company listed. Every price is copied from the vendor's official pricing page, with the date we checked it. Confirm on the vendor's site before you buy.</p></div>
+  <div><p class="font-medium text-slate-300">Pricing</p><ul class="mt-3 space-y-2">{FOOT_PRICING}</ul></div>
+  <div><p class="font-medium text-slate-300">Site</p><ul class="mt-3 space-y-2">{FOOT_SITE}</ul></div>
+ </div>
 </footer>
 </body></html>"""
 
@@ -387,17 +397,128 @@ def compare_page(c, a, b):
     return page(title, desc, f"/{c['slug']}/", body)
 
 
-def index_page(tools, comps):
-    item = "flex flex-wrap justify-between gap-2 rounded-xl border border-slate-800 bg-slate-900/60 px-5 py-4 font-medium text-white hover:border-indigo-500/60"
-    links = "".join(f'<li><a class="{item}" href="/{d["slug"]}/">{e(d["tool"])} pricing<span class="text-sm text-slate-500">checked {fmt_date(d["checked"])}</span></a></li>' for d in tools)
-    vs = "".join(f'<li><a class="{item}" href="/{c["slug"]}/">{e(a["tool"])} vs {e(b["tool"])}<span class="text-sm text-slate-500">pricing side by side</span></a></li>' for c, a, b in comps)
-    return page(
-        "AI Stack Prices: Real Costs of AI App Builders and Voice Agents",
-        "Sourced, dated pricing for AI app builders and voice-agent platforms, with cost calculators.", "/",
-        f'<section class="mx-auto max-w-3xl pt-16 sm:pt-24"><h1 class="{H1} text-4xl sm:text-6xl">What AI tools cost</h1>'
-        f'<p class="mt-5 text-lg text-slate-400">Plans, credits and calculators for AI app builders and voice agents, copied from each official pricing page with the date we checked.</p>'
-        f'<h2 class="mt-12 text-xl font-semibold text-white">Pricing pages</h2><ul class="mt-4 space-y-3">{links}</ul>'
-        f'<h2 class="mt-12 text-xl font-semibold text-white">Comparisons</h2><ul class="mt-4 space-y-3">{vs}</ul></section>')
+CATEGORIES = [
+    ("app-builders", "AI app builders", "Build apps by describing them. Compare plans, credits and what a month of building really costs.",
+     ["base44", "lovable"], "base44-vs-lovable"),
+    ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
+     ["retell", "vapi"], "vapi-vs-retell-ai"),
+]
+
+
+def home_page(tools):
+    latest = fmt_date(max(d["checked"] for d in tools.values()))
+    jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 '
+                   f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(tools[k]["tool"])} pricing</a>'
+                   for k in ("base44", "lovable", "retell"))
+    cards = ""
+    for cid, title, blurb, keys, vs in CATEGORIES:
+        rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
+                       f'{e(tools[k]["tool"])} pricing<span class="text-slate-500">{e(start_price(tools[k]))}</span></a></li>' for k in keys)
+        a, b = tools[keys[0]]["tool"], tools[keys[1]]["tool"]
+        cards += f"""<article id="{cid}" class="scroll-mt-24 {PANEL} flex flex-col p-6 transition-colors hover:border-indigo-500/50">
+ <h3 class="text-lg font-semibold text-white">{e(title)}</h3>
+ <p class="mt-2 text-sm text-slate-400">{e(blurb)}</p>
+ <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
+ <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(a)} and {e(b)}</a>
+</article>"""
+    cards += f"""<article class="{PANEL} flex flex-col p-6 opacity-70">
+ <h3 class="text-lg font-semibold text-white">Automation stacks</h3>
+ <p class="mt-2 text-sm text-slate-400">n8n and the tools people compare it with, on the same terms.</p>
+ <p class="mt-5 inline-flex w-fit rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400">Coming soon</p>
+</article>"""
+    widget = {k: widget_data(tools[k]) for k in ("base44", "lovable", "retell", "vapi")}
+    tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(tools[k]["tool"])}</button>'
+                   for i, k in enumerate(widget))
+    body = f"""
+<section class="pt-16 pb-12 text-center sm:pt-24">
+ <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
+  <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
+  Prices checked {latest}</p>
+ <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders and voice agents, copied from each official pricing page and checked against it every day. See what you would really pay before you pick a tool.</p>
+ <div class="mt-8 flex flex-wrap justify-center gap-3">{jump}</div>
+</section>
+
+<section aria-labelledby="cat-h">
+ <h2 id="cat-h" class="{H2}">Pick a category</h2>
+ <div class="mt-10 grid gap-5 md:grid-cols-3">{cards}</div>
+</section>
+
+<section id="calculator" aria-labelledby="calc-h" class="mx-auto mt-24 max-w-4xl scroll-mt-24 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+ <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
+ <div role="group" aria-label="Tool" class="mt-5 flex flex-wrap gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
+ <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+  <div>
+   <div class="flex items-baseline justify-between gap-3">
+    <label for="w-range" id="w-label" class="text-sm text-slate-400"></label>
+    <input id="w-need" type="number" min="0" inputmode="numeric" aria-labelledby="w-label" class="w-28 {NUM}">
+   </div>
+   <input id="w-range" type="range" min="0" class="mt-4 w-full accent-indigo-500">
+  </div>
+  <div aria-live="polite" class="md:min-w-64 md:text-right">
+   <p class="text-sm text-slate-400">Estimated monthly cost</p>
+   <p id="w-price" class="mt-1 text-4xl font-semibold tracking-tight text-white tabular-nums sm:text-5xl"></p>
+   <p id="w-plan" class="mt-2 text-sm text-slate-400"></p>
+  </div>
+ </div>
+ <p class="mt-6 text-xs text-slate-500"><span id="w-note"></span> Each tool counts usage its own way, so a credit on one is not a credit on another. <a id="w-link" class="{LINK}" href="#">See the full breakdown</a>.</p>
+</section>
+
+<section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
+ <p><span class="font-medium text-slate-200">How we get these numbers.</span> Every price on this site is copied from the vendor's official pricing page, with the date we checked it. A script reads those pages every day and flags any change, and a person updates the numbers after checking. We are not paid by any company listed. <a class="{LINK}" href="/about/">More about this site</a>.</p>
+</section>
+<script>
+const W={json.dumps(widget)},T=document.querySelectorAll('[data-tool]'),R=document.getElementById('w-range'),N=document.getElementById('w-need'),$=id=>document.getElementById(id);
+let cur='base44';
+const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
+ if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
+  $('w-plan').textContent=w.typical?(w.typical_label+': '+fmt(n*w.typical)+' a month.'):'Pay as you go, no monthly package.';}}
+ else{{const f=w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0];
+  $('w-price').textContent=f?fmt(f.monthly):'Custom';$('w-plan').textContent=f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
+function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
+ $('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
+T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};pick(cur);
+</script>"""
+    return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
+                "Independent, dated pricing for AI app builders and voice agents, with cost calculators. Copied from official pricing pages and checked daily.",
+                "/", body)
+
+
+def start_price(d):
+    if d["kind"] == "usage":
+        return f"from ${d['per_min_low']:.2f}/min"
+    return f"from ${min(p['monthly'] for p in calc_options(d) if p['monthly'])}/mo"
+
+
+def widget_data(d):
+    base = {"href": f"/{d['slug']}/"}
+    if d["kind"] == "usage":
+        return {**base, "kind": "usage", "label": "Call minutes per month", "max": 20000, "step": 100, "start": 1000,
+                "low": d["per_min_low"], "high": d["per_min_high"], "typical": d.get("per_min_typical"),
+                "typical_label": d.get("typical_label", ""), "note": f"Range from {d['tool']}'s published per-minute prices."}
+    opts = calc_options(d)
+    return {**base, "kind": "credits", "label": d["calc_label"], "max": max(o["credits"] for o in opts),
+            "step": 5 if max(o["credits"] for o in opts) <= 2000 else 50, "start": 150,
+            "options": [{"label": o["name"] if "tiers" in d else o["name"] + " plan", "credits": o["credits"], "monthly": o["monthly"]} for o in opts],
+            "note": f"Cheapest {d['tool']} plan that covers this, on monthly billing."}
+
+
+def about_page(tools):
+    rows = "".join(f'<li><a class="{LINK}" href="{e(d["source_url"])}">{e(d["tool"])}</a>, checked {fmt_date(d["checked"])}</li>' for d in tools.values())
+    body = f"""
+<section class="mx-auto max-w-3xl pt-16 sm:pt-24">
+ <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
+ <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
+  <p>AI Stack Prices shows what AI app builders and voice-agent platforms really cost, so you can compare them before you sign up.</p>
+  <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
+  <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site.</p>
+  <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
+ </div>
+ <h2 class="mt-12 text-xl font-semibold text-white">Sources</h2>
+ <ul class="mt-4 space-y-2 text-slate-400">{rows}</ul>
+</section>"""
+    return page("About AI Stack Prices", "How AI Stack Prices collects, dates and checks the AI tool prices it publishes.", "/about/", body)
 
 
 def main():
@@ -412,13 +533,22 @@ def main():
         d = json.loads(f.read_text())
         self_check(d)
         tools[f.stem] = d
+    a_cls = "hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400 rounded"
+    CHROME.update(
+        nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
+                    [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
+        pricing="".join(f'<li><a class="{a_cls}" href="/{d["slug"]}/">{e(d["tool"])} pricing</a></li>' for d in tools.values()),
+        site=f'<li><a class="{a_cls}" href="/about/">About</a></li><li><a class="{a_cls}" href="/sitemap.xml">Sitemap</a></li>',
+        latest=datetime.date.fromisoformat(max(d["checked"] for d in tools.values())).strftime("%-d %b %Y"))
+    for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
     comps = []
     for c in json.loads((ROOT / "data" / "compare.json").read_text()):
         a, b = tools[c["a"]], tools[c["b"]]
         comps.append((c, a, b))
         out[f"/{c['slug']}/"] = (compare_page(c, a, b), max(a["checked"], b["checked"]))
-    out["/"] = (index_page(list(tools.values()), comps), max(d["checked"] for d in tools.values()))
+    out["/"] = (home_page(tools), max(d["checked"] for d in tools.values()))
+    out["/about/"] = (about_page(tools), max(d["checked"] for d in tools.values()))
     for path, (doc, _) in out.items():
         target = DIST / path.strip("/") / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
