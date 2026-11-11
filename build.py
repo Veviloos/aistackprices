@@ -72,7 +72,7 @@ def page(title, desc, path, body, schema=None):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{SITE}{path}">
-{FONT}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v={CSS_V}">{ld}</head>
+{FONT}<link rel="icon" href="/favicon.ico" sizes="48x48"><link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="stylesheet" href="/site.css?v={CSS_V}">{ld}</head>
 <body class="min-h-screen bg-[#090A0F] font-[Geist,system-ui,sans-serif] text-slate-300 antialiased">
 <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[480px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.18),transparent)]"></div>
 <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-[#090A0F]/70 backdrop-blur-md">
