@@ -215,7 +215,9 @@ def credits_page(d):
                              "credits": p["credits"], "monthly": p["monthly"],
                              "annual_per_month": p.get("annual_per_month", p["monthly"])} for p in opts])
     cards = "".join(plan_card(p, link, monthly_only) for p in plans)
-    cols = "sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" if len(plans) >= 5 else "sm:grid-cols-2 lg:grid-cols-3"
+    # Centered rows so a short last row sits in the middle, never hanging on the left.
+    cols = ("*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(33.333%-0.834rem)] xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5
+            else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
     toggle = "" if monthly_only else f"""
   <div role="group" aria-label="Billing period" class="inline-flex rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">
    <button type="button" id="yr" aria-pressed="true" class="{SEG}">{e(d["yearly_label"])}</button>
@@ -266,7 +268,7 @@ def credits_page(d):
 <section aria-labelledby="plans-h" class="mt-24">
  <h2 id="plans-h" class="{H2}">All {tool} plans</h2>
  <p class="mt-3 text-center text-slate-400">{hint}</p>
- <div class="mt-10 grid gap-5 {cols}">{cards}</div>{tiers}
+ <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
 </section>
 {faq_html}
@@ -408,7 +410,7 @@ CATEGORIES = [
 
 def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
-    jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 '
+    jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-center text-sm font-medium whitespace-nowrap text-slate-200 sm:px-4 '
                    f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(tools[k]["tool"])} pricing</a>'
                    for k in ("base44", "lovable", "retell", "vapi"))
     cards = ""
@@ -437,17 +439,12 @@ def home_page(tools):
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
  <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders and voice agents, copied from each official pricing page and checked against it every day. See what you would really pay before you pick a tool.</p>
- <div class="mt-8 flex flex-wrap justify-center gap-3">{jump}</div>
+ <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
 </section>
 
-<section aria-labelledby="cat-h">
- <h2 id="cat-h" class="{H2}">Pick a category</h2>
- <div class="mt-10 grid gap-5 md:grid-cols-3">{cards}</div>
-</section>
-
-<section id="calculator" aria-labelledby="calc-h" class="mx-auto mt-24 max-w-4xl scroll-mt-24 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+<section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-24 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
- <div role="group" aria-label="Tool" class="mt-5 flex flex-wrap gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
+ <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div>
    <div class="flex items-baseline justify-between gap-3">
@@ -463,6 +460,11 @@ def home_page(tools):
   </div>
  </div>
  <p class="mt-6 text-xs text-slate-500"><span id="w-note"></span> Each tool counts usage its own way, so a credit on one is not a credit on another. <a id="w-link" class="{LINK}" href="#">See the full breakdown</a>.</p>
+</section>
+
+<section aria-labelledby="cat-h" class="mt-24">
+ <h2 id="cat-h" class="{H2}">Pick a category</h2>
+ <div class="mt-10 grid gap-5 md:grid-cols-3">{cards}</div>
 </section>
 
 <section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
