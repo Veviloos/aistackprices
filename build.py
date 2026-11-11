@@ -198,7 +198,7 @@ def trust(tools, cta=True):
 
 
 def source_lede(d):
-    return f'{e(d["lede"])} Copied from the <a class="{LINK}" href="{e(d["source_url"])}">official pricing page</a>.'
+    return e(d["lede"])  # the source is named once, in the "How we get these numbers" box at the end
 
 
 def credits_page(d):
@@ -381,8 +381,7 @@ def compare_page(c, a, b):
  </article>""" for d in (a, b))
     names = f"{a['tool']} vs {b['tool']}"
     checked = fmt_date(min(a["checked"], b["checked"]))
-    lede = (f'{e(a["tool"])} and {e(b["tool"])} pricing side by side, copied from the official pricing pages of '
-            f'<a class="{LINK}" href="{e(a["source_url"])}">{e(a["tool"])}</a> and <a class="{LINK}" href="{e(b["source_url"])}">{e(b["tool"])}</a>.')
+    lede = f'{e(a["tool"])} and {e(b["tool"])} pricing side by side.'
     body = hero(checked, f"{names} pricing", "text-4xl sm:text-5xl lg:text-6xl", lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
@@ -438,7 +437,7 @@ def home_page(tools):
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders and voice agents, copied from each official pricing page and checked against it every day. See what you would really pay before you pick a tool.</p>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders and voice agents. See what you would really pay before you pick a tool.</p>
  <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
 </section>
 
