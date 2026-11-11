@@ -17,7 +17,7 @@ ROOT = pathlib.Path(__file__).parent
 DIST = ROOT / "dist"
 SITE = "https://aistackprices.com"
 e = html.escape
-CHROME = {}  # header/footer links and latest checked date, filled in main()
+CHROME = {}  # nav links and stylesheet version, filled in main()
 
 
 def cheapest(plans, credits_needed, annual):
@@ -63,7 +63,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 
 def page(title, desc, path, body, schema=None):
-    NAV, LATEST_SHORT, YEAR = CHROME["nav"], CHROME["latest"], datetime.date.today().year
+    NAV, YEAR = CHROME["nav"], datetime.date.today().year
     CSS_V = CHROME["css_v"]  # changes whenever site.css changes, so browsers drop their cached copy
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
     return f"""<!doctype html>
@@ -85,7 +85,6 @@ def page(title, desc, path, body, schema=None):
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg></summary>
    <nav aria-label="Main" class="absolute right-0 mt-2 flex w-56 flex-col rounded-xl border border-slate-800 bg-slate-950 p-2 text-sm text-slate-300 shadow-2xl shadow-black/60 [&>a]:rounded-lg [&>a]:px-3 [&>a]:py-2.5 [&>a:hover]:bg-slate-800/70" onclick="if(event.target.closest('a'))this.parentElement.open=false">{NAV}</nav>
   </details>
-  <span class="hidden items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3 py-1 text-xs text-slate-300 lg:inline-flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Prices checked {LATEST_SHORT}</span>
  </div>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
@@ -539,8 +538,7 @@ def main():
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
                     [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
-        css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10],
-        latest=datetime.date.fromisoformat(max(d["checked"] for d in tools.values())).strftime("%-d %b %Y"))
+        css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
     comps = []
