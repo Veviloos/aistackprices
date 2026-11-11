@@ -7,6 +7,7 @@ Data: each data/<tool>.json is a pricing page of kind "credits" (plans with cred
 or "usage" (per-minute pricing). data/compare.json lists comparison pages between two tools.
 """
 import datetime
+import hashlib
 import html
 import json
 import pathlib
@@ -63,6 +64,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 def page(title, desc, path, body, schema=None):
     NAV, LATEST_SHORT, YEAR = CHROME["nav"], CHROME["latest"], datetime.date.today().year
+    CSS_V = CHROME["css_v"]  # changes whenever site.css changes, so browsers drop their cached copy
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
     return f"""<!doctype html>
 <html lang="en" class="bg-[#090A0F]"><head><meta charset="utf-8">
@@ -70,7 +72,7 @@ def page(title, desc, path, body, schema=None):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{SITE}{path}">
-{FONT}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css">{ld}</head>
+{FONT}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v={CSS_V}">{ld}</head>
 <body class="min-h-screen bg-[#090A0F] font-[Geist,system-ui,sans-serif] text-slate-300 antialiased">
 <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[480px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.18),transparent)]"></div>
 <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-[#090A0F]/70 backdrop-blur-md">
@@ -537,6 +539,7 @@ def main():
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
                     [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
+        css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10],
         latest=datetime.date.fromisoformat(max(d["checked"] for d in tools.values())).strftime("%-d %b %Y"))
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
