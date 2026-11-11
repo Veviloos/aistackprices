@@ -432,9 +432,6 @@ CATEGORIES = [
 def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
     short = {cid: title.removeprefix("AI ").capitalize() for cid, title, *_ in CATEGORIES}
-    jump = "".join(f'<a href="#{cid}" class="rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-center text-sm font-medium whitespace-nowrap text-slate-200 sm:px-4 '
-                   f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(short[cid])}</a>'
-                   for cid, *_ in CATEGORIES)
     cards = ""
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
@@ -459,7 +456,6 @@ def home_page(tools):
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
  <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents and automation tools. See what you would really pay before you pick a tool.</p>
- <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
 </section>
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
