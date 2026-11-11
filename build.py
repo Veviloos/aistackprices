@@ -411,7 +411,7 @@ def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
     jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-4 py-2 text-sm font-medium text-slate-200 '
                    f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(tools[k]["tool"])} pricing</a>'
-                   for k in ("base44", "lovable", "retell"))
+                   for k in ("base44", "lovable", "retell", "vapi"))
     cards = ""
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
