@@ -11,18 +11,45 @@
   "per_min_typical": 0.15,
   "typical_label": "Retell's own default setup",
   "fees": [],
-  "calc_note": "The range is Retell's published $0.07 to $0.31 per minute. Your exact rate depends on the AI model, voice and add-ons you choose. Phone call rates are extra unless you bring your own telephony.",
+  "calc_note": "The range is Retell's published $0.07 to $0.31 per minute. Your exact rate depends on the AI model, voice and add-ons you choose: the most expensive models and voices in Retell's own price list can take a minute above $0.31. Phone call rates are extra unless you bring your own telephony.",
   "components_title": "What goes into Retell's per-minute price",
   "components": [
-    ["Retell voice infrastructure", "$0.055/min"],
-    ["Text-to-speech, Retell, Cartesia or OpenAI voices", "$0.015/min"],
-    ["Text-to-speech, ElevenLabs voices", "$0.04 to $0.10/min"],
-    ["AI model (LLM), e.g. GPT 5.4", "$0.080/min"],
-    ["AI model (LLM), full range", "$0.0032 to $0.384/min"],
-    ["Your own telephony (SIP)", "No charge"],
-    ["Retell phone number", "$2.00/month"]
+    [
+      "Retell voice infrastructure",
+      "$0.055/min"
+    ],
+    [
+      "Text-to-speech, Retell, Cartesia or OpenAI voices",
+      "$0.015/min"
+    ],
+    [
+      "Text-to-speech, ElevenLabs voices",
+      "$0.04 to $0.10/min"
+    ],
+    [
+      "AI model (LLM), e.g. GPT 5.4",
+      "$0.080/min"
+    ],
+    [
+      "AI model (LLM), full range",
+      "$0.0032 to $0.384/min"
+    ],
+    [
+      "Your own telephony (SIP)",
+      "No charge"
+    ],
+    [
+      "Retell phone number",
+      "$2.00/month"
+    ]
   ],
-  "includes": ["$10 in free credits to start", "20 concurrent calls free, then $8 per extra call line a month", "Call analytics and transcripts", "Webhooks and API access", "Enterprise plan with custom pricing"],
+  "includes": [
+    "$10 in free credits to start",
+    "20 concurrent calls free, then $8 per extra call line a month",
+    "Call analytics and transcripts",
+    "Webhooks and API access",
+    "Enterprise plan with custom pricing"
+  ],
   "compare": {
     "Pricing model": "Pay as you go, per minute",
     "Price per minute": "$0.07 to $0.31",
@@ -32,9 +59,21 @@
     "1,000 minutes a month": "About $70 to $310"
   },
   "faq": [
-    ["How much does Retell AI cost?", "Retell AI is pay as you go: $0.07 to $0.31 per minute for voice agents, with no monthly fee. Its default setup in Retell's own estimator comes to $0.15 per minute."],
-    ["Is Retell AI free?", "You start with $10 in free credits. After that you pay per minute used."],
-    ["What makes the price per minute go up?", "The AI model is the biggest factor: from $0.0032 to $0.384 per minute. ElevenLabs voices ($0.04 to $0.10 per minute) also cost more than Retell's own voices ($0.015)."],
-    ["How many calls can run at once?", "20 concurrent calls are free. Extra call lines cost $8 each per month."]
+    [
+      "How much does Retell AI cost?",
+      "Retell AI is pay as you go: $0.07 to $0.31 per minute for voice agents, with no monthly fee. Its default setup in Retell's own estimator comes to $0.15 per minute."
+    ],
+    [
+      "Is Retell AI free?",
+      "You start with $10 in free credits. After that you pay per minute used."
+    ],
+    [
+      "What makes the price per minute go up?",
+      "The AI model is the biggest factor: from $0.0032 to $0.384 per minute. ElevenLabs voices ($0.04 to $0.10 per minute) also cost more than Retell's own voices ($0.015)."
+    ],
+    [
+      "How many calls can run at once?",
+      "20 concurrent calls are free. Extra call lines cost $8 each per month."
+    ]
   ]
 }

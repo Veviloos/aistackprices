@@ -68,13 +68,13 @@ def page(title, desc, path, body, schema=None):
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
 <link rel="canonical" href="{SITE}{path}">
-{FONT}<link rel="stylesheet" href="/site.css">{ld}</head>
+{FONT}<link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css">{ld}</head>
 <body class="min-h-screen bg-[#090A0F] font-[Geist,system-ui,sans-serif] text-slate-300 antialiased">
 <div aria-hidden="true" class="pointer-events-none fixed inset-x-0 top-0 h-[480px] bg-[radial-gradient(60%_60%_at_50%_0%,rgba(99,102,241,0.18),transparent)]"></div>
 <header class="relative border-b border-slate-800/80">
  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
   <a href="/" class="flex items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
-   <span class="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-indigo-500 to-violet-500 text-sm">$</span>AI Stack Prices</a>
+   <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
  </div>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>

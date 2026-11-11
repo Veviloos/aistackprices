@@ -7,32 +7,133 @@
   "affiliate_url": "",
   "lede": "Every Lovable plan, what each credit tier costs, and the cheapest way to get the credits you need.",
   "calc_label": "Lovable credits you need each month",
-  "calc_note": "The calculator uses Pro plan credit tiers on monthly billing. Lovable says credits roll over and you can top up on demand.",
+  "calc_note": "The calculator uses Pro plan credit tiers on monthly billing. The Free plan is left out because Lovable does not publish its free credit amount. Lovable says credits roll over and you can top up on demand.",
   "monthly_only": true,
   "plans": [
-    {"name": "Free", "monthly": 0, "annual_per_month": 0,
-     "rows": [["Credits", "Free grants"], ["Users", "Unlimited collaborators"]],
-     "features": ["5 lovable.app domains", "Invite-only publishing", "Cloud", "Community support"]},
-    {"name": "Pro", "monthly": 25, "annual_per_month": 21, "popular": true,
-     "rows": [["Credits", "100/mo, up to 10,000"], ["Users", "Unlimited"]],
-     "features": ["Credit rollovers", "On-demand credit top-ups", "Custom domains", "Remove the Lovable badge", "Email support"]},
-    {"name": "Business", "monthly": 50, "annual_per_month": 42,
-     "rows": [["Credits", "100/mo"], ["Users", "Unlimited"]],
-     "features": ["Everything in Pro", "Team workspace", "Role-based access", "SSO", "Priority support"]}
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "Credits",
+          "Free grants"
+        ],
+        [
+          "Users",
+          "Unlimited collaborators"
+        ]
+      ],
+      "features": [
+        "5 lovable.app domains",
+        "Invite-only publishing",
+        "Cloud",
+        "Community support"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 25,
+      "annual_per_month": 21,
+      "popular": true,
+      "rows": [
+        [
+          "Credits",
+          "100/mo, up to 10,000"
+        ],
+        [
+          "Users",
+          "Unlimited"
+        ]
+      ],
+      "features": [
+        "Credit rollovers",
+        "On-demand credit top-ups",
+        "Custom domains",
+        "Remove the Lovable badge",
+        "Email support"
+      ]
+    },
+    {
+      "name": "Business",
+      "monthly": 50,
+      "annual_per_month": 42,
+      "rows": [
+        [
+          "Credits",
+          "100/mo"
+        ],
+        [
+          "Users",
+          "Unlimited"
+        ]
+      ],
+      "features": [
+        "Everything in Pro",
+        "Team workspace",
+        "Role-based access",
+        "SSO",
+        "Priority support"
+      ]
+    }
   ],
   "tiers_title": "Lovable Pro credit tiers",
   "tiers": [
-    {"name": "Pro, 100 credits", "monthly": 25, "credits": 100},
-    {"name": "Pro, 200 credits", "monthly": 50, "credits": 200},
-    {"name": "Pro, 400 credits", "monthly": 100, "credits": 400},
-    {"name": "Pro, 800 credits", "monthly": 200, "credits": 800},
-    {"name": "Pro, 1,200 credits", "monthly": 294, "credits": 1200},
-    {"name": "Pro, 2,000 credits", "monthly": 480, "credits": 2000},
-    {"name": "Pro, 3,000 credits", "monthly": 705, "credits": 3000},
-    {"name": "Pro, 4,000 credits", "monthly": 920, "credits": 4000},
-    {"name": "Pro, 5,000 credits", "monthly": 1125, "credits": 5000},
-    {"name": "Pro, 7,500 credits", "monthly": 1688, "credits": 7500},
-    {"name": "Pro, 10,000 credits", "monthly": 2250, "credits": 10000}
+    {
+      "name": "Pro, 100 credits",
+      "monthly": 25,
+      "credits": 100
+    },
+    {
+      "name": "Pro, 200 credits",
+      "monthly": 50,
+      "credits": 200
+    },
+    {
+      "name": "Pro, 400 credits",
+      "monthly": 100,
+      "credits": 400
+    },
+    {
+      "name": "Pro, 800 credits",
+      "monthly": 200,
+      "credits": 800
+    },
+    {
+      "name": "Pro, 1,200 credits",
+      "monthly": 294,
+      "credits": 1200
+    },
+    {
+      "name": "Pro, 2,000 credits",
+      "monthly": 480,
+      "credits": 2000
+    },
+    {
+      "name": "Pro, 3,000 credits",
+      "monthly": 705,
+      "credits": 3000
+    },
+    {
+      "name": "Pro, 4,000 credits",
+      "monthly": 920,
+      "credits": 4000
+    },
+    {
+      "name": "Pro, 5,000 credits",
+      "monthly": 1125,
+      "credits": 5000
+    },
+    {
+      "name": "Pro, 7,500 credits",
+      "monthly": 1688,
+      "credits": 7500
+    },
+    {
+      "name": "Pro, 10,000 credits",
+      "monthly": 2250,
+      "credits": 10000
+    }
   ],
   "after_plans": "Prices above are for 100 monthly credits. Yearly prices ($21 Pro, $42 Business) are what Lovable shows with yearly billing selected, which it describes as 2 months free. Enterprise has a platform fee with volume pricing, by quote.",
   "compare": {
@@ -40,13 +141,24 @@
     "Cheapest paid plan": "Pro: $25/month, or $21/month billed yearly",
     "Credits on the cheapest paid plan": "100 credits a month",
     "Most credits on a public plan": "Pro: 10,000 credits for $2,250/month",
-    "Yearly billing": "Described by Lovable as 2 months free",
-    "Code export": "Not compared on this page"
+    "Yearly billing": "Described by Lovable as 2 months free"
   },
   "faq": [
-    ["How much does Lovable cost?", "Lovable has a free plan. Pro starts at $25/month for 100 credits ($21/month billed yearly), and Business at $50/month ($42/month billed yearly). Pro can go up to 10,000 credits for $2,250/month."],
-    ["Is Lovable free?", "Yes. The Free plan includes free credit grants, unlimited collaborators and 5 lovable.app domains, with invite-only publishing."],
-    ["Do Lovable credits roll over?", "Lovable lists credit rollovers and on-demand credit top-ups as Pro plan features."],
-    ["Pro or Business?", "Both start with 100 monthly credits. Business costs more because it adds a team workspace, role-based access, SSO and priority support."]
+    [
+      "How much does Lovable cost?",
+      "Lovable has a free plan. Pro starts at $25/month for 100 credits ($21/month billed yearly), and Business at $50/month ($42/month billed yearly). Pro can go up to 10,000 credits for $2,250/month."
+    ],
+    [
+      "Is Lovable free?",
+      "Yes. The Free plan includes free credit grants, unlimited collaborators and 5 lovable.app domains, with invite-only publishing."
+    ],
+    [
+      "Do Lovable credits roll over?",
+      "Lovable lists credit rollovers and on-demand credit top-ups as Pro plan features."
+    ],
+    [
+      "Pro or Business?",
+      "Both start with 100 monthly credits. Business costs more because it adds a team workspace, role-based access, SSO and priority support."
+    ]
   ]
 }
