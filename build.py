@@ -227,7 +227,8 @@ def credits_page(d):
                              "annual_per_month": p.get("annual_per_month", p["monthly"])} for p in opts])
     cards = "".join(plan_card(p, link, monthly_only, cur) for p in plans)
     # Centered rows so a short last row sits in the middle, never hanging on the left.
-    cols = ("*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(33.333%-0.834rem)]" if len(plans) == 6  # 2+2+2, then 3+3
+    cols = ("*:w-full sm:max-lg:*:w-[calc(50%-0.625rem)] lg:max-[1399px]:*:w-[calc(33.333%-0.834rem)] min-[1400px]:*:w-[calc(16.666%-1.042rem)] min-[1400px]:relative min-[1400px]:left-1/2 min-[1400px]:w-[min(calc(100vw-3rem),88rem)] min-[1400px]:-translate-x-1/2 min-[1400px]:[&_article>div]:p-5 min-[1400px]:[&_article_.text-4xl]:text-3xl"
+            if len(plans) == 6  # 2+2+2, then 3+3, then all 6 in one row (wide screens only, where they fit)
             else "max-xl:flex-col max-xl:items-center *:w-full *:max-w-md xl:*:max-w-none xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5  # 5 never splits evenly: one per row, then all 5 in one row
             else "*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if len(plans) == 4  # 2+2, then 4 in a row
             else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
