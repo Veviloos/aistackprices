@@ -87,8 +87,9 @@ def page(title, desc, path, body, schema=None):
  </div>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
-<footer class="relative mt-24 border-t border-slate-800/80">
- <p class="px-5 py-8 text-center text-sm text-slate-500"><span class="text-slate-300">&copy; {YEAR} AI Stack Prices.</span> Independent. Prices copied from official pricing pages.</p>
+<p class="relative mt-24 px-5 pb-4 text-center text-[11px] text-slate-500 min-[340px]:text-xs sm:text-sm">Independent. Prices copied from official pricing pages.</p>
+<footer class="relative border-t border-slate-800/80">
+ <p class="px-5 py-6 text-center text-sm text-slate-400">&copy; {YEAR} AI Stack Prices</p>
 </footer>
 </body></html>"""
 
