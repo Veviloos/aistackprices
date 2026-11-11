@@ -1,4 +1,5 @@
 [
   {"slug": "base44-vs-lovable", "a": "base44", "b": "lovable"},
-  {"slug": "vapi-vs-retell-ai", "a": "vapi", "b": "retell"}
+  {"slug": "vapi-vs-retell-ai", "a": "vapi", "b": "retell"},
+  {"slug": "n8n-vs-make", "a": "n8n", "b": "make"}
 ]

@@ -95,7 +95,7 @@ def page(title, desc, path, body, schema=None):
 </body></html>"""
 
 
-def plan_card(p, link, monthly_only=False):
+def plan_card(p, link, monthly_only=False, cur="$"):
     pop = p.get("popular", False)
     ring = ("bg-gradient-to-b from-indigo-500 via-violet-500 to-indigo-500/20 shadow-[0_0_40px_-8px_rgba(139,92,246,0.55)]"
             if pop else "bg-slate-800")
@@ -106,17 +106,17 @@ def plan_card(p, link, monthly_only=False):
                  f'<p class="mt-1 text-xs text-slate-500">{e(p.get("price_note", ""))}</p>')
     elif p["monthly"] and monthly_only:
         a = p["annual_per_month"]
-        note = f"or ${a}/month billed yearly" if a != p["monthly"] else "billed monthly"
-        price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums">${p["monthly"]}</span>'
+        note = f"or {cur}{a}/month billed yearly" if a != p["monthly"] else "billed monthly"
+        price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums">{cur}{p["monthly"]}</span>'
                  f'<span class="text-sm text-slate-400">/month</span></p><p class="mt-1 text-xs text-slate-500">{e(note)}</p>')
     elif p["monthly"]:
         price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums" '
-                 f'data-annual="{p["annual_per_month"]}" data-monthly="{p["monthly"]}">${p["annual_per_month"]}</span>'
+                 f'data-annual="{p["annual_per_month"]}" data-monthly="{p["monthly"]}">{cur}{p["annual_per_month"]}</span>'
                  f'<span class="text-sm text-slate-400">/month</span></p>'
-                 f'<p class="mt-1 text-xs text-slate-500" data-note data-annual-note="billed yearly, ${p["annual_per_month"] * 12:,}/year" '
-                 f'data-monthly-note="billed monthly">billed yearly, ${p["annual_per_month"] * 12:,}/year</p>')
+                 f'<p class="mt-1 text-xs text-slate-500" data-note data-annual-note="billed yearly, {cur}{p["annual_per_month"] * 12:,}/year" '
+                 f'data-monthly-note="billed monthly">billed yearly, {cur}{p["annual_per_month"] * 12:,}/year</p>')
     else:
-        price = ('<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white">$0</span>'
+        price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white">{cur}0</span>'
                  '<span class="text-sm text-slate-400">/month</span></p><p class="mt-1 text-xs text-slate-500">no payment needed</p>')
     feats = "".join(f'<li class="flex gap-2"><span aria-hidden="true" class="text-indigo-400">✓</span>{e(f)}</li>'
                     for f in p["features"])
@@ -209,16 +209,18 @@ def credits_page(d):
     link = link_of(d)
     checked = fmt_date(d["checked"])
     monthly_only = d.get("monthly_only", False)
+    cur = d.get("currency", "$")
     top = max(p["credits"] for p in opts)
-    paid = [p for p in plans if p["monthly"]]
+    paid = [p for p in plans if p.get("monthly")]  # "Custom" plans have a text price, no monthly
     lo, hi = paid[0], paid[-1]
     faq_html, schema = faq_block(d["faq"])
     calc_data = json.dumps([{"name": p["name"], "label": p["name"] if "tiers" in d else p["name"] + " plan",
                              "credits": p["credits"], "monthly": p["monthly"],
                              "annual_per_month": p.get("annual_per_month", p["monthly"])} for p in opts])
-    cards = "".join(plan_card(p, link, monthly_only) for p in plans)
+    cards = "".join(plan_card(p, link, monthly_only, cur) for p in plans)
     # Centered rows so a short last row sits in the middle, never hanging on the left.
     cols = ("*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(33.333%-0.834rem)] xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5
+            else "*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if len(plans) == 4  # 2+2, then 4 in a row
             else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
     toggle = "" if monthly_only else f"""
   <div role="group" aria-label="Billing period" class="inline-flex rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">
@@ -230,13 +232,13 @@ def credits_page(d):
         rows = "".join(f'<tr data-tier="{e(t["name"])}" class="border-t border-slate-800">'
                        f'<th scope="row" class="py-2.5 pr-4 pl-3 font-normal">{e(t["name"])}</th>'
                        f'<td class="py-2.5 pr-4 tabular-nums">{t["credits"]:,}</td>'
-                       f'<td class="py-2.5 pr-3 text-right font-medium text-white tabular-nums">${t["monthly"]:,}/mo</td></tr>'
+                       f'<td class="py-2.5 pr-3 text-right font-medium text-white tabular-nums">{cur}{t["monthly"]:,}/mo</td></tr>'
                        for t in d["tiers"])
         tiers = f"""
  <div class="mx-auto mt-12 max-w-2xl {PANEL} p-3 sm:p-5">
   <h3 class="px-3 pt-2 text-lg font-semibold text-white">{e(d["tiers_title"])}</h3>
   <table class="mt-3 {TABLE}">
-   <thead class="text-xs text-slate-500"><tr><th scope="col" class="py-2 pr-4 pl-3 font-normal">Tier</th><th scope="col" class="py-2 pr-4 font-normal">Credits</th><th scope="col" class="py-2 pr-3 text-right font-normal">Monthly price</th></tr></thead>
+   <thead class="text-xs text-slate-500"><tr><th scope="col" class="py-2 pr-4 pl-3 font-normal">Tier</th><th scope="col" class="py-2 pr-4 font-normal">{e(d.get("unit_label", "Credits"))}</th><th scope="col" class="py-2 pr-3 text-right font-normal">Monthly price</th></tr></thead>
    <tbody class="text-slate-300">{rows}</tbody>
   </table>
  </div>"""
@@ -278,25 +280,25 @@ def credits_page(d):
 {page_end([d], cta=False)}
 
 <script>
-const P={calc_data},R=document.getElementById('range'),N=document.getElementById('need'),Y=document.getElementById('yr'),M=document.getElementById('mo');
+const P={calc_data},C={json.dumps(cur)},R=document.getElementById('range'),N=document.getElementById('need'),Y=document.getElementById('yr'),M=document.getElementById('mo');
 let yearly={'false' if monthly_only else 'true'};
 const HI=['bg-indigo-500/15','text-white'];
 function run(){{const n=Math.max(0,+N.value||0),k=yearly?'annual_per_month':'monthly',
 f=P.filter(p=>p.credits>=n).sort((a,b)=>a[k]-b[k])[0];
 document.querySelectorAll('article[data-plan]').forEach(c=>{{const on=!!f&&c.dataset.plan===f.name;['outline-2','outline-emerald-400','outline-offset-4'].forEach(x=>c.classList.toggle(x,on));}});
 document.querySelectorAll('tr[data-tier]').forEach(r=>{{const on=!!f&&r.dataset.tier===f.name;HI.forEach(x=>r.classList.toggle(x,on));r.toggleAttribute('data-picked',on);}});
-document.querySelectorAll('[data-annual]').forEach(s=>s.textContent='$'+s.dataset[yearly?'annual':'monthly']);
+document.querySelectorAll('[data-annual]').forEach(s=>s.textContent=C+s.dataset[yearly?'annual':'monthly']);
 document.querySelectorAll('[data-note]').forEach(s=>s.textContent=s.dataset[yearly?'annualNote':'monthlyNote']);
-document.getElementById('price').textContent=f?'$'+f[k].toLocaleString('en-US')+'/mo':'Custom';
-document.getElementById('plan').textContent=f?(f.label+', $'+(f[k]*12).toLocaleString('en-US')+' a year'+(yearly?' paid up front.':' if you stay 12 months.')):'Above the largest plan. Ask {tool} sales for a quote.';}}
+document.getElementById('price').textContent=f?C+f[k].toLocaleString('en-US')+'/mo':'Custom';
+document.getElementById('plan').textContent=f?(f.label+', '+C+(f[k]*12).toLocaleString('en-US')+' a year'+(yearly?' paid up front.':' if you stay 12 months.')):'Above the largest plan. Ask {tool} sales for a quote.';}}
 R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};
 function bill(y){{yearly=y;Y.setAttribute('aria-pressed',y);M.setAttribute('aria-pressed',!y);run();}}
 if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
 </script>"""
-    title = f"{d['tool']} Pricing {d['checked'][:4]}: Plans, Credits & Cost Calculator"
-    free = "Free, then " if any(not p["monthly"] for p in plans) else ""
-    desc = (f"{d['tool']} pricing checked {checked}: {free}${lo['monthly']}-${hi['monthly']}/mo "
-            f"(or ${lo['annual_per_month']}-${hi['annual_per_month']}/mo yearly). Credits per plan and a calculator.")
+    title = f"{d['tool']} Pricing {d['checked'][:4]}: Plans, {d.get('unit_label', 'Credits')} & Cost Calculator"
+    free = "Free, then " if any(p.get("monthly") == 0 for p in plans) else ""
+    desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{lo['monthly']}-{cur}{hi['monthly']}/mo "
+            f"(or {cur}{lo['annual_per_month']}-{cur}{hi['annual_per_month']}/mo yearly). {d.get('unit_label', 'Credits')} per plan and a calculator.")
     return page(title, desc, f"/{d['slug']}/", body, schema)
 
 
@@ -393,6 +395,11 @@ def compare_page(c, a, b):
     names = f"{a['tool']} vs {b['tool']}"
     checked = fmt_date(min(a["checked"], b["checked"]))
     lede = f'{e(a["tool"])} and {e(b["tool"])} pricing side by side.'
+    ca, cb = a.get("currency", "$"), b.get("currency", "$")
+    if ca != cb:  # never convert: each vendor's own currency, said plainly
+        names_of = {"$": "US dollars ($)", "€": "euros (€)"}
+        lede += (f' {e(a["tool"])} lists prices in {names_of.get(ca, ca)} and {e(b["tool"])} in {names_of.get(cb, cb)}.'
+                 ' We show each as published and do not convert them.')
     body = hero(checked, f"{names} pricing", "text-4xl sm:text-5xl lg:text-6xl", lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
@@ -415,14 +422,17 @@ CATEGORIES = [
      ["base44", "lovable"], "base44-vs-lovable"),
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
      ["retell", "vapi"], "vapi-vs-retell-ai"),
+    ("automation", "Automation", "Workflow automation billed by runs or credits. See what your monthly volume costs, in each vendor's own currency.",
+     ["n8n", "make"], "n8n-vs-make"),
 ]
+HOME_TOOLS = ("base44", "lovable", "retell", "vapi", "n8n", "make")
 
 
 def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
     jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-center text-sm font-medium whitespace-nowrap text-slate-200 sm:px-4 '
                    f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(tools[k]["tool"])} pricing</a>'
-                   for k in ("base44", "lovable", "retell", "vapi"))
+                   for k in HOME_TOOLS)
     cards = ""
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
@@ -434,12 +444,7 @@ def home_page(tools):
  <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
  <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(a)} and {e(b)}</a>
 </article>"""
-    cards += f"""<article class="{PANEL} flex flex-col p-6 opacity-70">
- <h3 class="text-lg font-semibold text-white">Automation stacks</h3>
- <p class="mt-2 text-sm text-slate-400">n8n and the tools people compare it with, on the same terms.</p>
- <p class="mt-5 inline-flex w-fit rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400">Coming soon</p>
-</article>"""
-    widget = {k: widget_data(tools[k]) for k in ("base44", "lovable", "retell", "vapi")}
+    widget = {k: widget_data(tools[k]) for k in HOME_TOOLS}
     tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(tools[k]["tool"])}</button>'
                    for i, k in enumerate(widget))
     body = f"""
@@ -448,13 +453,13 @@ def home_page(tools):
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders and voice agents. See what you would really pay before you pick a tool.</p>
- <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, voice agents and automation tools. See what you would really pay before you pick a tool.</p>
+ <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-3">{jump}</div>
 </section>
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
- <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{tabs}</div>
+ <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-3">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div>
    <div class="flex items-baseline justify-between gap-3">
@@ -474,7 +479,7 @@ def home_page(tools):
 
 <section aria-labelledby="cat-h" class="mt-16">
  <h2 id="cat-h" class="{H2}">Pick a category</h2>
- <div class="mt-10 grid gap-5 md:grid-cols-3">{cards}</div>
+ <div class="mt-10 grid gap-5 lg:grid-cols-3">{cards}</div>
 </section>
 
 <section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
@@ -483,7 +488,7 @@ def home_page(tools):
 <script>
 const W={json.dumps(widget)},T=document.querySelectorAll('[data-tool]'),R=document.getElementById('w-range'),N=document.getElementById('w-need'),$=id=>document.getElementById(id);
 let cur='base44';
-const fmt=n=>'$'+Math.round(n).toLocaleString('en-US');
+const fmt=n=>W[cur].cur+Math.round(n).toLocaleString('en-US');
 function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
  if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
   $('w-plan').textContent=w.typical?(w.typical_label+': '+fmt(n*w.typical)+' a month.'):'Pay as you go, no monthly package.';}}
@@ -494,18 +499,18 @@ function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',
 T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};pick(cur);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
-                "Independent, dated pricing for AI app builders and voice agents, with cost calculators. Copied from official pricing pages and checked daily.",
+                "Independent, dated pricing for AI app builders, voice agents and automation tools, with cost calculators. Copied from official pricing pages and checked daily.",
                 "/", body)
 
 
 def start_price(d):
     if d["kind"] == "usage":
         return f"from ${d['per_min_low']:.2f}/min"
-    return f"from ${min(p['monthly'] for p in calc_options(d) if p['monthly'])}/mo"
+    return f"from {d.get('currency', '$')}{min(p['monthly'] for p in calc_options(d) if p['monthly'])}/mo"
 
 
 def widget_data(d):
-    base = {"href": f"/{d['slug']}/"}
+    base = {"href": f"/{d['slug']}/", "cur": d.get("currency", "$")}
     if d["kind"] == "usage":
         return {**base, "kind": "usage", "label": "Call minutes per month", "max": 20000, "step": 100, "start": 1000,
                 "low": d["per_min_low"], "high": d["per_min_high"], "typical": d.get("per_min_typical"),
@@ -523,7 +528,7 @@ def about_page(tools):
 <section class="mx-auto max-w-3xl pt-12 sm:pt-20">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
-  <p>AI Stack Prices shows what AI app builders and voice-agent platforms really cost, so you can compare them before you sign up.</p>
+  <p>AI Stack Prices shows what AI app builders, voice-agent platforms and automation tools really cost, so you can compare them before you sign up.</p>
   <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
   <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site.</p>
   <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
@@ -532,6 +537,53 @@ def about_page(tools):
  <ul class="mt-4 space-y-2 text-slate-400">{rows}</ul>
 </section>"""
     return page("About AI Stack Prices", "How AI Stack Prices collects, dates and checks the AI tool prices it publishes.", "/about/", body)
+
+
+WEB3FORMS_KEY = ""  # Web3Forms access key; while empty the contact form renders disabled with a mailto fallback
+MAIL = "hello@aistackprices.com"
+FIELD = ("mt-2 block w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white placeholder:text-slate-500 "
+         "focus:border-indigo-400 focus:outline-2 focus:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60")
+
+
+def contact_page():
+    live = bool(WEB3FORMS_KEY)
+    mail = f'<a class="{LINK}" href="mailto:{MAIL}">{MAIL}</a>'
+    off = "" if live else (f'<p class="mb-6 rounded-lg border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">'
+                           f'The form is not switched on yet. Please email us at {mail} instead.</p>')
+    script = "" if not live else f"""
+<script>
+const F=document.getElementById('contact-form'),S=document.getElementById('form-status');
+F.onsubmit=async ev=>{{ev.preventDefault();const b=F.querySelector('button[type=submit]');b.disabled=true;S.className='mt-4 text-sm text-slate-400';S.textContent='Sending...';
+ try{{const r=await fetch(F.action,{{method:'POST',headers:{{'Content-Type':'application/json',Accept:'application/json'}},body:JSON.stringify(Object.fromEntries(new FormData(F)))}});
+  const j=await r.json();if(!r.ok||!j.success)throw 0;F.reset();S.className='mt-4 text-sm text-emerald-300';S.textContent='Thanks, your message was sent. We usually reply within a few days.';}}
+ catch(_){{S.className='mt-4 text-sm text-rose-300';S.innerHTML='Sorry, your message could not be sent. Please email us at <a class="underline" href="mailto:{MAIL}">{MAIL}</a>.';}}
+ b.disabled=false;}};
+</script>"""
+    body = f"""
+<section class="mx-auto max-w-xl pt-12 sm:pt-20">
+ <h1 class="{H1} text-4xl sm:text-5xl">Contact</h1>
+ <p class="mt-6 text-lg leading-relaxed text-slate-300">Send us questions, price corrections or partnership requests. If a price looks wrong, include the link to our page and we will fix it after checking the official pricing page.</p>
+ <div class="mt-8 {PANEL} p-6 sm:p-8">{off}
+  <form id="contact-form" action="https://api.web3forms.com/submit" method="POST">
+   <fieldset{"" if live else " disabled"} class="space-y-5">
+    <legend class="sr-only">Send a message</legend>
+    <input type="hidden" name="access_key" value="{e(WEB3FORMS_KEY)}">
+    <input type="hidden" name="subject" value="New message from aistackprices.com">
+    <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off">
+    <div><label for="c-name" class="text-sm font-medium text-slate-200">Name</label>
+     <input id="c-name" name="name" type="text" required autocomplete="name" class="{FIELD}"></div>
+    <div><label for="c-email" class="text-sm font-medium text-slate-200">Email</label>
+     <input id="c-email" name="email" type="email" required autocomplete="email" class="{FIELD}"></div>
+    <div><label for="c-message" class="text-sm font-medium text-slate-200">Message</label>
+     <textarea id="c-message" name="message" rows="6" required class="{FIELD}"></textarea></div>
+    <button type="submit" class="{CTA} w-full disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto">Send message</button>
+   </fieldset>
+  </form>
+  <p id="form-status" role="status" aria-live="polite" class="mt-4 text-sm"></p>
+ </div>
+ <p class="mt-6 text-sm text-slate-400">You can also email us at {mail}.</p>
+</section>{script}"""
+    return page("Contact AI Stack Prices", "Questions, price corrections or partnership requests for AI Stack Prices.", "/contact/", body)
 
 
 def main():
@@ -549,7 +601,7 @@ def main():
     a_cls = "hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400 rounded"
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
-                    [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
+                    [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     pairs = json.loads((ROOT / "data" / "compare.json").read_text())
     for c in pairs:  # each tool page links to its comparison page
@@ -564,6 +616,7 @@ def main():
         out[f"/{c['slug']}/"] = (compare_page(c, a, b), max(a["checked"], b["checked"]))
     out["/"] = (home_page(tools), max(d["checked"] for d in tools.values()))
     out["/about/"] = (about_page(tools), max(d["checked"] for d in tools.values()))
+    out["/contact/"] = (contact_page(), max(d["checked"] for d in tools.values()))
     for path, (doc, _) in out.items():
         target = DIST / path.strip("/") / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)

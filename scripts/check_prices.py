@@ -1,5 +1,5 @@
 """Daily price check. Reads each vendor's official pricing page, compares the lines that contain a
-dollar sign with the last saved snapshot, and when they change opens a GitHub issue for a human to
+dollar or euro sign with the last saved snapshot, and when they change opens a GitHub issue for a human to
 review. It never edits data/*.json: prices on the site change only after someone approves.
 
 Snapshots live in snapshots/<tool>.txt. First run only saves them.
@@ -22,12 +22,12 @@ GROQ_MODEL = "openai/gpt-oss-20b"
 
 
 def price_lines(text):
-    """Visible lines that mention a dollar amount, whitespace-normalised, order kept, duplicates dropped."""
+    """Visible lines that mention a dollar or euro amount, whitespace-normalised, order kept, duplicates dropped."""
     seen, out = set(), []
-    text = re.sub(r"\$\s*\n\s*", "$", text)  # some pages put "$" and the amount on separate lines
+    text = re.sub(r"([$€])\s*\n\s*", r"\1", text)  # some pages put "$"/"€" and the amount on separate lines
     for line in text.splitlines():
         line = re.sub(r"\s+", " ", line).strip()
-        if "$" in line and line not in seen:
+        if ("$" in line or "€" in line) and line not in seen:
             seen.add(line)
             out.append(line)
     return out
@@ -67,6 +67,8 @@ def main():
     assert diff(["$1 a", "$2 b"], ["$1 a", "$3 b"]) == ["-$2 b", "+$3 b"]
     assert price_lines("x\n $5  /mo \nno\n$5 /mo") == ["$5 /mo"]
     assert price_lines("Pro\n$\n40\n/mo") == ["$40"]
+    assert price_lines("Starter\n€\n24\n/mo\nfree") == ["€24"]
+    assert price_lines("€60 /mo\n$28 /mo") == ["€60 /mo", "$28 /mo"]
     SNAP.mkdir(exist_ok=True)
     tools = [(f, json.loads(f.read_text())) for f in sorted((ROOT / "data").glob("*.json"))]
     tools = [(f, d) for f, d in tools if isinstance(d, dict) and d.get("source_url")]
@@ -87,7 +89,7 @@ def main():
             snap = SNAP / f"{d['slug']}.txt"
             if not lines:
                 open_issue(f"Price check found no prices: {d['tool']}",
-                           f"{d['source_url']} returned no lines with a $ sign. The page may have changed layout.")
+                           f"{d['source_url']} returned no lines with a $ or € sign. The page may have changed layout.")
                 continue
             if snap.exists():
                 changes = diff(snap.read_text().splitlines(), lines)

@@ -1,0 +1,72 @@
+{
+  "kind": "credits",
+  "tool": "n8n",
+  "slug": "n8n-pricing",
+  "source_url": "https://n8n.io/pricing/",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "currency": "€",
+  "unit_label": "Executions",
+  "lede": "Every n8n plan in euros, how many workflow executions each one gives you, and the cheapest one for how much you automate.",
+  "calc_label": "Workflow executions you run each month",
+  "calc_note": "The calculator uses n8n Cloud plans: Starter, and Pro with 10,000 or 50,000 executions. Business is left out because it is self-hosted only, not on n8n Cloud yet. One execution is one full workflow run, however many steps it has. Prices are in euros.",
+  "yearly_label": "Yearly, save 17%",
+  "plans": [
+    {
+      "name": "Starter",
+      "monthly": 24,
+      "annual_per_month": 20,
+      "credits": 2500,
+      "rows": [["Executions", "2,500/mo"], ["Concurrent executions", "5"], ["Shared projects", "1"]],
+      "features": ["Hosted by n8n", "Agents, MCP and AI nodes", "1,600 Assistant credits/month", "AI models without API keys", "Forum support"]
+    },
+    {
+      "name": "Pro",
+      "monthly": 60,
+      "annual_per_month": 50,
+      "credits": 10000,
+      "popular": true,
+      "rows": [["Executions", "10,000/mo, or 50,000"], ["Concurrent executions", "Up to 50"], ["Shared projects", "3"]],
+      "features": ["Everything in Starter", "Hosted by n8n", "7 days of insights", "Up to 9,600 Assistant credits/month", "Admin roles", "Metric-based evaluations", "Global Variables"]
+    },
+    {
+      "name": "Business",
+      "monthly": 800,
+      "annual_per_month": 667,
+      "credits": 40000,
+      "rows": [["Executions", "40,000/mo"], ["Hosting", "Self-hosted only"], ["Shared projects", "6"]],
+      "features": ["SSO and LDAP", "30 days of insights", "Queue mode", "Git version control", "Multiple environments", "Forum support"]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "contact sales",
+      "rows": [["Concurrent executions", "200+"], ["Projects", "Unlimited"], ["Hosting", "Hosted or self-hosted"]],
+      "features": ["365 days of insights", "Log streaming", "External secret store", "SLA-backed dedicated support"],
+      "cta": "Contact sales"
+    }
+  ],
+  "tiers_title": "n8n Cloud execution tiers",
+  "tiers": [
+    {"name": "Starter, 2,500 executions", "monthly": 24, "annual_per_month": 20, "credits": 2500},
+    {"name": "Pro, 10,000 executions", "monthly": 60, "annual_per_month": 50, "credits": 10000},
+    {"name": "Pro, 50,000 executions", "monthly": 144, "annual_per_month": 120, "credits": 50000}
+  ],
+  "after_plans": "Pro prices on the card are for 10,000 executions. Pro with 50,000 executions is €144/month, or €120/month billed yearly, and larger volumes are custom. Every plan includes unlimited users, unlimited workflows and every integration. The free Cloud trial needs no credit card and gives 1,000 executions with Pro-level features. Companies under 20 employees can get 50% off Business (Startup plan).",
+  "compare": {
+    "Prices shown in": "Euros (€), not converted",
+    "What you pay for": "Workflow executions: one execution is one full workflow run, however many steps",
+    "Free option": "Free Cloud trial: 1,000 executions, no credit card",
+    "Cheapest paid plan": "Starter: €24/month, or €20/month billed yearly, for 2,500 executions",
+    "Most on a public plan": "Pro: 50,000 executions for €144/month, or €120/month billed yearly",
+    "Yearly billing": "Save 17%",
+    "Self-hosted plan": "Business: €800/month, or €667/month billed yearly, for 40,000 executions",
+    "Under 20 employees": "Startup plan: 50% off Business"
+  },
+  "faq": [
+    ["How much does n8n cost?", "n8n Cloud Starter costs €24/month (€20/month billed yearly) for 2,500 executions. Pro costs €60/month (€50/month yearly) for 10,000 executions, or €144/month (€120/month yearly) for 50,000. Business is self-hosted only at €800/month (€667/month yearly) for 40,000 executions. Enterprise is custom."],
+    ["Is n8n free?", "n8n Cloud has a free trial with no credit card: 1,000 executions, 5 concurrent executions and Pro-level features."],
+    ["What counts as an n8n execution?", "One execution is one full workflow run, no matter how many steps it has. Every plan includes unlimited users, unlimited workflows and every integration."],
+    ["What happens if I use more executions than my plan has?", "n8n lists overage on Starter and Pro as \"Capped\" and publishes no per-execution overage price. Pro volumes above 50,000 executions are custom."]
+  ]
+}

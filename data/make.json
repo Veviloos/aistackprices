@@ -1,0 +1,172 @@
+{
+  "kind": "credits",
+  "tool": "Make",
+  "slug": "make-pricing",
+  "source_url": "https://www.make.com/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "lede": "Every Make plan, what each credit tier costs, and the cheapest way to get the credits you need.",
+  "calc_label": "Make credits you use each month",
+  "calc_note": "The calculator uses Core plan credit tiers. The Free plan covers up to 1,000 credits a month. Most actions use 1 credit and some AI features use more, so treat this as an estimate. Credits expire at the end of the term.",
+  "yearly_label": "Yearly",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "credits": 1000,
+      "rows": [
+        [
+          "Credits",
+          "1,000/mo"
+        ],
+        [
+          "Minimum interval",
+          "15 minutes"
+        ]
+      ],
+      "features": [
+        "No-code visual builder",
+        "3,500+ apps",
+        "Routers & filters",
+        "Customer support"
+      ]
+    },
+    {
+      "name": "Core",
+      "monthly": 16,
+      "annual_per_month": 11,
+      "credits": 10000,
+      "rows": [
+        [
+          "Credits",
+          "10,000/mo, up to 300,000"
+        ]
+      ],
+      "features": [
+        "Unlimited active scenarios",
+        "Scheduling down to the minute",
+        "Increased data transfer limits",
+        "Access to the Make API"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 28,
+      "annual_per_month": 20,
+      "credits": 10000,
+      "popular": true,
+      "rows": [
+        [
+          "Credits",
+          "10,000/mo, up to 300,000"
+        ]
+      ],
+      "features": [
+        "Everything in Core",
+        "Priority scenario execution",
+        "Custom variables",
+        "Full-text execution log search"
+      ]
+    },
+    {
+      "name": "Teams",
+      "monthly": 51,
+      "annual_per_month": 36,
+      "credits": 10000,
+      "rows": [
+        [
+          "Credits",
+          "10,000/mo, up to 300,000"
+        ]
+      ],
+      "features": [
+        "Everything in Pro",
+        "Teams and team roles",
+        "Create and share scenario templates"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "contact sales",
+      "features": [
+        "Custom functions",
+        "Enterprise app integrations",
+        "24/7 enterprise support",
+        "Value Engineering team",
+        "Overage protection",
+        "Advanced security features"
+      ],
+      "cta": "Contact sales"
+    }
+  ],
+  "tiers_title": "Make Core credit tiers",
+  "tiers": [
+    {
+      "name": "Core, 10,000 credits",
+      "monthly": 16,
+      "annual_per_month": 11,
+      "credits": 10000
+    },
+    {
+      "name": "Core, 20,000 credits",
+      "monthly": 28,
+      "annual_per_month": 20,
+      "credits": 20000
+    },
+    {
+      "name": "Core, 40,000 credits",
+      "monthly": 46,
+      "annual_per_month": 37,
+      "credits": 40000
+    },
+    {
+      "name": "Core, 80,000 credits",
+      "monthly": 81,
+      "annual_per_month": 65,
+      "credits": 80000
+    },
+    {
+      "name": "Core, 150,000 credits",
+      "monthly": 134,
+      "annual_per_month": 107,
+      "credits": 150000
+    },
+    {
+      "name": "Core, 300,000 credits",
+      "monthly": 236,
+      "annual_per_month": 189,
+      "credits": 300000
+    }
+  ],
+  "after_plans": "Plan prices above are for 10,000 credits a month. Core, Pro and Teams each have credit tiers up to 300,000 credits a month: Core $236/month, Pro $348/month and Teams $660/month at 300,000 ($189, $278 and $528 billed yearly). Extra credits can be bought in bundles of 1,000 or 10,000. Enterprise is custom. Companies under 20 employees can get the Start-up Plan at 50% off.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits: most actions use 1 credit, some AI features use more",
+    "Free option": "Free plan: 1,000 credits a month, runs at most every 15 minutes",
+    "Cheapest paid plan": "Core: $16/month, or $11/month billed yearly, for 10,000 credits",
+    "Most on a public plan": "300,000 credits: Core $236/month, or $189/month billed yearly",
+    "Yearly billing": "Cheaper per month, e.g. Core with 10,000 credits is $11 instead of $16",
+    "Self-hosted plan": "Not listed on Make's pricing page",
+    "Under 20 employees": "Start-up Plan: 50% off (Make says \"50% off Business\")"
+  },
+  "faq": [
+    [
+      "How much does Make cost?",
+      "Make has a free plan. With 10,000 credits a month, Core costs $16/month ($11/month billed yearly), Pro $28/month ($20/month yearly) and Teams $51/month ($36/month yearly). Core goes up to 300,000 credits for $236/month ($189/month yearly). Enterprise is custom."
+    ],
+    [
+      "Is Make free?",
+      "Yes. The Free plan gives 1,000 credits a month, the no-code visual builder, 3,500+ apps, routers & filters and customer support, with a 15-minute minimum interval between runs."
+    ],
+    [
+      "What is a Make credit?",
+      "Most actions use 1 credit and some AI features use more. Credits expire at the end of the term, and extra credits can be bought in bundles of 1,000 or 10,000."
+    ],
+    [
+      "Core, Pro or Teams?",
+      "Core gives unlimited active scenarios, scheduling down to the minute and access to the Make API. Pro adds priority scenario execution, custom variables and full-text execution log search. Teams adds teams and team roles, and creating and sharing scenario templates."
+    ]
+  ]
+}
