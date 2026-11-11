@@ -176,25 +176,15 @@ def faq_block(faq):
 </section>""", schema
 
 
-def trust(tools, cta=True):
-    """The "How we get these numbers" box for one or more tools."""
-    if len(tools) == 1:
-        d = tools[0]
-        src = f"{e(d['tool'])}'s official pricing page and note the date we checked it: {fmt_date(d['checked'])}."
-    else:
-        names = " and ".join(f"{e(d['tool'])}'s" for d in tools)
-        dates = ", ".join(f"{e(d['tool'])} {fmt_date(d['checked'])}" for d in tools)
-        src = f"{names} official pricing pages and note the dates we checked them: {dates}."
-    disclosure = ("Some links on this page are affiliate links: if you buy through them we may earn a commission, "
-                  "at no extra cost to you. It never changes the prices shown." if any(d["affiliate_url"] for d in tools) else
-                  "We don't earn anything from the links on this page.")
-    btn = (f'<a href="{e(link_of(tools[0]))}" rel="nofollow sponsored" class="mt-5 {CTA}">See {e(tools[0]["tool"])}\'s current pricing</a>'
+def page_end(tools, cta=True):
+    """End of a tool page: an optional button to the vendor, plus the affiliate disclosure once a page has affiliate links.
+    How prices are collected is explained once, on the homepage."""
+    btn = (f'<a href="{e(link_of(tools[0]))}" rel="nofollow sponsored" class="{CTA}">See {e(tools[0]["tool"])}\'s current pricing</a>'
            if cta else "")
-    return f"""
-<section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
- <p><span class="font-medium text-slate-200">How we get these numbers.</span> We copy each price from {src} {disclosure}</p>
- {btn}
-</section>"""
+    note = ('<p class="mt-4 text-xs text-slate-500">Some links on this page are affiliate links: if you buy through them we may '
+            'earn a commission, at no extra cost to you. It never changes the prices shown.</p>'
+            if any(d["affiliate_url"] for d in tools) else "")
+    return f'<section class="mt-16 text-center">{btn}{note}</section>' if btn or note else ""
 
 
 def source_lede(d):
@@ -272,7 +262,7 @@ def credits_page(d):
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
 </section>
 {faq_html}
-{trust([d])}
+{page_end([d], cta=False)}
 
 <script>
 const P={calc_data},R=document.getElementById('range'),N=document.getElementById('need'),Y=document.getElementById('yr'),M=document.getElementById('mo');
@@ -345,7 +335,7 @@ def usage_page(d):
  </div>
 </section>
 {faq_html}
-{trust([d])}
+{page_end([d])}
 
 <script>
 const C={calc},R=document.getElementById('range'),N=document.getElementById('need');
@@ -393,7 +383,7 @@ def compare_page(c, a, b):
 </section>
 
 <section class="mx-auto mt-10 grid max-w-4xl gap-5 md:grid-cols-2">{cards}</section>
-{trust([a, b], cta=False)}"""
+{page_end([a, b], cta=False)}"""
     title = f"{names} Pricing {max(a['checked'], b['checked'])[:4]}: Plans and Costs Side by Side"
     desc = f"{names} pricing side by side, copied from each official pricing page. Checked {checked}."
     return page(title, desc, f"/{c['slug']}/", body)
