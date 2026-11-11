@@ -78,9 +78,13 @@ def page(title, desc, path, body, schema=None):
   <a href="/" class="flex shrink-0 items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
    <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
   <nav aria-label="Main" class="hidden items-center gap-6 text-sm text-slate-400 md:flex">{NAV}</nav>
+  <details class="relative md:hidden">
+   <summary aria-label="Menu" class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-slate-700 text-slate-200 hover:border-slate-500 focus-visible:outline-2 focus-visible:outline-indigo-400 [&::-webkit-details-marker]:hidden">
+    <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg></summary>
+   <nav aria-label="Main" class="absolute right-0 mt-2 flex w-56 flex-col rounded-xl border border-slate-800 bg-slate-950 p-2 text-sm text-slate-300 shadow-2xl shadow-black/60 [&>a]:rounded-lg [&>a]:px-3 [&>a]:py-2.5 [&>a:hover]:bg-slate-800/70" onclick="if(event.target.closest('a'))this.parentElement.open=false">{NAV}</nav>
+  </details>
   <span class="hidden items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3 py-1 text-xs text-slate-300 lg:inline-flex"><span class="h-1.5 w-1.5 rounded-full bg-emerald-400"></span>Prices checked {LATEST_SHORT}</span>
  </div>
- <nav aria-label="Main" class="flex justify-between gap-4 overflow-x-auto border-t border-slate-800/60 px-5 py-2 text-[13px] whitespace-nowrap text-slate-400 md:hidden">{NAV}</nav>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
 <footer class="relative mt-24 border-t border-slate-800/80">
