@@ -427,14 +427,14 @@ CATEGORIES = [
     ("automation", "Automation", "Workflow automation billed by runs or credits. See what your monthly volume costs, in each vendor's own currency.",
      ["n8n", "make"], "n8n-vs-make"),
 ]
-HOME_TOOLS = ("base44", "lovable", "webflow", "framer", "retell", "vapi", "n8n", "make")
 
 
 def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
-    jump = "".join(f'<a href="/{tools[k]["slug"]}/" class="rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-center text-sm font-medium whitespace-nowrap text-slate-200 sm:px-4 '
-                   f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(tools[k]["tool"])} pricing</a>'
-                   for k in HOME_TOOLS)
+    short = {cid: title.removeprefix("AI ").capitalize() for cid, title, *_ in CATEGORIES}
+    jump = "".join(f'<a href="#{cid}" class="rounded-lg border border-slate-700 bg-slate-900/60 px-2 py-2 text-center text-sm font-medium whitespace-nowrap text-slate-200 sm:px-4 '
+                   f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">{e(short[cid])}</a>'
+                   for cid, *_ in CATEGORIES)
     cards = ""
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
@@ -446,9 +446,12 @@ def home_page(tools):
  <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
  <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(a)} and {e(b)}</a>
 </article>"""
-    widget = {k: widget_data(tools[k]) for k in HOME_TOOLS}
-    tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(tools[k]["tool"])}</button>'
-                   for i, k in enumerate(widget))
+    widget = {k: widget_data(tools[k]) for *_, keys, _ in CATEGORIES for k in keys}
+    cats = {cid: keys for cid, _, _, keys, _ in CATEGORIES}
+    cat_tabs = "".join(f'<button type="button" data-cat="{cid}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(short[cid])}</button>'
+                       for i, cid in enumerate(cats))
+    tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="false" class="{SEG} flex-1">{e(tools[k]["tool"])}</button>'
+                   for k in widget)
     body = f"""
 <section class="pt-12 pb-10 text-center sm:pt-20">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
@@ -461,7 +464,8 @@ def home_page(tools):
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
- <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{tabs}</div>
+ <div role="group" aria-label="Category" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{cat_tabs}</div>
+ <div role="group" aria-label="Tool" class="mt-2 flex gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div>
    <div class="flex items-baseline justify-between gap-3">
@@ -488,7 +492,7 @@ def home_page(tools):
  <p><span class="font-medium text-slate-200">How we get these numbers.</span> Every price on this site is copied from the vendor's official pricing page, with the date we checked it. A script reads those pages every day and flags any change, and a person updates the numbers after checking. We are not paid by any company listed. <a class="{LINK}" href="/about/">More about this site</a>.</p>
 </section>
 <script>
-const W={json.dumps(widget)},T=document.querySelectorAll('[data-tool]'),R=document.getElementById('w-range'),N=document.getElementById('w-need'),$=id=>document.getElementById(id);
+const W={json.dumps(widget)},CATS={json.dumps(cats)},K=document.querySelectorAll('[data-cat]'),T=document.querySelectorAll('[data-tool]'),R=document.getElementById('w-range'),N=document.getElementById('w-need'),$=id=>document.getElementById(id);
 let cur='base44';
 const fmt=n=>W[cur].cur+Math.round(n).toLocaleString('en-US');
 function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
@@ -498,7 +502,8 @@ function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
   $('w-price').textContent=f?fmt(f.monthly):'Custom';$('w-plan').textContent=f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
  $('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
-T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};pick(cur);
+function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));pick(CATS[c][0]);}}
+K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
                 "Independent, dated pricing for AI app builders, website builders, voice agents and automation tools, with cost calculators. Copied from official pricing pages and checked daily.",
