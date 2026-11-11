@@ -539,7 +539,7 @@ def about_page(tools):
     return page("About AI Stack Prices", "How AI Stack Prices collects, dates and checks the AI tool prices it publishes.", "/about/", body)
 
 
-WEB3FORMS_KEY = ""  # Web3Forms access key; while empty the contact form renders disabled with a mailto fallback
+WEB3FORMS_KEY = "7736e9fb-e54c-4060-8401-e783c4ea923e"  # Web3Forms access key; while empty the contact form renders disabled with a mailto fallback
 MAIL = "hello@aistackprices.com"
 FIELD = ("mt-2 block w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white placeholder:text-slate-500 "
          "focus:border-indigo-400 focus:outline-2 focus:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60")
