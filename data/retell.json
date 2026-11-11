@@ -43,13 +43,6 @@
       "$2.00/month"
     ]
   ],
-  "includes": [
-    "$10 in free credits to start",
-    "20 concurrent calls free, then $8 per extra call line a month",
-    "Call analytics and transcripts",
-    "Webhooks and API access",
-    "Enterprise plan with custom pricing"
-  ],
   "compare": {
     "Pricing model": "Pay as you go, per minute",
     "Price per minute": "$0.07 to $0.31",
@@ -75,5 +68,34 @@
       "How many calls can run at once?",
       "20 concurrent calls are free. Extra call lines cost $8 each per month."
     ]
-  ]
+  ],
+  "plans": [
+    {
+      "name": "Pay as you go",
+      "price": "$0.07 to $0.31/min",
+      "price_note": "$10 in free credits to start, no monthly fee",
+      "features": [
+        "Full platform access",
+        "Pre-built agent templates",
+        "Call analytics and transcripts",
+        "Webhooks and API access",
+        "20 concurrent calls free",
+        "Community and email support"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "Volume pricing by quote from Retell sales",
+      "cta": "Contact Retell sales",
+      "features": [
+        "Role-based access control",
+        "Custom SSO",
+        "High cap on concurrent calls",
+        "Custom MSA and DPA terms",
+        "24/7 support with a dedicated portal"
+      ]
+    }
+  ],
+  "after_plans": "Extra call lines beyond the free 20 cost $8 each a month. Enterprise can add dedicated implementation support and a dedicated server as paid add-ons."
 }

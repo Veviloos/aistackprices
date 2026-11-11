@@ -101,7 +101,10 @@ def plan_card(p, link, monthly_only=False):
             if pop else "bg-slate-800")
     badge = ('<span class="whitespace-nowrap rounded-full bg-indigo-500/15 px-2.5 py-0.5 text-xs font-medium text-indigo-300">'
              'Most popular</span>') if pop else ""
-    if p["monthly"] and monthly_only:
+    if "price" in p:  # usage-based plans publish a text price, e.g. "$29/month" or "Custom"
+        price = (f'<p class="mt-4 text-3xl font-semibold tracking-tight text-balance text-white tabular-nums">{e(p["price"])}</p>'
+                 f'<p class="mt-1 text-xs text-slate-500">{e(p.get("price_note", ""))}</p>')
+    elif p["monthly"] and monthly_only:
         a = p["annual_per_month"]
         note = f"or ${a}/month billed yearly" if a != p["monthly"] else "billed monthly"
         price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums">${p["monthly"]}</span>'
@@ -118,16 +121,16 @@ def plan_card(p, link, monthly_only=False):
     feats = "".join(f'<li class="flex gap-2"><span aria-hidden="true" class="text-indigo-400">✓</span>{e(f)}</li>'
                     for f in p["features"])
     rows = "".join(f'<div class="flex justify-between gap-3"><dt class="text-slate-400">{e(k)}</dt>'
-                   f'<dd class="text-right font-medium text-white tabular-nums">{e(v)}</dd></div>' for k, v in p["rows"])
+                   f'<dd class="text-right font-medium text-white tabular-nums">{e(v)}</dd></div>' for k, v in p.get("rows", []))
     btn = ("bg-gradient-to-r from-indigo-500 to-violet-500 text-white hover:from-indigo-400 hover:to-violet-400"
            if pop else "border border-slate-700 text-slate-200 hover:border-slate-500 hover:text-white")
     return f"""<article data-plan="{e(p['name'])}" class="rounded-2xl p-px {ring}">
  <div class="flex h-full flex-col rounded-[15px] bg-slate-900/80 p-6 backdrop-blur-md">
   <div class="flex items-center justify-between gap-2"><h3 class="text-lg font-semibold text-white">{e(p['name'])}</h3>{badge}</div>
   {price}
-  <dl class="mt-5 space-y-1 border-y border-slate-800 py-4 text-sm">{rows}</dl>
+  {f'<dl class="mt-5 space-y-1 border-y border-slate-800 py-4 text-sm">{rows}</dl>' if rows else '<div class="mt-5 border-t border-slate-800"></div>'}
   <ul class="mt-4 flex-1 space-y-2 text-sm text-slate-300">{feats}</ul>
-  <a href="{e(link)}" rel="nofollow sponsored" class="mt-6 block rounded-lg px-4 py-2.5 text-center text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 {btn}">Choose {e(p['name'])}</a>
+  <a href="{e(link)}" rel="nofollow sponsored" class="mt-6 block rounded-lg px-4 py-2.5 text-center text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400 {btn}">{e(p.get('cta', 'Choose ' + p['name']))}</a>
  </div>
 </article>"""
 
@@ -298,8 +301,10 @@ def usage_page(d):
             f'bg-slate-950/60 p-1 text-sm">{fees}</div>') if fees else ""
     comps = "".join(f'<tr class="border-t border-slate-800"><th scope="row" class="{TH}">{e(k)}</th>'
                     f'<td class="{TD} text-right">{e(v)}</td></tr>' for k, v in d["components"])
-    incl = "".join(f'<li class="flex gap-2"><span aria-hidden="true" class="text-indigo-400">✓</span>{e(x)}</li>'
-                   for x in d["includes"])
+    n = len(d["plans"])
+    widths = ("*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if n >= 4
+              else "*:w-full md:*:w-[calc(50%-0.625rem)]")
+    cards = "".join(plan_card(p, link_of(d)) for p in d["plans"])
     calc = json.dumps({"lo": lo, "hi": hi, "typ": typ, "typLabel": d.get("typical_label", ""),
                        "fee": d["fees"][0][1] if d["fees"] else 0})
     body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
@@ -326,16 +331,21 @@ def usage_page(d):
  </div>
 </section>
 
+<section aria-labelledby="plans-h" class="mt-24">
+ <h2 id="plans-h" class="{H2}">{tool} plans</h2>
+ <div class="mx-auto mt-10 flex {"max-w-4xl" if n < 4 else ""} flex-wrap justify-center gap-5 {widths}">{cards}</div>
+ <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
+</section>
+
 <section aria-labelledby="comp-h" class="mx-auto mt-16 max-w-4xl">
  <div class="{PANEL} p-6 sm:p-8">
   <h2 id="comp-h" class="text-xl font-semibold text-balance text-white">{e(d["components_title"])}</h2>
   <table class="mt-4 {TABLE}"><tbody>{comps}</tbody></table>
-  <ul class="mt-6 space-y-2 border-t border-slate-800 pt-6 text-sm text-slate-300">{incl}</ul>
-  <p class="mt-6 text-xs text-slate-500">{e(d["calc_note"])}</p>
+  <p class="mt-6 border-t border-slate-800 pt-6 text-xs text-slate-500">{e(d["calc_note"])}</p>
  </div>
 </section>
 {faq_html}
-{page_end([d])}
+{page_end([d], cta=False)}
 
 <script>
 const C={calc},R=document.getElementById('range'),N=document.getElementById('need');
@@ -344,7 +354,7 @@ const $=v=>'$'+Math.round(v).toLocaleString('en-US');
 function run(){{const n=Math.max(0,+N.value||0),a=$(n*C.lo+fee),b=$(n*C.hi+fee);
 document.getElementById('price').textContent=(a===b?a:a+' to '+b)+'/mo';
 document.getElementById('typ').textContent=C.typ===null?'':C.typLabel+': '+$(n*C.typ+fee)+'/mo';
-document.getElementById('plan').textContent=n.toLocaleString('en-US')+' minutes at $'+C.lo+' to $'+C.hi+' a minute'+(fee?', plus $'+fee+' a month.':'.');}}
+document.getElementById('plan').textContent=n.toLocaleString('en-US')+' minutes at about $'+C.lo.toFixed(2)+' to $'+C.hi.toFixed(2)+' a minute'+(fee?', plus $'+fee+' a month.':'.');}}
 R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,20000);run();}};
 document.querySelectorAll('[data-fee]').forEach(b=>b.onclick=()=>{{fee=+b.dataset.fee;document.querySelectorAll('[data-fee]').forEach(x=>x.setAttribute('aria-pressed',x===b));run();}});
 run();
