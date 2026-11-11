@@ -44,7 +44,8 @@ a:focus-visible,input:focus-visible,button:focus-visible{outline:3px solid var(-
 .brand{font-weight:800;color:var(--ink);text-decoration:none;font-size:18px;letter-spacing:-.01em}
 .brand span{display:inline-block;background:var(--tag);color:var(--tag-ink);padding:0 6px;margin-right:6px;border-radius:3px}
 .checked{color:var(--muted);font-size:14px}
-h1{font-size:clamp(34px,6vw,56px);line-height:1.04;letter-spacing:-.03em;font-weight:800;margin:44px 0 12px;max-width:16ch}
+h1{font-size:clamp(34px,6vw,56px);line-height:1.04;letter-spacing:-.03em;font-weight:800;margin:44px 0 12px}
+h1,h2,h3{text-wrap:balance}
 .lede{color:var(--muted);font-size:19px;max-width:58ch;margin:0 0 28px}
 h2{font-size:26px;letter-spacing:-.02em;line-height:1.2;margin:56px 0 12px}
 h3{font-size:18px;margin:28px 0 4px}
@@ -55,7 +56,7 @@ p{max-width:68ch}
 .need input[type=range]{flex:1;accent-color:var(--tag)}
 .need input[type=number]{width:96px;font:inherit;font-weight:600;padding:6px 8px;border-radius:6px;border:0}
 .bill{display:inline-flex;margin-top:18px;border:1px solid #ffffff55;border-radius:999px;padding:3px}
-.bill button{font:inherit;font-size:15px;background:none;color:#fff;border:0;border-radius:999px;padding:6px 14px;cursor:pointer}
+.bill button{font:inherit;font-size:15px;background:none;color:#fff;border:0;border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
 .bill button[aria-pressed=true]{background:#fff;color:var(--ink);font-weight:600}
 .answer{border-left:1px solid #ffffff33;padding-left:28px}
 .answer .price{font-size:clamp(48px,8vw,72px);font-weight:800;letter-spacing:-.04em;line-height:1}
@@ -162,16 +163,16 @@ def pricing_page(d):
     calc_data = json.dumps([{k: p[k] for k in ("name", "monthly", "annual_per_month", "message_credits")}
                             for p in plans])
     body = f"""
-<h1>{tool} pricing: what you will actually pay</h1>
-<p class="lede">Every {tool} plan, its credits, and the cheapest one for how much you build. Taken from the <a href="{e(d['source_url'])}">official pricing page</a>.</p>
+<h1>{tool} pricing and real costs</h1>
+<p class="lede">What you will actually pay: every {tool} plan, its credits, and the cheapest one for how much you build. Taken from the <a href="{e(d['source_url'])}">official pricing page</a>.</p>
 <section class="calc" aria-label="{tool} cost calculator">
  <div>
   <label for="need">AI message credits you use each month</label>
   <div class="need"><input id="range" type="range" min="0" max="{top}" step="5" value="150" aria-label="Message credits per month">
   <input id="need" type="number" min="0" value="150"></div>
-  <div class="bill" role="group" aria-label="Billing">
-   <button type="button" id="yr" aria-pressed="true">Billed yearly</button>
-   <button type="button" id="mo" aria-pressed="false">Billed monthly</button>
+  <div class="bill" role="group" aria-label="Billing period">
+   <button type="button" id="yr" aria-pressed="true">Yearly</button>
+   <button type="button" id="mo" aria-pressed="false">Monthly</button>
   </div>
  </div>
  <div class="answer" aria-live="polite"><div class="price" id="price"></div><p class="plan" id="plan"></p></div>
@@ -216,7 +217,7 @@ def main():
     (DIST / "index.html").write_text(page(
         "AI Stack Prices: Real Costs of AI App Builders and Voice Agents",
         "Sourced, dated pricing for AI app builders and voice-agent platforms, with cost calculators.", "/",
-        f'<h1>What AI tools really cost</h1><p class="lede">Plans, credits and calculators for AI app builders '
+        f'<h1>What AI tools cost</h1><p class="lede">Plans, credits and calculators for AI app builders '
         f'and voice agents, copied from each official pricing page with the date we checked.</p>'
         f'<ul class="list">{links}</ul>'))
     print(f"built {len(pages)} pricing page(s) into {DIST}")
