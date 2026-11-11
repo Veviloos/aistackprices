@@ -1,0 +1,38 @@
+{
+  "kind": "usage",
+  "tool": "Vapi",
+  "slug": "vapi-pricing",
+  "source_url": "https://vapi.ai/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "lede": "What Vapi voice agents cost per minute with the default speech, AI and voice providers, plus the optional monthly packages.",
+  "per_min_low": 0.0818,
+  "per_min_high": 0.1289,
+  "fees": [["No package", 0], ["Core package", 29]],
+  "calc_note": "Per-minute range uses Vapi's default setup: Deepgram speech-to-text, OpenAI model, ElevenLabs voice and Vapi telephony. Other providers change the rate. The Pro package (10% of the hosting fee, $999/month minimum) is not included.",
+  "components_title": "What goes into Vapi's per-minute price",
+  "components": [
+    ["Vapi hosting fee", "$0.05/min"],
+    ["Speech-to-text, Deepgram", "$0.0095 to $0.0099/min"],
+    ["AI model, OpenAI", "$0.0077 to $0.0452/min"],
+    ["Voice, ElevenLabs", "$0.0146 to $0.0238/min"],
+    ["Vapi telephony, SIP, WebSockets, WebRTC", "Free"],
+    ["Twilio calls", "$0.008/min in, $0.014/min out"],
+    ["Telnyx calls", "$0.0055/min"]
+  ],
+  "includes": ["$5 in free credits to start", "4 concurrent calls and 1 phone number with no package", "Core package, $29/month: 10 concurrent calls, 5 numbers, email support", "Extra call lines: $10 each per month", "Model costs passed through with no markup"],
+  "compare": {
+    "Pricing model": "Pay as you go, per minute, optional monthly package",
+    "Price per minute": "About $0.08 to $0.13 with default providers",
+    "Free credits": "$5",
+    "Monthly platform fee": "None, or $29 for the Core package",
+    "Concurrent calls included": "4, or 10 with Core",
+    "1,000 minutes a month": "About $82 to $129, before telephony"
+  },
+  "faq": [
+    ["How much does Vapi cost?", "Vapi charges a $0.05 per minute hosting fee plus the providers you choose, passed through at cost. With its default providers that comes to about $0.08 to $0.13 per minute. Monthly packages are optional: Core is $29/month."],
+    ["Is Vapi free?", "You start with $5 in free credits and no monthly fee. After that you pay per minute."],
+    ["What does the Core package add?", "Core costs $29/month and raises you from 4 to 10 concurrent calls and from 1 to 5 included phone numbers, with email support on a 2 business day response time."],
+    ["Does Vapi mark up model costs?", "Vapi says provider and model costs are passed through with no markup. Its own charge is the $0.05 per minute hosting fee."]
+  ]
+}

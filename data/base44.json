@@ -1,74 +1,44 @@
 {
+  "kind": "credits",
   "tool": "Base44",
   "slug": "base44-pricing",
   "source_url": "https://base44.com/pricing",
   "checked": "2026-11-11",
   "affiliate_url": "",
-  "annual_only_features": [
-    "Free domain for 1 year (Starter and up)",
-    "25 credits to share with a friend (Builder and up)"
-  ],
+  "lede": "Every Base44 plan, how many credits it gives you, and the cheapest one for how much you build.",
+  "calc_label": "AI message credits you use each month",
+  "calc_note": "Base44 says credit use varies by action and AI model, so treat this as an estimate.",
+  "yearly_label": "Yearly, save 20%",
   "plans": [
-    {
-      "name": "Free",
-      "monthly": 0,
-      "annual_per_month": 0,
-      "message_credits": 25,
-      "integration_credits": 100,
-      "features": [
-        "Core Base44 features",
-        "Up to 5 apps",
-        "Authentication, database, analytics"
-      ]
-    },
-    {
-      "name": "Starter",
-      "monthly": 20,
-      "annual_per_month": 16,
-      "message_credits": 100,
-      "integration_credits": 2000,
-      "features": [
-        "Unlimited apps",
-        "In-app code edits",
-        "Connect a domain"
-      ]
-    },
-    {
-      "name": "Builder",
-      "monthly": 50,
-      "annual_per_month": 40,
-      "message_credits": 250,
-      "integration_credits": 10000,
-      "features": [
-        "Unlimited apps",
-        "In-app code edits",
-        "AI model select",
-        "Connect a domain",
-        "GitHub integration"
-      ],
-      "popular": true
-    },
-    {
-      "name": "Pro",
-      "monthly": 100,
-      "annual_per_month": 80,
-      "message_credits": 500,
-      "integration_credits": 20000,
-      "features": [
-        "Everything in Builder",
-        "Early access to beta features"
-      ]
-    },
-    {
-      "name": "Elite",
-      "monthly": 200,
-      "annual_per_month": 160,
-      "message_credits": 1200,
-      "integration_credits": 50000,
-      "features": [
-        "Everything in Pro",
-        "Premium support"
-      ]
-    }
+    {"name": "Free", "monthly": 0, "annual_per_month": 0, "credits": 25,
+     "rows": [["Message credits", "25/mo"], ["Integration credits", "100/mo"]],
+     "features": ["Core Base44 features", "Up to 5 apps", "Authentication, database, analytics"]},
+    {"name": "Starter", "monthly": 20, "annual_per_month": 16, "credits": 100,
+     "rows": [["Message credits", "100/mo"], ["Integration credits", "2,000/mo"]],
+     "features": ["Unlimited apps", "In-app code edits", "Connect a domain"]},
+    {"name": "Builder", "monthly": 50, "annual_per_month": 40, "credits": 250, "popular": true,
+     "rows": [["Message credits", "250/mo"], ["Integration credits", "10,000/mo"]],
+     "features": ["Unlimited apps", "In-app code edits", "AI model select", "Connect a domain", "GitHub integration"]},
+    {"name": "Pro", "monthly": 100, "annual_per_month": 80, "credits": 500,
+     "rows": [["Message credits", "500/mo"], ["Integration credits", "20,000/mo"]],
+     "features": ["Everything in Builder", "Early access to beta features"]},
+    {"name": "Elite", "monthly": 200, "annual_per_month": 160, "credits": 1200,
+     "rows": [["Message credits", "1,200/mo"], ["Integration credits", "50,000/mo"]],
+     "features": ["Everything in Pro", "Premium support"]}
+  ],
+  "after_plans": "Enterprise pricing is custom, by quote from Base44 sales.",
+  "compare": {
+    "Free plan": "Yes: 25 message credits and 100 integration credits a month, up to 5 apps",
+    "Cheapest paid plan": "Starter: $20/month, or $16/month billed yearly",
+    "Credits on the cheapest paid plan": "100 message credits a month",
+    "Most credits on a public plan": "Elite: 1,200 message credits for $200/month",
+    "Yearly billing": "20% cheaper than monthly",
+    "Code export": "Two-way GitHub sync on Builder and up"
+  },
+  "faq": [
+    ["How much does Base44 cost?", "Base44 has a free plan. Paid plans run from $20/month (Starter) to $200/month (Elite) on monthly billing, or $16 to $160 per month billed annually."],
+    ["Is Base44 free?", "Yes. The Free plan gives 25 message credits and 100 integration credits per month, for up to 5 apps."],
+    ["Is annual billing worth it?", "Annual billing costs 20% less than monthly and adds a free domain for 1 year (Starter and up) and 25 credits to share with a friend (Builder and up). You pay for the full year up front."],
+    ["What is a Base44 credit?", "Base44 describes credits as your monthly usage allowance for AI messages and integration actions. Message credits and integration credits are counted separately, and usage per action varies with the AI model you select."]
   ]
 }
