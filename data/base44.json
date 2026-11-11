@@ -1,0 +1,50 @@
+{
+  "tool": "Base44",
+  "slug": "base44-pricing",
+  "source_url": "https://base44.com/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "annual_only_features": ["Free domain for 1 year (Starter and up)", "25 credits to share with a friend (Builder and up)"],
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "message_credits": 25,
+      "integration_credits": 100,
+      "features": ["Core Base44 features", "Up to 5 apps", "Authentication, database, analytics"]
+    },
+    {
+      "name": "Starter",
+      "monthly": 20,
+      "annual_per_month": 16,
+      "message_credits": 100,
+      "integration_credits": 2000,
+      "features": ["Unlimited apps", "In-app code edits", "Connect a domain"]
+    },
+    {
+      "name": "Builder",
+      "monthly": 50,
+      "annual_per_month": 40,
+      "message_credits": 250,
+      "integration_credits": 10000,
+      "features": ["Unlimited apps", "In-app code edits", "AI model select", "Connect a domain", "GitHub integration"]
+    },
+    {
+      "name": "Pro",
+      "monthly": 100,
+      "annual_per_month": 80,
+      "message_credits": 500,
+      "integration_credits": 20000,
+      "features": ["Everything in Builder", "Early access to beta features"]
+    },
+    {
+      "name": "Elite",
+      "monthly": 200,
+      "annual_per_month": 160,
+      "message_credits": 1200,
+      "integration_credits": 50000,
+      "features": ["Everything in Pro", "Premium support"]
+    }
+  ]
+}
