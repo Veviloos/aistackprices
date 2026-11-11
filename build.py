@@ -88,7 +88,7 @@ def page(title, desc, path, body, schema=None):
  </div>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
-<p class="relative mt-24 px-5 pb-4 text-center text-[11px] text-slate-500 min-[340px]:text-xs sm:text-sm">Independent. Prices copied from official pricing pages.</p>
+<p class="relative mt-16 px-5 pb-4 text-center text-[11px] text-slate-500 min-[340px]:text-xs sm:text-sm">Independent. Prices copied from official pricing pages.</p>
 <footer class="relative border-t border-slate-800/80">
  <p class="px-5 py-6 text-center text-sm text-slate-400">&copy; {YEAR} AI Stack Prices</p>
 </footer>
@@ -156,7 +156,7 @@ def link_of(d):
 
 def hero(checked, h1, h1_size, lede):
     return f"""
-<section class="pt-16 pb-10 text-center sm:pt-24">
+<section class="pt-8 pb-10 text-center sm:pt-14">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {checked}</p>
@@ -173,7 +173,7 @@ def faq_block(faq):
     schema = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in faq]}
     return f"""
-<section aria-labelledby="faq-h" class="mx-auto mt-24 max-w-3xl">
+<section aria-labelledby="faq-h" class="mx-auto mt-16 max-w-3xl">
  <h2 id="faq-h" class="{H2}">Questions people ask</h2>
  <div class="mt-8 space-y-3">{items}</div>
 </section>""", schema
@@ -258,7 +258,7 @@ def credits_page(d):
  <p class="mt-6 text-xs text-slate-500">{e(d["calc_note"])}</p>
 </section>
 
-<section aria-labelledby="plans-h" class="mt-24">
+<section aria-labelledby="plans-h" class="mt-16">
  <h2 id="plans-h" class="{H2}">All {tool} plans</h2>
  <p class="mt-3 text-center text-slate-400">{hint}</p>
  <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
@@ -331,7 +331,7 @@ def usage_page(d):
  </div>
 </section>
 
-<section aria-labelledby="plans-h" class="mt-24">
+<section aria-labelledby="plans-h" class="mt-16">
  <h2 id="plans-h" class="{H2}">{tool} plans</h2>
  <div class="mx-auto mt-10 flex {"max-w-4xl" if n < 4 else ""} flex-wrap justify-center gap-5 {widths}">{cards}</div>
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
@@ -417,7 +417,7 @@ def home_page(tools):
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
                        f'{e(tools[k]["tool"])} pricing<span class="text-slate-500">{e(start_price(tools[k]))}</span></a></li>' for k in keys)
         a, b = tools[keys[0]]["tool"], tools[keys[1]]["tool"]
-        cards += f"""<article id="{cid}" class="scroll-mt-24 {PANEL} flex flex-col p-6 transition-colors hover:border-indigo-500/50">
+        cards += f"""<article id="{cid}" class="scroll-mt-16 {PANEL} flex flex-col p-6 transition-colors hover:border-indigo-500/50">
  <h3 class="text-lg font-semibold text-white">{e(title)}</h3>
  <p class="mt-2 text-sm text-slate-400">{e(blurb)}</p>
  <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
@@ -432,7 +432,7 @@ def home_page(tools):
     tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(tools[k]["tool"])}</button>'
                    for i, k in enumerate(widget))
     body = f"""
-<section class="pt-16 pb-12 text-center sm:pt-24">
+<section class="pt-8 pb-10 text-center sm:pt-14">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
@@ -441,7 +441,7 @@ def home_page(tools):
  <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
 </section>
 
-<section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-24 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+<section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
  <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
@@ -461,7 +461,7 @@ def home_page(tools):
  <p class="mt-6 text-xs text-slate-500"><span id="w-note"></span> Each tool counts usage its own way, so a credit on one is not a credit on another. <a id="w-link" class="{LINK}" href="#">See the full breakdown</a>.</p>
 </section>
 
-<section aria-labelledby="cat-h" class="mt-24">
+<section aria-labelledby="cat-h" class="mt-16">
  <h2 id="cat-h" class="{H2}">Pick a category</h2>
  <div class="mt-10 grid gap-5 md:grid-cols-3">{cards}</div>
 </section>
@@ -509,7 +509,7 @@ def widget_data(d):
 def about_page(tools):
     rows = "".join(f'<li><a class="{LINK}" href="{e(d["source_url"])}">{e(d["tool"])}</a>, checked {fmt_date(d["checked"])}</li>' for d in tools.values())
     body = f"""
-<section class="mx-auto max-w-3xl pt-16 sm:pt-24">
+<section class="mx-auto max-w-3xl pt-8 sm:pt-14">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
   <p>AI Stack Prices shows what AI app builders and voice-agent platforms really cost, so you can compare them before you sign up.</p>
