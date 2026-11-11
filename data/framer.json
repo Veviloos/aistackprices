@@ -1,0 +1,196 @@
+{
+  "kind": "credits",
+  "tool": "Framer",
+  "slug": "framer-pricing",
+  "source_url": "https://www.framer.com/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "unit_label": "AI credits",
+  "lede": "Every Framer plan, what each AI credit tier costs, and the cheapest plan for how much you use Framer AI.",
+  "calc_label": "Framer AI credits you need each month",
+  "calc_note": "The calculator uses Framer's credit options: Basic with 1,000 or 2,000 credits, then Pro from 3,000 to 100,000. From 3,000 to 15,000 credits, Basic and Pro cost the same on Framer's page, and Pro includes more, so the calculator picks Pro. Agents and other AI features use credits.",
+  "yearly_label": "Yearly",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "AI credits",
+          "500/mo"
+        ],
+        [
+          "Bandwidth",
+          "1 GB"
+        ]
+      ],
+      "features": [
+        "Free Framer domain",
+        "Design pages",
+        "MCP server"
+      ]
+    },
+    {
+      "name": "Basic",
+      "monthly": 15,
+      "annual_per_month": 10,
+      "rows": [
+        [
+          "AI credits",
+          "1,000/mo, up to 15,000"
+        ],
+        [
+          "Bandwidth",
+          "50 GB"
+        ],
+        [
+          "Site pages",
+          "30"
+        ]
+      ],
+      "features": [
+        "Free custom domain",
+        "2× credits first month",
+        "2 CMS collections",
+        "Built-in SEO",
+        "Localization (add-on)"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 45,
+      "annual_per_month": 30,
+      "rows": [
+        [
+          "AI credits",
+          "3,000/mo, up to 100,000"
+        ],
+        [
+          "Bandwidth",
+          "100 GB"
+        ],
+        [
+          "Site pages",
+          "150"
+        ]
+      ],
+      "features": [
+        "Free custom domain",
+        "2× credits first month",
+        "10 CMS collections",
+        "Site redirects",
+        "Staging environment",
+        "Branching with previews"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "contact sales",
+      "rows": [
+        [
+          "AI credits",
+          "Volume discounts"
+        ],
+        [
+          "Editors",
+          "Unlimited"
+        ]
+      ],
+      "features": [
+        "Custom limits",
+        "Enterprise-grade security",
+        "Uptime guarantee",
+        "SCIM",
+        "SSO"
+      ],
+      "cta": "Request a trial"
+    }
+  ],
+  "tiers_title": "Framer AI credit tiers",
+  "tiers": [
+    {
+      "name": "Basic, 1,000 credits",
+      "monthly": 15,
+      "annual_per_month": 10,
+      "credits": 1000
+    },
+    {
+      "name": "Basic, 2,000 credits",
+      "monthly": 30,
+      "annual_per_month": 20,
+      "credits": 2000
+    },
+    {
+      "name": "Pro, 3,000 credits",
+      "monthly": 45,
+      "annual_per_month": 30,
+      "credits": 3000
+    },
+    {
+      "name": "Pro, 5,000 credits",
+      "monthly": 75,
+      "annual_per_month": 50,
+      "credits": 5000
+    },
+    {
+      "name": "Pro, 10,000 credits",
+      "monthly": 150,
+      "annual_per_month": 100,
+      "credits": 10000
+    },
+    {
+      "name": "Pro, 20,000 credits",
+      "monthly": 300,
+      "annual_per_month": 200,
+      "credits": 20000
+    },
+    {
+      "name": "Pro, 30,000 credits",
+      "monthly": 450,
+      "annual_per_month": 300,
+      "credits": 30000
+    },
+    {
+      "name": "Pro, 50,000 credits",
+      "monthly": 750,
+      "annual_per_month": 500,
+      "credits": 50000
+    },
+    {
+      "name": "Pro, 100,000 credits",
+      "monthly": 1500,
+      "annual_per_month": 1000,
+      "credits": 100000
+    }
+  ],
+  "after_plans": "Prices on the cards are for the smallest credit option of each plan, in US dollars, plus tax. Basic also comes with 3,000 to 15,000 credits at the same price as Pro. Additional editors are $30/month, or $20/month billed yearly, and viewers are free. Framer includes a complimentary domain on yearly billing.",
+  "compare": {
+    "Free plan": "Free: Framer domain, 500 AI credits, 1 GB bandwidth",
+    "Cheapest paid plan": "Basic: $15/month, or $10/month billed yearly, with 1,000 AI credits",
+    "Largest public plan": "Pro with 100,000 credits: $1,500/month, or $1,000/month billed yearly",
+    "What changes the price": "AI credits per month",
+    "Yearly billing": "Lower price and a complimentary domain",
+    "Extra team members": "Editors $30/month, or $20/month billed yearly; viewers free",
+    "Custom domain": "On paid plans"
+  },
+  "faq": [
+    [
+      "How much does Framer cost?",
+      "Framer Basic costs $15/month, or $10/month billed yearly, with 1,000 AI credits. Pro costs $45/month, or $30/month billed yearly, with 3,000 credits, and goes up to $1,500/month ($1,000/month yearly) for 100,000 credits. Enterprise is custom."
+    ],
+    [
+      "Is Framer free?",
+      "Yes. The Free plan includes 500 AI credits a month, a free Framer domain and 1 GB of bandwidth. Framer describes it as ideal for non-commercial use. A custom domain needs a paid plan."
+    ],
+    [
+      "What are Framer credits?",
+      "Framer says every paid plan includes monthly credits that power Agents, Localization and other AI features. Credits are shared across the workspace and its editors."
+    ],
+    [
+      "Basic or Pro?",
+      "At 3,000 to 15,000 credits a month, Basic and Pro cost the same. Pro adds more pages, CMS collections and bandwidth, plus site redirects, staging and branching."
+    ]
+  ]
+}

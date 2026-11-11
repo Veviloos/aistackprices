@@ -1,0 +1,214 @@
+{
+  "kind": "credits",
+  "tool": "Webflow",
+  "slug": "webflow-pricing",
+  "source_url": "https://webflow.com/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "unit_label": "Bandwidth (GB)",
+  "lede": "Every Webflow Site plan, what each bandwidth tier costs, and the cheapest plan for your traffic.",
+  "calc_label": "Bandwidth your site uses each month (GB)",
+  "calc_note": "The calculator uses Webflow Site plans: Basic with 10 GB, and Premium from 50 GB up to 2.5 TB of monthly bandwidth. 1 TB is counted as 1,000 GB. The free Starter plan has 1 GB but no custom domain. Workspace plans for teams are billed separately.",
+  "yearly_label": "Yearly, save up to 40%",
+  "plans": [
+    {
+      "name": "Starter",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "Static pages",
+          "2"
+        ],
+        [
+          "Bandwidth",
+          "1 GB"
+        ]
+      ],
+      "features": [
+        "Webflow.io domain",
+        "Limited Webflow CMS",
+        "50 form submissions",
+        "Webflow AI",
+        "MCP server"
+      ]
+    },
+    {
+      "name": "Basic",
+      "monthly": 25,
+      "annual_per_month": 15,
+      "rows": [
+        [
+          "Static pages",
+          "300"
+        ],
+        [
+          "Bandwidth",
+          "10 GB"
+        ]
+      ],
+      "features": [
+        "Custom domain",
+        "Unlimited form submissions",
+        "Password protection",
+        "Webflow AI",
+        "MCP server",
+        "Webflow Cloud app hosting"
+      ]
+    },
+    {
+      "name": "Premium",
+      "monthly": 39,
+      "annual_per_month": 25,
+      "rows": [
+        [
+          "CMS",
+          "Webflow CMS"
+        ],
+        [
+          "Bandwidth",
+          "50 GB, up to 2.5 TB"
+        ]
+      ],
+      "features": [
+        "Everything in Basic",
+        "Code components",
+        "Site search",
+        "Form file upload",
+        "Well-known files"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "contact sales",
+      "rows": [
+        [
+          "Scale",
+          "Enterprise-ready"
+        ],
+        [
+          "Support",
+          "Dedicated account manager"
+        ]
+      ],
+      "features": [
+        "Granular permissions",
+        "Custom roles",
+        "Advanced governance",
+        "Secure integrations",
+        "Enhanced SLAs"
+      ],
+      "cta": "Talk to sales"
+    }
+  ],
+  "tiers_title": "Webflow bandwidth tiers",
+  "tiers": [
+    {
+      "name": "Basic, 10 GB",
+      "monthly": 25,
+      "annual_per_month": 15,
+      "credits": 10
+    },
+    {
+      "name": "Premium, 50 GB",
+      "monthly": 39,
+      "annual_per_month": 25,
+      "credits": 50
+    },
+    {
+      "name": "Premium, 100 GB",
+      "monthly": 69,
+      "annual_per_month": 45,
+      "credits": 100
+    },
+    {
+      "name": "Premium, 150 GB",
+      "monthly": 99,
+      "annual_per_month": 65,
+      "credits": 150
+    },
+    {
+      "name": "Premium, 200 GB",
+      "monthly": 129,
+      "annual_per_month": 85,
+      "credits": 200
+    },
+    {
+      "name": "Premium, 300 GB",
+      "monthly": 189,
+      "annual_per_month": 125,
+      "credits": 300
+    },
+    {
+      "name": "Premium, 400 GB",
+      "monthly": 249,
+      "annual_per_month": 165,
+      "credits": 400
+    },
+    {
+      "name": "Premium, 500 GB",
+      "monthly": 299,
+      "annual_per_month": 199,
+      "credits": 500
+    },
+    {
+      "name": "Premium, 750 GB",
+      "monthly": 449,
+      "annual_per_month": 299,
+      "credits": 750
+    },
+    {
+      "name": "Premium, 1 TB",
+      "monthly": 599,
+      "annual_per_month": 399,
+      "credits": 1000
+    },
+    {
+      "name": "Premium, 1.5 TB",
+      "monthly": 899,
+      "annual_per_month": 599,
+      "credits": 1500
+    },
+    {
+      "name": "Premium, 2 TB",
+      "monthly": 1199,
+      "annual_per_month": 799,
+      "credits": 2000
+    },
+    {
+      "name": "Premium, 2.5 TB",
+      "monthly": 1499,
+      "annual_per_month": 999,
+      "credits": 2500
+    }
+  ],
+  "after_plans": "Prices are per site, in US dollars, plus tax. Premium on the card is for 50 GB of bandwidth; more bandwidth raises the price, as in the table. The Team platform plan is $2,500/month with an annual contract. Ecommerce plans start at $29/month billed yearly. Workspace plans for teams (Core $19, Growth $49) and extra seats (Full $39, Limited $15) are billed separately, prices per month billed yearly.",
+  "compare": {
+    "Free plan": "Starter: webflow.io domain, 2 static pages, 1 GB bandwidth",
+    "Cheapest paid plan": "Basic: $25/month, or $15/month billed yearly",
+    "Largest public plan": "Premium with 2.5 TB: $1,499/month, or $999/month billed yearly",
+    "What changes the price": "Monthly bandwidth on Premium",
+    "Yearly billing": "Save up to 40%",
+    "Extra team members": "Full seat $39/month, Limited seat $15/month, billed yearly",
+    "Custom domain": "On paid Site plans"
+  },
+  "faq": [
+    [
+      "How much does Webflow cost?",
+      "Webflow Basic costs $25/month, or $15/month billed yearly. Premium starts at $39/month, or $25/month billed yearly, for 50 GB of bandwidth, and goes up to $1,499/month ($999/month yearly) for 2.5 TB. Enterprise is custom."
+    ],
+    [
+      "Is Webflow free?",
+      "Yes. The Starter plan is free, with a webflow.io domain, 2 static pages, 1 GB of bandwidth and 50 form submissions. A custom domain needs a paid Site plan."
+    ],
+    [
+      "What is the difference between a Site plan and a Workspace plan?",
+      "Webflow says Site plans give you the tools to publish and host a site, while Workspace plans add staging and collaboration for teams. Every account gets a free Workspace plan."
+    ],
+    [
+      "Basic or Premium?",
+      "Basic is for simple sites without a CMS and includes 10 GB of bandwidth. Premium adds the Webflow CMS, code components and site search, with 50 GB of bandwidth or more."
+    ]
+  ]
+}

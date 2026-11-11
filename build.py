@@ -79,8 +79,8 @@ def page(title, desc, path, body, schema=None):
  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
   <a href="/" class="flex shrink-0 items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
    <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
-  <nav aria-label="Main" class="hidden items-center gap-6 text-sm text-slate-400 md:flex">{NAV}</nav>
-  <details class="relative md:hidden">
+  <nav aria-label="Main" class="hidden items-center gap-6 text-sm whitespace-nowrap text-slate-400 lg:flex">{NAV}</nav>
+  <details class="relative lg:hidden">
    <summary aria-label="Menu" class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-slate-700 text-slate-200 hover:border-slate-500 focus-visible:outline-2 focus-visible:outline-indigo-400 [&::-webkit-details-marker]:hidden">
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg></summary>
    <nav aria-label="Main" class="absolute right-0 mt-2 flex w-56 flex-col rounded-xl border border-slate-800 bg-slate-950 p-2 text-sm text-slate-300 shadow-2xl shadow-black/60 [&>a]:rounded-lg [&>a]:px-3 [&>a]:py-2.5 [&>a:hover]:bg-slate-800/70" onclick="if(event.target.closest('a'))this.parentElement.open=false">{NAV}</nav>
@@ -420,12 +420,14 @@ def compare_page(c, a, b):
 CATEGORIES = [
     ("app-builders", "AI app builders", "Build apps by describing them. Compare plans, credits and what a month of building really costs.",
      ["base44", "lovable"], "base44-vs-lovable"),
+    ("website-builders", "Website builders", "Design and host websites without code. Compare plans, bandwidth and AI credits, and what your site will cost.",
+     ["webflow", "framer"], "webflow-vs-framer"),
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
      ["retell", "vapi"], "vapi-vs-retell-ai"),
     ("automation", "Automation", "Workflow automation billed by runs or credits. See what your monthly volume costs, in each vendor's own currency.",
      ["n8n", "make"], "n8n-vs-make"),
 ]
-HOME_TOOLS = ("base44", "lovable", "retell", "vapi", "n8n", "make")
+HOME_TOOLS = ("base44", "lovable", "webflow", "framer", "retell", "vapi", "n8n", "make")
 
 
 def home_page(tools):
@@ -453,13 +455,13 @@ def home_page(tools):
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, voice agents and automation tools. See what you would really pay before you pick a tool.</p>
- <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-3">{jump}</div>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents and automation tools. See what you would really pay before you pick a tool.</p>
+ <div class="mx-auto mt-8 grid max-w-md grid-cols-2 gap-3 sm:max-w-none sm:w-fit sm:grid-cols-4">{jump}</div>
 </section>
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
- <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-3">{tabs}</div>
+ <div role="group" aria-label="Tool" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div>
    <div class="flex items-baseline justify-between gap-3">
@@ -479,7 +481,7 @@ def home_page(tools):
 
 <section aria-labelledby="cat-h" class="mt-16">
  <h2 id="cat-h" class="{H2}">Pick a category</h2>
- <div class="mt-10 grid gap-5 lg:grid-cols-3">{cards}</div>
+ <div class="mt-10 grid gap-5 md:grid-cols-2">{cards}</div>
 </section>
 
 <section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
@@ -499,7 +501,7 @@ function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',
 T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};pick(cur);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
-                "Independent, dated pricing for AI app builders, voice agents and automation tools, with cost calculators. Copied from official pricing pages and checked daily.",
+                "Independent, dated pricing for AI app builders, website builders, voice agents and automation tools, with cost calculators. Copied from official pricing pages and checked daily.",
                 "/", body)
 
 
@@ -528,7 +530,7 @@ def about_page(tools):
 <section class="mx-auto max-w-3xl pt-12 sm:pt-20">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
-  <p>AI Stack Prices shows what AI app builders, voice-agent platforms and automation tools really cost, so you can compare them before you sign up.</p>
+  <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms and automation tools really cost, so you can compare them before you sign up.</p>
   <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
   <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site.</p>
   <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
@@ -601,7 +603,7 @@ def main():
     a_cls = "hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400 rounded"
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
-                    [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
+                    [("App Builders", "/#app-builders"), ("Website Builders", "/#website-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     pairs = json.loads((ROOT / "data" / "compare.json").read_text())
     for c in pairs:  # each tool page links to its comparison page
