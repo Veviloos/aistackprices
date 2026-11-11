@@ -4,7 +4,7 @@
   "slug": "vapi-pricing",
   "source_url": "https://vapi.ai/pricing",
   "checked": "2026-11-11",
-  "affiliate_url": "",
+  "affiliate_url": "https://vapi.ai/?aff=aistackprices",
   "lede": "What Vapi voice agents cost per minute with the default speech, AI and voice providers, plus the optional monthly packages.",
   "per_min_low": 0.0818,
   "per_min_high": 0.1289,
