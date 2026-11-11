@@ -4,8 +4,11 @@ Per width: no sideways scroll; no button, text, field or link sticking out of th
 its box; headings fit 1 line on computers (>=1024px) and 2 lines on phones/tablets, with no single
 word alone on the last line.
 """
+import functools
+import http.server
 import pathlib
 import sys
+import threading
 
 from playwright.sync_api import sync_playwright
 
@@ -48,17 +51,27 @@ def main():
     pages = sorted(DIST.rglob("*.html"))
     assert pages, "dist/ is empty: run build.py first"
     failures = 0
+    # Serve dist/ over HTTP so root-relative links like /site.css load as on the live site.
+    class Quiet(http.server.SimpleHTTPRequestHandler):
+        def log_message(self, *a):
+            pass
+    handler = functools.partial(Quiet, directory=str(DIST))
+    server = http.server.ThreadingHTTPServer(("127.0.0.1", 0), handler)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    base = f"http://127.0.0.1:{server.server_port}/"
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
         for width, label in WIDTHS.items():
             page = browser.new_page(viewport={"width": width, "height": 900})
             for f in pages:
-                page.goto(f.as_uri(), wait_until="networkidle")
+                page.goto(base + f.relative_to(DIST).as_posix(), wait_until="networkidle")
+                assert page.evaluate("[...document.styleSheets].some(s => { try { return s.cssRules.length > 0 } catch (e) { return false } })"), f"site stylesheet did not load on {f}"
                 for problem in page.evaluate(PROBE, 1 if width >= DESKTOP_FROM else 2):
                     failures += 1
                     print(f"FAIL {width}px ({label}) {f.relative_to(DIST)}: {problem}")
             page.close()
         browser.close()
+    server.shutdown()
     print(f"{len(pages)} page(s) x {len(WIDTHS)} widths: {failures} problem(s)")
     sys.exit(1 if failures else 0)
 

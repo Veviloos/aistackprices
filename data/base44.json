@@ -4,7 +4,10 @@
   "source_url": "https://base44.com/pricing",
   "checked": "2026-11-11",
   "affiliate_url": "",
-  "annual_only_features": ["Free domain for 1 year (Starter and up)", "25 credits to share with a friend (Builder and up)"],
+  "annual_only_features": [
+    "Free domain for 1 year (Starter and up)",
+    "25 credits to share with a friend (Builder and up)"
+  ],
   "plans": [
     {
       "name": "Free",
@@ -12,7 +15,11 @@
       "annual_per_month": 0,
       "message_credits": 25,
       "integration_credits": 100,
-      "features": ["Core Base44 features", "Up to 5 apps", "Authentication, database, analytics"]
+      "features": [
+        "Core Base44 features",
+        "Up to 5 apps",
+        "Authentication, database, analytics"
+      ]
     },
     {
       "name": "Starter",
@@ -20,7 +27,11 @@
       "annual_per_month": 16,
       "message_credits": 100,
       "integration_credits": 2000,
-      "features": ["Unlimited apps", "In-app code edits", "Connect a domain"]
+      "features": [
+        "Unlimited apps",
+        "In-app code edits",
+        "Connect a domain"
+      ]
     },
     {
       "name": "Builder",
@@ -28,7 +39,14 @@
       "annual_per_month": 40,
       "message_credits": 250,
       "integration_credits": 10000,
-      "features": ["Unlimited apps", "In-app code edits", "AI model select", "Connect a domain", "GitHub integration"]
+      "features": [
+        "Unlimited apps",
+        "In-app code edits",
+        "AI model select",
+        "Connect a domain",
+        "GitHub integration"
+      ],
+      "popular": true
     },
     {
       "name": "Pro",
@@ -36,7 +54,10 @@
       "annual_per_month": 80,
       "message_credits": 500,
       "integration_credits": 20000,
-      "features": ["Everything in Builder", "Early access to beta features"]
+      "features": [
+        "Everything in Builder",
+        "Early access to beta features"
+      ]
     },
     {
       "name": "Elite",
@@ -44,7 +65,10 @@
       "annual_per_month": 160,
       "message_credits": 1200,
       "integration_credits": 50000,
-      "features": ["Everything in Pro", "Premium support"]
+      "features": [
+        "Everything in Pro",
+        "Premium support"
+      ]
     }
   ]
 }

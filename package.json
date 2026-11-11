@@ -1,0 +1,5 @@
+{
+  "private": true,
+  "scripts": { "css": "tailwindcss -i styles/input.css -o static/site.css --minify" },
+  "devDependencies": { "@tailwindcss/cli": "4.3.5", "tailwindcss": "4.3.5" }
+}
