@@ -243,7 +243,7 @@ def credits_page(d):
     else:
         hint = "The plan that fits your usage gets a green outline as you move the calculator."
         tiers = ""
-    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d), compare_btn(d)) + f"""
+    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
 
 <section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <div class="flex flex-wrap items-center justify-between gap-4">
@@ -272,6 +272,7 @@ def credits_page(d):
  <p class="mt-3 text-center text-slate-400">{hint}</p>
  <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
+ <div class="text-center">{compare_btn(d)}</div>
 </section>
 {faq_html}
 {page_end([d], cta=False)}
@@ -316,7 +317,7 @@ def usage_page(d):
     cards = "".join(plan_card(p, link_of(d)) for p in d["plans"])
     calc = json.dumps({"lo": lo, "hi": hi, "typ": typ, "typLabel": d.get("typical_label", ""),
                        "fee": d["fees"][0][1] if d["fees"] else 0})
-    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d), compare_btn(d)) + f"""
+    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
 
 <section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <div class="flex flex-wrap items-center justify-between gap-4">
@@ -344,6 +345,7 @@ def usage_page(d):
  <h2 id="plans-h" class="{H2}">{tool} plans</h2>
  <div class="mx-auto mt-10 flex {"max-w-4xl" if n < 4 else ""} flex-wrap justify-center gap-5 {widths}">{cards}</div>
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
+ <div class="text-center">{compare_btn(d)}</div>
 </section>
 
 <section aria-labelledby="comp-h" class="mx-auto mt-16 max-w-4xl">
