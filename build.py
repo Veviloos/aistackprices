@@ -154,15 +154,24 @@ def link_of(d):
     return d["affiliate_url"] or d["source_url"]
 
 
-def hero(checked, h1, h1_size, lede):
+def hero(checked, h1, h1_size, lede, extra=""):
     return f"""
 <section class="pt-12 pb-10 text-center sm:pt-20">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {checked}</p>
  <h1 class="mx-auto mt-6 {H1} {h1_size}">{e(h1)}</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">{lede}</p>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">{lede}</p>{extra}
 </section>"""
+
+
+def compare_btn(d):
+    """Outline button from a tool page to its comparison page (set in main from data/compare.json)."""
+    if not d.get("compare_with"):
+        return ""
+    slug, other = d["compare_with"]
+    return (f'\n <a href="/{slug}/" class="mt-8 inline-block rounded-lg border border-slate-700 bg-slate-900/60 px-5 py-2.5 text-sm font-medium text-slate-200 '
+            f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">Compare {e(d["tool"])} vs {e(other)}</a>')
 
 
 def faq_block(faq):
@@ -234,7 +243,7 @@ def credits_page(d):
     else:
         hint = "The plan that fits your usage gets a green outline as you move the calculator."
         tiers = ""
-    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
+    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d), compare_btn(d)) + f"""
 
 <section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <div class="flex flex-wrap items-center justify-between gap-4">
@@ -307,7 +316,7 @@ def usage_page(d):
     cards = "".join(plan_card(p, link_of(d)) for p in d["plans"])
     calc = json.dumps({"lo": lo, "hi": hi, "typ": typ, "typLabel": d.get("typical_label", ""),
                        "fee": d["fees"][0][1] if d["fees"] else 0})
-    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
+    body = hero(checked, f"{d['tool']} pricing and real costs", "text-4xl sm:text-5xl lg:text-6xl", source_lede(d), compare_btn(d)) + f"""
 
 <section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <div class="flex flex-wrap items-center justify-between gap-4">
@@ -540,10 +549,14 @@ def main():
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
                     [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
+    pairs = json.loads((ROOT / "data" / "compare.json").read_text())
+    for c in pairs:  # each tool page links to its comparison page
+        tools[c["a"]]["compare_with"] = (c["slug"], tools[c["b"]]["tool"])
+        tools[c["b"]]["compare_with"] = (c["slug"], tools[c["a"]]["tool"])
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
     comps = []
-    for c in json.loads((ROOT / "data" / "compare.json").read_text()):
+    for c in pairs:
         a, b = tools[c["a"]], tools[c["b"]]
         comps.append((c, a, b))
         out[f"/{c['slug']}/"] = (compare_page(c, a, b), max(a["checked"], b["checked"]))
