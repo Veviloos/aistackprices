@@ -62,7 +62,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 
 def page(title, desc, path, body, schema=None):
-    NAV, FOOT_PRICING, FOOT_SITE, LATEST_SHORT = CHROME["nav"], CHROME["pricing"], CHROME["site"], CHROME["latest"]
+    NAV, LATEST_SHORT, YEAR = CHROME["nav"], CHROME["latest"], datetime.date.today().year
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
     return f"""<!doctype html>
 <html lang="en" class="bg-[#090A0F]"><head><meta charset="utf-8">
@@ -88,12 +88,7 @@ def page(title, desc, path, body, schema=None):
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
 <footer class="relative mt-24 border-t border-slate-800/80">
- <div class="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm text-slate-500 md:grid-cols-[2fr_1fr_1fr]">
-  <div><p class="flex items-center gap-2 font-semibold text-white"><img src="/mark.svg" alt="" width="20" height="20" class="h-5 w-5">AI Stack Prices</p>
-   <p class="mt-3 max-w-md">Independent and not affiliated with any company listed. Every price is copied from the vendor's official pricing page, with the date we checked it. Confirm on the vendor's site before you buy.</p></div>
-  <div><p class="font-medium text-slate-300">Pricing</p><ul class="mt-3 space-y-2">{FOOT_PRICING}</ul></div>
-  <div><p class="font-medium text-slate-300">Site</p><ul class="mt-3 space-y-2">{FOOT_SITE}</ul></div>
- </div>
+ <p class="px-5 py-8 text-center text-sm text-slate-500"><span class="text-slate-300">&copy; {YEAR} AI Stack Prices.</span> Independent. Prices copied from official pricing pages.</p>
 </footer>
 </body></html>"""
 
@@ -541,8 +536,6 @@ def main():
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
                     [("App Builders", "/#app-builders"), ("Voice Agents", "/#voice-agents"), ("Cost Calculators", "/#calculator"), ("About", "/about/")]),
-        pricing="".join(f'<li><a class="{a_cls}" href="/{d["slug"]}/">{e(d["tool"])} pricing</a></li>' for d in tools.values()),
-        site=f'<li><a class="{a_cls}" href="/about/">About</a></li><li><a class="{a_cls}" href="/sitemap.xml">Sitemap</a></li>',
         latest=datetime.date.fromisoformat(max(d["checked"] for d in tools.values())).strftime("%-d %b %Y"))
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
