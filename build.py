@@ -156,7 +156,7 @@ def link_of(d):
 
 def hero(checked, h1, h1_size, lede):
     return f"""
-<section class="pt-8 pb-10 text-center sm:pt-14">
+<section class="pt-12 pb-10 text-center sm:pt-20">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {checked}</p>
@@ -432,7 +432,7 @@ def home_page(tools):
     tabs = "".join(f'<button type="button" data-tool="{k}" aria-pressed="{str(i == 0).lower()}" class="{SEG}">{e(tools[k]["tool"])}</button>'
                    for i, k in enumerate(widget))
     body = f"""
-<section class="pt-8 pb-10 text-center sm:pt-14">
+<section class="pt-12 pb-10 text-center sm:pt-20">
  <p class="inline-flex items-center gap-2 rounded-full border border-slate-800 bg-slate-900/70 px-3.5 py-1 text-xs text-slate-300 backdrop-blur-md">
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
@@ -509,7 +509,7 @@ def widget_data(d):
 def about_page(tools):
     rows = "".join(f'<li><a class="{LINK}" href="{e(d["source_url"])}">{e(d["tool"])}</a>, checked {fmt_date(d["checked"])}</li>' for d in tools.values())
     body = f"""
-<section class="mx-auto max-w-3xl pt-8 sm:pt-14">
+<section class="mx-auto max-w-3xl pt-12 sm:pt-20">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
   <p>AI Stack Prices shows what AI app builders and voice-agent platforms really cost, so you can compare them before you sign up.</p>
