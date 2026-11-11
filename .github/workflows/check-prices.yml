@@ -1,0 +1,31 @@
+name: Check prices
+
+on:
+  schedule:
+    - cron: "17 6 * * *"  # daily 06:17 UTC; GitHub may run scheduled jobs late or skip them
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install playwright==1.63.0 && python -m playwright install --with-deps chromium
+      - run: python scripts/check_prices.py
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+      - name: Save new snapshots
+        run: |
+          git config user.name "price-check-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add snapshots
+          git diff --cached --quiet || (git commit -m "Update price snapshots" && git push)
