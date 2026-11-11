@@ -1,0 +1,162 @@
+{
+  "kind": "credits",
+  "tool": "Synthesia",
+  "slug": "synthesia-pricing",
+  "source_url": "https://www.synthesia.io/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "unit_label": "Credits",
+  "lede": "Every Synthesia plan, how many credits each one gives you, and the cheapest plan for the AI avatar videos you make.",
+  "calc_label": "Synthesia credits you use each month",
+  "calc_note": "The calculator uses Starter and the Pro credit tiers, counted per month: on yearly billing Synthesia gives the year's credits up front (for example 72,000 a year on Pro, which is 6,000 a month). The free Basic plan has 500 credits a month. A typical finished minute of video uses about 100 credits, more if the avatar is on screen throughout.",
+  "yearly_label": "Yearly, save up to 4 months",
+  "plans": [
+    {
+      "name": "Basic",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "Credits",
+          "500/mo"
+        ],
+        [
+          "Video",
+          "10 minutes/month"
+        ]
+      ],
+      "features": [
+        "Share your content online via share link",
+        "Pre-built libraries, templates, roleplays, surveys",
+        "Videos carry a Synthesia watermark"
+      ]
+    },
+    {
+      "name": "Starter",
+      "monthly": 19,
+      "annual_per_month": 14,
+      "rows": [
+        [
+          "Credits",
+          "1,250/mo, or 15,000/year"
+        ],
+        [
+          "Seats",
+          "1 editor, 3 guests"
+        ]
+      ],
+      "features": [
+        "Download your content",
+        "Remove Synthesia logo",
+        "AI Video Assistant",
+        "Survey Analytics",
+        "125+ Synthesia AI Avatars",
+        "Chat/email support"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 89,
+      "annual_per_month": 59,
+      "popular": true,
+      "rows": [
+        [
+          "Credits",
+          "6,000/mo, up to 48,000"
+        ],
+        [
+          "Seats",
+          "1 editor, 5 guests"
+        ]
+      ],
+      "features": [
+        "Everything in Starter",
+        "5 Personal Avatars",
+        "Branded video pages",
+        "Interactive videos",
+        "180+ Synthesia AI Avatars",
+        "Priority chat/email support"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "custom credit volumes",
+      "features": [
+        "Unlimited video minutes",
+        "1-Click Translations into 140+ languages",
+        "240+ stock AI Avatars",
+        "Unlimited Personal Avatars",
+        "SAML/SSO",
+        "SCORM export"
+      ],
+      "cta": "Book demo"
+    }
+  ],
+  "tiers_title": "Synthesia credit tiers",
+  "tiers": [
+    {
+      "name": "Starter, 1,250 credits",
+      "monthly": 19,
+      "annual_per_month": 14,
+      "credits": 1250
+    },
+    {
+      "name": "Pro, 6,000 credits",
+      "monthly": 89,
+      "annual_per_month": 59,
+      "credits": 6000
+    },
+    {
+      "name": "Pro, 12,000 credits",
+      "monthly": 176,
+      "annual_per_month": 117,
+      "credits": 12000
+    },
+    {
+      "name": "Pro, 24,000 credits",
+      "monthly": 347,
+      "annual_per_month": 230,
+      "credits": 24000
+    },
+    {
+      "name": "Pro, 36,000 credits",
+      "monthly": 514,
+      "annual_per_month": 341,
+      "credits": 36000
+    },
+    {
+      "name": "Pro, 48,000 credits",
+      "monthly": 676,
+      "annual_per_month": 448,
+      "credits": 48000
+    }
+  ],
+  "after_plans": "Pro on the card is for 6,000 credits a month (72,000 a year on yearly billing); more credits raise the price, as in the table. On monthly billing the first month is $9 on Starter and $49 on Pro with 6,000 credits. Studio Avatars are a paid add-on at $1,000/year.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits: a typical finished minute of video uses about 100",
+    "Free option": "Basic: 500 credits and 10 minutes of video a month, with a watermark",
+    "Cheapest paid plan": "Starter: $19/month, or $14/month billed yearly",
+    "Most on a public plan": "Pro with 48,000 credits a month: $676/month, or $448/month billed yearly",
+    "Yearly billing": "Save up to 4 months"
+  },
+  "faq": [
+    [
+      "How much does Synthesia cost?",
+      "Basic is free. Starter costs $19/month, or $14/month billed yearly ($168/year). Pro starts at $89/month, or $59/month billed yearly ($708/year), for 6,000 credits a month and goes up to $676/month ($448/month yearly) for 48,000. Enterprise is custom."
+    ],
+    [
+      "Is Synthesia free?",
+      "Yes. The Basic plan is $0 with 500 credits and 10 minutes of video a month. Videos carry a Synthesia watermark."
+    ],
+    [
+      "How many credits does a minute of video use?",
+      "Synthesia counts the avatar footage generated, not the length of the finished video. A typical finished minute uses about 100 credits, more if the avatar is on screen throughout. Dubbing uses 80 credits per minute with lip-sync and 40 without."
+    ],
+    [
+      "Is there a first-month discount?",
+      "On monthly billing, Starter's first month is $9 (then $19/month) and Pro's first month is $49 (then $89/month) at 6,000 credits a month."
+    ]
+  ]
+}

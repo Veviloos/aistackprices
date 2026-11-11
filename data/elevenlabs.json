@@ -1,0 +1,166 @@
+{
+  "kind": "credits",
+  "tool": "ElevenLabs",
+  "slug": "elevenlabs-pricing",
+  "source_url": "https://elevenlabs.io/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "unit_label": "Call Minutes",
+  "lede": "Every ElevenLabs voice agent (ElevenAgents) plan, how many call minutes each one includes, and the cheapest plan for your call volume.",
+  "calc_label": "Call minutes you need each month",
+  "calc_note": "The calculator uses ElevenAgents plans and the call minutes each one includes. Extra minutes cost $0.08 each on every plan, so a smaller plan plus extra minutes can cost less than the next plan up. LLM usage is billed on top, based on the model you choose, and your own telephony provider bills you separately. Enterprise is custom.",
+  "yearly_label": "Yearly, 2 months free",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "credits": 15,
+      "rows": [
+        [
+          "Call minutes",
+          "15/mo"
+        ],
+        [
+          "Concurrent calls",
+          "4"
+        ]
+      ],
+      "features": [
+        "Realtime Configs",
+        "Workflow Builder",
+        "Knowledge Base",
+        "Multilingual",
+        "Widget"
+      ]
+    },
+    {
+      "name": "Starter",
+      "monthly": 6,
+      "annual_per_month": 5,
+      "credits": 75,
+      "rows": [
+        [
+          "Call minutes",
+          "75/mo"
+        ],
+        [
+          "Concurrent calls",
+          "6"
+        ]
+      ],
+      "features": [
+        "Everything in Free",
+        "Text messages",
+        "Commercial License"
+      ]
+    },
+    {
+      "name": "Creator",
+      "monthly": 22,
+      "annual_per_month": 18.33,
+      "credits": 275,
+      "popular": true,
+      "rows": [
+        [
+          "Call minutes",
+          "275/mo"
+        ],
+        [
+          "Concurrent calls",
+          "10"
+        ]
+      ],
+      "features": [
+        "Everything in Starter",
+        "Additional minutes"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 99,
+      "annual_per_month": 82.5,
+      "credits": 1238,
+      "rows": [
+        [
+          "Call minutes",
+          "1,238/mo"
+        ],
+        [
+          "Concurrent calls",
+          "20"
+        ]
+      ],
+      "features": [
+        "Everything in Creator"
+      ]
+    },
+    {
+      "name": "Scale",
+      "monthly": 299,
+      "annual_per_month": 249.17,
+      "credits": 3738,
+      "rows": [
+        [
+          "Call minutes",
+          "3,738/mo"
+        ],
+        [
+          "Concurrent calls",
+          "30"
+        ]
+      ],
+      "features": [
+        "Everything in Pro",
+        "3 workspace seats"
+      ]
+    },
+    {
+      "name": "Business",
+      "monthly": 990,
+      "annual_per_month": 825,
+      "credits": 12375,
+      "rows": [
+        [
+          "Call minutes",
+          "12,375/mo"
+        ],
+        [
+          "Concurrent calls",
+          "40"
+        ]
+      ],
+      "features": [
+        "Everything in Scale",
+        "10 workspace seats",
+        "10 Professional Voice Clones"
+      ]
+    }
+  ],
+  "after_plans": "Prices exclude taxes. On monthly billing, Starter's first month is $1 and Creator's first month is $11. Extra call minutes cost $0.08 each on every plan, burst calls above your concurrency limit $0.16 a minute, and text messages $0.003 each. Enterprise has custom pricing, with elevated concurrency, custom SSO and BAAs for HIPAA customers.",
+  "compare": {
+    "Pricing model": "Monthly plans with included call minutes",
+    "Price per minute": "$0.08 for each minute above your plan, LLM billed separately",
+    "Free credits": "Free plan: 15 call minutes a month",
+    "Monthly platform fee": "$0 to $990, or custom on Enterprise",
+    "Concurrent calls included": "4 on Free, up to 40 on Business"
+  },
+  "faq": [
+    [
+      "How much does ElevenLabs cost for voice agents?",
+      "ElevenAgents plans: Free is $0 with 15 call minutes a month. Starter is $6/month ($5/month billed yearly) for 75 minutes, Creator $22/month ($18.33 yearly) for 275, Pro $99/month ($82.50 yearly) for 1,238, Scale $299/month ($249.17 yearly) for 3,738 and Business $990/month ($825 yearly) for 12,375. Enterprise is custom."
+    ],
+    [
+      "What do extra call minutes cost?",
+      "Additional call minutes cost $0.08 per minute on every plan. Burst pricing, when you go over your concurrency limit, is $0.16 per minute, and text messages cost $0.003 each."
+    ],
+    [
+      "Is the AI model (LLM) included?",
+      "No. LLM usage is billed on top, based on the model you choose. ElevenLabs shows the fee in its platform and deducts it from your ElevenLabs credits."
+    ],
+    [
+      "Does ElevenLabs charge extra for telephony?",
+      "No. ElevenLabs adds no telephony fee. If you connect your own provider, such as Twilio or a SIP trunk, that provider bills you directly for its own charges."
+    ]
+  ]
+}

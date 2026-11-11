@@ -1,0 +1,228 @@
+{
+  "kind": "credits",
+  "tool": "Zapier",
+  "slug": "zapier-pricing",
+  "source_url": "https://zapier.com/pricing",
+  "checked": "2026-11-11",
+  "affiliate_url": "",
+  "unit_label": "Tasks",
+  "lede": "Every Zapier plan, what each task tier costs, and the cheapest way to get the tasks you need.",
+  "calc_label": "Zapier tasks you use each month",
+  "calc_note": "The calculator uses Professional plan task tiers, from 750 to 2,000,000 tasks a month. The Free plan covers up to 100 tasks a month. Team costs more for the same tasks and adds up to 25 users. Some actions use more than one task, so treat this as an estimate. Above 2,000,000 tasks, Zapier sets custom limits through sales.",
+  "yearly_label": "Yearly, save 33%",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "Tasks",
+          "100/mo"
+        ],
+        [
+          "Users",
+          "1"
+        ]
+      ],
+      "features": [
+        "Zapier automation platform",
+        "Unlimited Zaps, Tables and Forms",
+        "Two-step Zaps",
+        "Zapier Copilot"
+      ]
+    },
+    {
+      "name": "Professional",
+      "monthly": 29.99,
+      "annual_per_month": 19.99,
+      "rows": [
+        [
+          "Tasks",
+          "750/mo, up to 2,000,000"
+        ],
+        [
+          "Users",
+          "1"
+        ]
+      ],
+      "features": [
+        "Multi-step Zaps",
+        "Unlimited premium apps",
+        "Webhooks",
+        "Email and live chat support",
+        "AI fields",
+        "Conditional form logic"
+      ]
+    },
+    {
+      "name": "Team",
+      "monthly": 103.5,
+      "annual_per_month": 69,
+      "rows": [
+        [
+          "Tasks",
+          "2,000/mo, up to 2,000,000"
+        ],
+        [
+          "Users",
+          "25"
+        ]
+      ],
+      "features": [
+        "Shared Zaps and folders",
+        "Shared app connections",
+        "SAML SSO",
+        "Priority support"
+      ]
+    },
+    {
+      "name": "Enterprise",
+      "price": "Custom",
+      "price_note": "contact sales",
+      "features": [
+        "Unlimited users",
+        "Advanced admin permissions and app controls",
+        "Advanced deployment options",
+        "Annual task limits",
+        "Observability",
+        "Technical Account Manager",
+        "Priority support with screen sharing"
+      ],
+      "cta": "Contact sales"
+    }
+  ],
+  "tiers_title": "Professional task tiers",
+  "tiers": [
+    {
+      "name": "Professional, 750 tasks",
+      "monthly": 29.99,
+      "annual_per_month": 19.99,
+      "credits": 750
+    },
+    {
+      "name": "Professional, 1,500 tasks",
+      "monthly": 58.5,
+      "annual_per_month": 39,
+      "credits": 1500
+    },
+    {
+      "name": "Professional, 2,000 tasks",
+      "monthly": 73.5,
+      "annual_per_month": 49,
+      "credits": 2000
+    },
+    {
+      "name": "Professional, 5,000 tasks",
+      "monthly": 133.5,
+      "annual_per_month": 89,
+      "credits": 5000
+    },
+    {
+      "name": "Professional, 10,000 tasks",
+      "monthly": 193.5,
+      "annual_per_month": 129,
+      "credits": 10000
+    },
+    {
+      "name": "Professional, 20,000 tasks",
+      "monthly": 283.5,
+      "annual_per_month": 189,
+      "credits": 20000
+    },
+    {
+      "name": "Professional, 50,000 tasks",
+      "monthly": 433.5,
+      "annual_per_month": 289,
+      "credits": 50000
+    },
+    {
+      "name": "Professional, 100,000 tasks",
+      "monthly": 733.5,
+      "annual_per_month": 489,
+      "credits": 100000
+    },
+    {
+      "name": "Professional, 200,000 tasks",
+      "monthly": 1149,
+      "annual_per_month": 769,
+      "credits": 200000
+    },
+    {
+      "name": "Professional, 300,000 tasks",
+      "monthly": 1599,
+      "annual_per_month": 1069,
+      "credits": 300000
+    },
+    {
+      "name": "Professional, 400,000 tasks",
+      "monthly": 1899,
+      "annual_per_month": 1269,
+      "credits": 400000
+    },
+    {
+      "name": "Professional, 500,000 tasks",
+      "monthly": 2199,
+      "annual_per_month": 1499,
+      "credits": 500000
+    },
+    {
+      "name": "Professional, 750,000 tasks",
+      "monthly": 2999,
+      "annual_per_month": 1999,
+      "credits": 750000
+    },
+    {
+      "name": "Professional, 1,000,000 tasks",
+      "monthly": 3299,
+      "annual_per_month": 2199,
+      "credits": 1000000
+    },
+    {
+      "name": "Professional, 1,500,000 tasks",
+      "monthly": 4499,
+      "annual_per_month": 2999,
+      "credits": 1500000
+    },
+    {
+      "name": "Professional, 1,750,000 tasks",
+      "monthly": 4799,
+      "annual_per_month": 3199,
+      "credits": 1750000
+    },
+    {
+      "name": "Professional, 2,000,000 tasks",
+      "monthly": 5099,
+      "annual_per_month": 3389,
+      "credits": 2000000
+    }
+  ],
+  "after_plans": "Professional and Team prices on the cards are for the smallest task tier: 750 tasks on Professional and 2,000 on Team. Team goes up to $5,999/month, or $3,999/month billed yearly, at 2,000,000 tasks. If you reach your task limit you can switch on pay-per-task billing, at a higher rate per task. Non-profits get 15% off any paid plan.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Tasks: each action a Zap completes uses a task, some actions use more",
+    "Free option": "Free plan: 100 tasks a month, two-step Zaps",
+    "Cheapest paid plan": "Professional: $29.99/month, or $19.99/month billed yearly, for 750 tasks",
+    "Most on a public plan": "2,000,000 tasks: Professional $5,099/month, or $3,389/month billed yearly",
+    "Yearly billing": "Save 33%",
+    "Self-hosted plan": "Not listed on Zapier's pricing page"
+  },
+  "faq": [
+    [
+      "How much does Zapier cost?",
+      "Zapier Free is $0 for 100 tasks a month. Professional starts at $29.99/month ($19.99/month billed yearly) for 750 tasks and goes up to $5,099/month ($3,389/month yearly) for 2,000,000 tasks. Team starts at $103.50/month ($69/month yearly) for 2,000 tasks. Enterprise is priced by sales."
+    ],
+    [
+      "Is Zapier free?",
+      "Yes. The Free plan includes Zaps, Tables and Forms with 100 tasks a month and two-step Zaps. New accounts also get a free 14-day trial of Professional, with no credit card."
+    ],
+    [
+      "What is a Zapier task?",
+      "A task is used each time a Zap successfully moves data or completes an action, for example creating one contact. Some apps or actions use more than one task. Actions that fail do not count."
+    ],
+    [
+      "What happens if I hit my task limit?",
+      "Zapier emails you when you are close to the limit and when you reach it. With pay-per-task billing switched on, your Zaps keep running at a higher rate per task. With it off, your Zaps pause until your next usage period."
+    ]
+  ]
+}
