@@ -8,7 +8,17 @@
   "unit_label": "Call Minutes",
   "lede": "Every ElevenLabs voice agent (ElevenAgents) plan, how many call minutes each one includes, and the cheapest plan for your call volume.",
   "calc_label": "Call minutes you need each month",
-  "calc_note": "The calculator uses ElevenAgents plans and the call minutes each one includes. Extra minutes cost $0.08 each on every plan, so a smaller plan plus extra minutes can cost less than the next plan up. LLM usage is billed on top, based on the model you choose, and your own telephony provider bills you separately. Enterprise is custom.",
+  "calc_note": "The calculator compares every ElevenAgents plan: on Creator and higher plans, which include additional minutes, it adds $0.08 for each call minute above the plan, on monthly and yearly billing, and shows the lowest total. LLM usage is billed on top, based on the model you choose, and your own telephony provider bills you separately. Enterprise is custom.",
+  "overage": {
+    "per_unit": 0.08,
+    "label": "extra minute",
+    "plans": [
+      "Creator",
+      "Pro",
+      "Scale",
+      "Business"
+    ]
+  },
   "yearly_label": "Yearly, 2 months free",
   "plans": [
     {

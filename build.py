@@ -10,6 +10,7 @@ import datetime
 import hashlib
 import html
 import json
+import math
 import pathlib
 import shutil
 
@@ -25,6 +26,20 @@ def cheapest(plans, credits_needed, annual):
     key = "annual_per_month" if annual else "monthly"
     fits = [p for p in plans if p["credits"] >= credits_needed]
     return min(fits, key=lambda p: p[key]) if fits else None
+
+
+def cost(p, need, annual, ov):
+    """Monthly cost of option p for `need` units, rounded to cents. Above its allowance only the plans in
+    ov["plans"] can buy extra units (at ov["per_unit"] each); any other plan that falls short cannot be used."""
+    extra = max(0, need - p["credits"])
+    if extra and p["name"] not in ov["plans"]:
+        return math.inf
+    return round(p["annual_per_month" if annual else "monthly"] + extra * ov["per_unit"], 2)
+
+
+def cheapest_with_overage(plans, need, annual, ov):
+    """Option with the lowest total (price + extra units); the first one wins a tie, like the page's JS sort."""
+    return min(plans, key=lambda p: cost(p, need, annual, ov))
 
 
 def calc_options(d):
@@ -51,6 +66,28 @@ def self_check(d):
     assert cheapest(opts, opts[0]["credits"] + 1, False) is opts[1]
     assert cheapest(opts, opts[-1]["credits"], False) is opts[-1]
     assert cheapest(opts, opts[-1]["credits"] + 1, False) is None
+    if "overage" in d:
+        ov = d["overage"]
+        assert 0 < ov["per_unit"] and ov["label"] and set(ov["plans"]) <= {p["name"] for p in opts}, d["tool"]
+        names = [p["name"] for p in opts]  # the plans that can buy extra units are the top ones, so every need has a price
+        assert ov["plans"] == names[names.index(ov["plans"][0]):], d["tool"]
+        # Fixed example, so a broken formula fails the build whatever the data says.
+        ex = [{"name": "S", "credits": 75, "monthly": 6, "annual_per_month": 5},
+              {"name": "A", "credits": 275, "monthly": 22, "annual_per_month": 18.33},
+              {"name": "B", "credits": 1238, "monthly": 99, "annual_per_month": 82.5}]
+        xo = {"per_unit": 0.08, "plans": ["A", "B"]}
+        assert cheapest_with_overage(ex, 300, False, xo)["name"] == "A" and cost(ex[1], 300, False, xo) == 24.00
+        assert cost(ex[1], 300, True, xo) == 20.33 and cost(ex[1], 100, False, xo) == 22
+        assert cost(ex[0], 76, False, xo) == math.inf and cheapest_with_overage(ex, 76, False, xo)["name"] == "A"
+        assert cheapest_with_overage(ex, 50, False, xo)["name"] == "S"
+        assert cheapest_with_overage(ex, 2000, False, xo)["name"] == "B"  # A: 22 + 1,725 x 0.08 = 160 > B: 99 + 762 x 0.08 = 159.96
+        for n in (0, opts[0]["credits"], opts[-1]["credits"], opts[-1]["credits"] + 1000):
+            for annual in (False, True):
+                best = cheapest_with_overage(opts, n, annual, ov)
+                fit = cheapest(opts, n, annual)  # a total with extra units never beats a plan that covers it all
+                assert cost(best, n, annual, ov) < math.inf, (d["tool"], n)
+                assert fit is None or cost(best, n, annual, ov) <= cost(fit, n, annual, ov), (d["tool"], n)
+        assert cheapest_with_overage(opts, 0, False, ov) is opts[0]
 
 
 def money(x):
@@ -290,17 +327,19 @@ def credits_page(d):
 {page_end([d], cta=False)}
 
 <script>
-const P={calc_data},C={json.dumps(cur)},R=document.getElementById('range'),N=document.getElementById('need'),Y=document.getElementById('yr'),M=document.getElementById('mo');
+const P={calc_data},O={json.dumps(d.get("overage"))},C={json.dumps(cur)},R=document.getElementById('range'),N=document.getElementById('need'),Y=document.getElementById('yr'),M=document.getElementById('mo');
 let yearly={'false' if monthly_only else 'true'};
 const HI=['bg-indigo-500/15','text-white'],$=v=>v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
+// Same formula as cost() in build.py: plan price plus every unit above its allowance, rounded to cents.
+const cost=(p,n,k)=>p.credits>=n||O.plans.includes(p.name)?Math.round((p[k]+Math.max(0,n-p.credits)*O.per_unit)*100)/100:Infinity;
 function run(){{const n=Math.max(0,+N.value||0),k=yearly?'annual_per_month':'monthly',
-f=P.filter(p=>p.credits>=n).sort((a,b)=>a[k]-b[k])[0];
+f=O?[...P].sort((a,b)=>cost(a,n,k)-cost(b,n,k))[0]:P.filter(p=>p.credits>=n).sort((a,b)=>a[k]-b[k])[0],x=O?Math.max(0,n-f.credits):0;
 document.querySelectorAll('article[data-plan]').forEach(c=>{{const on=!!f&&c.dataset.plan===f.name;['outline-2','outline-emerald-400','outline-offset-4'].forEach(x=>c.classList.toggle(x,on));}});
 document.querySelectorAll('tr[data-tier]').forEach(r=>{{const on=!!f&&r.dataset.tier===f.name;HI.forEach(x=>r.classList.toggle(x,on));r.toggleAttribute('data-picked',on);}});
 document.querySelectorAll('[data-annual]').forEach(s=>s.textContent=C+s.dataset[yearly?'annual':'monthly']);
 document.querySelectorAll('[data-note]').forEach(s=>s.textContent=s.dataset[yearly?'annualNote':'monthlyNote']);
-document.getElementById('price').textContent=f?C+$(f[k])+'/mo':'Custom';
-document.getElementById('plan').textContent=f?(f.label+(yearly&&f[k]%1?', billed yearly.':', '+C+$(f[k]*12)+' a year'+(yearly?' paid up front.':' if you stay 12 months.'))):'Above the largest plan. Ask {tool} sales for a quote.';}}
+document.getElementById('price').textContent=f?C+$(x?cost(f,n,k):f[k])+'/mo':'Custom';
+document.getElementById('plan').textContent=x?f.label+' '+C+$(f[k])+' + '+x.toLocaleString('en-US')+' '+O.label+(x>1?'s':'')+' × '+C+O.per_unit+' = '+C+$(cost(f,n,k))+'/mo'+(yearly?', plan billed yearly.':'.'):f?(f.label+(yearly&&f[k]%1?', billed yearly.':', '+C+$(f[k]*12)+' a year'+(yearly?' paid up front.':' if you stay 12 months.'))):'Above the largest plan. Ask {tool} sales for a quote.';}}
 R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};
 function bill(y){{yearly=y;Y.setAttribute('aria-pressed',y);M.setAttribute('aria-pressed',!y);run();}}
 if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
@@ -504,8 +543,11 @@ const fmt=n=>W[cur].cur+Math.round(n).toLocaleString('en-US');
 function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
  if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
   $('w-plan').textContent=w.typical?(w.typical_label+': '+fmt(n*w.typical)+' a month.'):'Pay as you go, no monthly package.';}}
- else{{const f=w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0];
-  $('w-price').textContent=f?W[cur].cur+f.monthly.toLocaleString('en-US',{{minimumFractionDigits:f.monthly%1?2:0,maximumFractionDigits:2}}):'Custom';$('w-plan').textContent=f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
+ else{{const o=w.over,c=p=>p.credits>=n||o.plans.includes(p.name)?Math.round((p.monthly+Math.max(0,n-p.credits)*o.per_unit)*100)/100:Infinity,
+  f=o?[...w.options].sort((a,b)=>c(a)-c(b))[0]:w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0],x=o?Math.max(0,n-f.credits):0,
+  m=v=>w.cur+v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
+  $('w-price').textContent=f?m(x?c(f):f.monthly):'Custom';
+  $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1?'s':'')+' × '+w.cur+o.per_unit+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
  $('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
 function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));pick(CATS[c][0]);}}
@@ -531,8 +573,10 @@ def widget_data(d):
     opts = calc_options(d)
     return {**base, "kind": "credits", "label": d["calc_label"], "max": max(o["credits"] for o in opts),
             "step": 5 if max(o["credits"] for o in opts) <= 2000 else 50, "start": 150,
-            "options": [{"label": o["name"] if "tiers" in d else o["name"] + " plan", "credits": o["credits"], "monthly": o["monthly"]} for o in opts],
-            "note": f"Cheapest {d['tool']} plan that covers this, on monthly billing."}
+            "options": [{"name": o["name"], "label": o["name"] if "tiers" in d else o["name"] + " plan", "credits": o["credits"], "monthly": o["monthly"]} for o in opts],
+            "over": d.get("overage"),
+            "note": (f"Cheapest {d['tool']} option on monthly billing, counting each {d['overage']['label']} at {d.get('currency', '$')}{d['overage']['per_unit']} from the {d['overage']['plans'][0]} plan up."
+                     if "overage" in d else f"Cheapest {d['tool']} plan that covers this, on monthly billing.")}
 
 
 def about_page(tools):
