@@ -3,12 +3,11 @@
   "tool": "Lovable",
   "slug": "lovable-pricing",
   "source_url": "https://lovable.dev/pricing",
-  "checked": "2026-11-11",
+  "checked": "2026-11-12",
   "affiliate_url": "",
   "lede": "Every Lovable plan, what each credit tier costs, and the cheapest way to get the credits you need.",
   "calc_label": "Lovable credits you need each month",
-  "calc_note": "The calculator uses Pro plan credit tiers on monthly billing. The Free plan is left out because Lovable does not publish its free credit amount. Lovable says credits roll over and you can top up on demand.",
-  "monthly_only": true,
+  "calc_note": "The calculator uses Pro plan credit tiers, on monthly or yearly billing. The Free plan is left out because Lovable does not publish its free credit amount. Lovable says credits roll over and you can top up on demand.",
   "plans": [
     {
       "name": "Free",
@@ -82,65 +81,76 @@
     {
       "name": "Pro, 100 credits",
       "monthly": 25,
-      "credits": 100
+      "credits": 100,
+      "annual_per_month": 21
     },
     {
       "name": "Pro, 200 credits",
       "monthly": 50,
-      "credits": 200
+      "credits": 200,
+      "annual_per_month": 42
     },
     {
       "name": "Pro, 400 credits",
       "monthly": 100,
-      "credits": 400
+      "credits": 400,
+      "annual_per_month": 84
     },
     {
       "name": "Pro, 800 credits",
       "monthly": 200,
-      "credits": 800
+      "credits": 800,
+      "annual_per_month": 167
     },
     {
       "name": "Pro, 1,200 credits",
       "monthly": 294,
-      "credits": 1200
+      "credits": 1200,
+      "annual_per_month": 245
     },
     {
       "name": "Pro, 2,000 credits",
       "monthly": 480,
-      "credits": 2000
+      "credits": 2000,
+      "annual_per_month": 400
     },
     {
       "name": "Pro, 3,000 credits",
       "monthly": 705,
-      "credits": 3000
+      "credits": 3000,
+      "annual_per_month": 588
     },
     {
       "name": "Pro, 4,000 credits",
       "monthly": 920,
-      "credits": 4000
+      "credits": 4000,
+      "annual_per_month": 767
     },
     {
       "name": "Pro, 5,000 credits",
       "monthly": 1125,
-      "credits": 5000
+      "credits": 5000,
+      "annual_per_month": 938
     },
     {
       "name": "Pro, 7,500 credits",
       "monthly": 1688,
-      "credits": 7500
+      "credits": 7500,
+      "annual_per_month": 1407
     },
     {
       "name": "Pro, 10,000 credits",
       "monthly": 2250,
-      "credits": 10000
+      "credits": 10000,
+      "annual_per_month": 1875
     }
   ],
-  "after_plans": "Prices above are for 100 monthly credits. Yearly prices ($21 Pro, $42 Business) are what Lovable shows with yearly billing selected, which it describes as 2 months free. Enterprise has a platform fee with volume pricing, by quote.",
+  "after_plans": "Prices above are for 100 monthly credits. On yearly billing, which Lovable describes as 2 months free, Pro tiers cost $21 to $1,875 a month and Business $42 a month for 100 credits. The tier table shows monthly billing. Enterprise has a platform fee with volume pricing, by quote.",
   "compare": {
     "Free plan": "Yes, with free credit grants and unlimited collaborators",
     "Cheapest paid plan": "Pro: $25/month, or $21/month billed yearly",
     "Credits on the cheapest paid plan": "100 credits a month",
-    "Most credits on a public plan": "Pro: 10,000 credits for $2,250/month",
+    "Most credits on a public plan": "Pro: 10,000 credits for $2,250/month, or $1,875/month billed yearly",
     "Yearly billing": "Described by Lovable as 2 months free"
   },
   "faq": [
@@ -160,5 +170,6 @@
       "Pro or Business?",
       "Both start with 100 monthly credits. Business costs more because it adds a team workspace, role-based access, SSO and priority support."
     ]
-  ]
+  ],
+  "yearly_label": "Yearly, 2 months free"
 }
