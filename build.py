@@ -111,7 +111,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 
 def page(title, desc, path, body, schema=None):
-    NAV, YEAR = CHROME["nav"], datetime.date.today().year
+    NAV, NAV_DESK, YEAR = CHROME["nav"], CHROME["nav_desk"], datetime.date.today().year
     CSS_V = CHROME["css_v"]  # changes whenever site.css changes, so browsers drop their cached copy
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
     return f"""<!doctype html>
@@ -127,8 +127,8 @@ def page(title, desc, path, body, schema=None):
  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
   <a href="/" class="flex shrink-0 items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
    <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
-  <nav aria-label="Main" class="hidden items-center gap-6 text-sm whitespace-nowrap text-slate-400 xl:flex">{NAV}</nav>
-  <details class="relative xl:hidden">
+  <nav aria-label="Main" class="hidden items-center gap-6 text-sm whitespace-nowrap text-slate-400 lg:flex">{NAV_DESK}</nav>
+  <details data-menu class="relative lg:hidden">
    <summary aria-label="Menu" class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-slate-700 text-slate-200 hover:border-slate-500 focus-visible:outline-2 focus-visible:outline-indigo-400 [&::-webkit-details-marker]:hidden">
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg></summary>
    <nav aria-label="Main" class="absolute right-0 mt-2 flex w-56 flex-col rounded-xl border border-slate-800 bg-slate-950 p-2 text-sm text-slate-300 shadow-2xl shadow-black/60 [&>a]:rounded-lg [&>a]:px-3 [&>a]:py-2.5 [&>a:hover]:bg-slate-800/70" onclick="if(event.target.closest('a'))this.parentElement.open=false">{NAV}</nav>
@@ -136,6 +136,7 @@ def page(title, desc, path, body, schema=None):
  </div>
 </header>
 <main class="relative mx-auto max-w-6xl px-5">{body}</main>
+<script>document.addEventListener('click',e=>document.querySelectorAll('details[data-menu][open]').forEach(d=>{{if(!d.contains(e.target))d.open=false}}))</script>
 <p class="relative mt-16 px-5 pb-4 text-center text-[11px] text-slate-500 min-[340px]:text-xs sm:text-sm">Independent. Prices copied from official pricing pages.</p>
 <footer class="relative border-t border-slate-800/80">
  <p class="px-5 py-6 text-center text-sm text-slate-400">&copy; {YEAR} AI Stack Prices</p>
@@ -510,6 +511,18 @@ CATEGORIES = [
 ]
 
 
+def categories_menu(tools, a_cls):
+    """Desktop header: one "Categories" button that opens all categories, so the header stays short as categories grow."""
+    items = "".join(f'<a href="/#{cid}" class="rounded-lg px-3 py-2.5 hover:bg-slate-800/70 focus-visible:outline-2 focus-visible:outline-indigo-400">'
+                    f'<span class="block font-medium text-white">{e(title)}</span>'
+                    f'<span class="mt-0.5 block text-xs text-slate-400">{e(", ".join(tools[k]["tool"] for k in keys))}</span></a>'
+                    for cid, title, _, keys, _ in CATEGORIES)
+    return (f'<details data-menu class="relative"><summary class="{a_cls} flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden">Categories'
+            '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>'
+            '<div class="absolute right-0 z-40 mt-3 grid w-[30rem] grid-cols-2 gap-1 rounded-xl border border-slate-800 bg-slate-950 p-2 whitespace-normal shadow-2xl shadow-black/60" '
+            f'onclick="if(event.target.closest(\'a\'))this.parentElement.open=false">{items}</div></details>')
+
+
 def home_page(tools):
     latest = fmt_date(max(d["checked"] for d in tools.values()))
     short = {cid: title.removeprefix("AI ").capitalize() for cid, title, *_ in CATEGORIES}
@@ -698,6 +711,8 @@ def main():
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
                     [("App Builders", "/#app-builders"), ("Website Builders", "/#website-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("AI Voices", "/#ai-voices"), ("AI Video", "/#ai-video"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
+        nav_desk=categories_menu(tools, a_cls) + "".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
+                    [("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     pairs = json.loads((ROOT / "data" / "compare.json").read_text())
     for c in pairs:  # each tool page links to its comparison page
