@@ -4,7 +4,7 @@
   "slug": "elevenlabs-pricing",
   "source_url": "https://elevenlabs.io/pricing",
   "checked": "2026-11-12",
-  "affiliate_url": "",
+  "affiliate_url": "https://try.elevenlabs.io/aistackprices",
   "unit_label": "Credits",
   "lede": "Every ElevenLabs text to speech plan (ElevenCreative), how many credits each one includes, and the cheapest plan for the audio you make each month.",
   "calc_label": "ElevenLabs credits you need each month",
