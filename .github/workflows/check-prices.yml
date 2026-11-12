@@ -11,14 +11,16 @@ permissions:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # pinned: ubuntu-latest moved to 26.04, where the Chromium install failed on 11/11/2026
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install playwright==1.63.0 && python -m playwright install --with-deps chromium
+      - run: pip install playwright==1.63.0
+      # the runner's package mirrors sometimes fail to resolve; try three times before giving up
+      - run: for i in 1 2 3; do python -m playwright install --with-deps chromium && exit 0; sleep 30; done; exit 1
       - run: python scripts/check_prices.py
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
