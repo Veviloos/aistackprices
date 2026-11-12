@@ -1,0 +1,137 @@
+{
+  "kind": "credits",
+  "tool": "Speechify",
+  "slug": "speechify-pricing",
+  "source_url": "https://speechify.ai/pricing",
+  "checked": "2026-11-12",
+  "affiliate_url": "",
+  "unit_label": "Characters",
+  "lede": "Every plan of Speechify's text to speech API, how many characters each one includes each month, and the cheapest way to cover the characters you need.",
+  "calc_label": "Thousands of characters you need each month",
+  "calc_note": "The calculator uses Speechify's text to speech API plans (SpeechifyAI), which are priced per character; the Speechify Reader app and Speechify Studio are separate subscriptions. Past the included characters, Starter, Pro and Scale keep going from your top-up balance at $10, $8 and $6 per 1M characters, so the calculator adds that and shows the lowest total. Free pauses until the next month. Amounts and rates are for the Simba 3.0 and 3.2 models, which Simba 3.5 matches until 21 November 2026.",
+  "monthly_only": true,
+  "overage": {
+    "label": "extra 1K characters",
+    "per_unit": {
+      "Starter": 0.01,
+      "Pro": 0.008,
+      "Scale": 0.006
+    }
+  },
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "credits": 500,
+      "rows": [
+        [
+          "Characters",
+          "500K/mo"
+        ],
+        [
+          "After that",
+          "Pauses until next month"
+        ]
+      ],
+      "features": [
+        "Catalog voices, streaming and SSML",
+        "Commercial use",
+        "Community support",
+        "No credit card"
+      ]
+    },
+    {
+      "name": "Starter",
+      "monthly": 10,
+      "annual_per_month": 10,
+      "credits": 1900,
+      "rows": [
+        [
+          "Characters",
+          "1.9M/mo"
+        ],
+        [
+          "After that",
+          "$10 per 1M"
+        ]
+      ],
+      "features": [
+        "Voice cloning, streaming, SSML",
+        "Top up past the balance, no hard cap",
+        "Up to 3 seats",
+        "Service accounts for CI",
+        "Community support"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 99,
+      "annual_per_month": 99,
+      "credits": 13500,
+      "rows": [
+        [
+          "Characters",
+          "13.5M/mo"
+        ],
+        [
+          "After that",
+          "$8 per 1M"
+        ]
+      ],
+      "features": [
+        "Voice cloning, no per-plan limit",
+        "Priority support"
+      ]
+    },
+    {
+      "name": "Scale",
+      "monthly": 499,
+      "annual_per_month": 499,
+      "credits": 78000,
+      "rows": [
+        [
+          "Characters",
+          "78M/mo"
+        ],
+        [
+          "After that",
+          "$6 per 1M"
+        ]
+      ],
+      "features": [
+        "Up to 25 seats",
+        "100 service accounts",
+        "Dedicated support"
+      ]
+    }
+  ],
+  "after_plans": "Plans are month to month, with no yearly option. Characters and rates shown are for Simba 3.0 and 3.2; Simba 3.5 gets the same until 21 November 2026, then $15, $12 and $10 per 1M characters, with 333K, 1.26M, 9M and 46.8M characters included. Enterprise has custom volume and rates. The Speechify Reader app (Premium, $29/month or $139 billed yearly) and Speechify Studio ($100 or $300 a year) are billed separately.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Characters of text to speech through the API",
+    "Free option": "Free: 500K characters a month, no credit card",
+    "Cheapest paid plan": "Starter: $10/month for 1.9M characters",
+    "Most on a public plan": "Scale: $499/month for 78M characters",
+    "Usage above the plan": "$10, $8 or $6 per 1M characters on Starter, Pro or Scale",
+    "Yearly billing": "Not offered, monthly plans only"
+  },
+  "faq": [
+    [
+      "How much does the Speechify API cost?",
+      "Free is $0 with 500K characters a month. Starter is $10/month for 1.9M characters, Pro $99/month for 13.5M and Scale $499/month for 78M. Enterprise is custom. Plans are month to month, with no annual commitment."
+    ],
+    [
+      "What happens when I use up my characters?",
+      "On Starter, Pro and Scale you keep going from your top-up balance at the plan's rate: $10, $8 or $6 per 1M characters. Auto top-up is off until you switch it on. Free pauses until the next month and cannot top up."
+    ],
+    [
+      "Is the API the same as the Speechify app subscription?",
+      "No. SpeechifyAI, the developer API, is billed separately from the Speechify Reader app, whose Premium plan is $29/month or $139 billed yearly. Speechify Studio, for voiceovers and dubbing, is another subscription at $100 or $300 a year."
+    ],
+    [
+      "Do unused characters roll over?",
+      "No. Each month's included usage expires at the end of the billing period. Money you top up yourself does not expire."
+    ]
+  ]
+}

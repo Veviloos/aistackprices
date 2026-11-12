@@ -1,0 +1,167 @@
+{
+  "kind": "credits",
+  "tool": "OpusClip",
+  "slug": "opus-clip-pricing",
+  "source_url": "https://www.opus.pro/pricing",
+  "checked": "2026-11-12",
+  "affiliate_url": "",
+  "unit_label": "Credits",
+  "lede": "Every OpusClip plan, what each credit pack costs, and the cheapest plan for the minutes of video you turn into clips each month.",
+  "calc_label": "OpusClip credits you need each month",
+  "calc_note": "1 credit = 1 minute of video processing. The calculator uses Free, Starter and Pro with 1 to 5 credit packs of 300 credits a month, the Pro options offered on both monthly and yearly billing. Starter is monthly only, so on yearly billing the calculator picks Free or Pro. On yearly billing Pro goes up to 15 packs, 4,500 credits a month.",
+  "yearly_label": "Yearly, save up to 50%",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        [
+          "Credits",
+          "60/mo"
+        ],
+        [
+          "Watermark",
+          "Yes"
+        ]
+      ],
+      "features": [
+        "Up to 1080p rendered clips",
+        "Auto reframe",
+        "AI captions with emoji and keyword highlighter",
+        "No editing",
+        "Clips can't be exported after 3 days"
+      ]
+    },
+    {
+      "name": "Starter",
+      "monthly": 15,
+      "rows": [
+        [
+          "Credits",
+          "150/mo"
+        ],
+        [
+          "Watermark",
+          "Removed"
+        ]
+      ],
+      "features": [
+        "AI clipping with Virality Score",
+        "AI animated captions in 20+ languages",
+        "Auto post to YouTube Shorts, TikTok, IG Reels",
+        "Powerful editor",
+        "1 brand template",
+        "Filler & silence removal"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 29,
+      "annual_per_month": 14.5,
+      "rows": [
+        [
+          "Credits",
+          "300/mo per pack"
+        ],
+        [
+          "Seats",
+          "2"
+        ]
+      ],
+      "features": [
+        "Everything in Starter",
+        "Viral Hook",
+        "Motion Graphics",
+        "AI B-Roll",
+        "Social media scheduler",
+        "On-demand credit top-ups",
+        "Video dubbing"
+      ]
+    },
+    {
+      "name": "Business",
+      "price": "Custom",
+      "price_note": "custom pricing and packs",
+      "cta": "Contact us",
+      "features": [
+        "Priority project processing",
+        "Customized credits, team seats and social account connections",
+        "Dedicated storage",
+        "API & custom integrations",
+        "Enterprise-level security"
+      ]
+    }
+  ],
+  "tiers_title": "OpusClip credit options",
+  "tiers": [
+    {
+      "name": "Free, 60 credits",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "credits": 60
+    },
+    {
+      "name": "Starter, 150 credits",
+      "monthly": 15,
+      "credits": 150
+    },
+    {
+      "name": "Pro, 1 pack (300 credits)",
+      "monthly": 29,
+      "annual_per_month": 14.5,
+      "credits": 300
+    },
+    {
+      "name": "Pro, 2 packs (600 credits)",
+      "monthly": 58,
+      "annual_per_month": 29,
+      "credits": 600
+    },
+    {
+      "name": "Pro, 3 packs (900 credits)",
+      "monthly": 87,
+      "annual_per_month": 43.5,
+      "credits": 900
+    },
+    {
+      "name": "Pro, 4 packs (1,200 credits)",
+      "monthly": 116,
+      "annual_per_month": 58,
+      "credits": 1200
+    },
+    {
+      "name": "Pro, 5 packs (1,500 credits)",
+      "monthly": 145,
+      "annual_per_month": 72.5,
+      "credits": 1500
+    }
+  ],
+  "after_plans": "Pro on the card is for 1 credit pack, 300 credits a month; each extra pack adds the same price, as in the table. Yearly Pro is billed $174 a year per pack, with 3,600 credits over 12 months, and goes up to 15 packs ($2,610 a year for 54,000 credits). Unused Pro credits roll over for 1 month on monthly billing and 2 months on yearly. Starter and Pro come with a free trial, no credit card required.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits: 1 credit = 1 minute of video processing",
+    "Free option": "Free: 60 credits a month, clips carry a watermark",
+    "Cheapest paid plan": "Starter: $15/month for 150 credits, monthly billing only",
+    "Most on a public plan": "Pro with 15 packs on yearly billing: $217.50/month ($2,610 a year) for 54,000 credits a year",
+    "Yearly billing": "Save up to 50%, Pro only"
+  },
+  "faq": [
+    [
+      "How much does OpusClip cost?",
+      "Free is $0 with 60 credits a month. Starter is $15/month for 150 credits, on monthly billing only. Pro is $29/month per pack of 300 credits a month, or $14.50/month per pack billed yearly ($174 a year). Business pricing is custom."
+    ],
+    [
+      "What is an OpusClip credit?",
+      "1 credit = 1 minute of video processing. Pro credits come in packs of 300 a month: up to 5 packs on monthly billing and up to 15 on yearly billing."
+    ],
+    [
+      "Do unused credits roll over?",
+      "On Pro, yes: unused credits roll over for 1 month on monthly billing and for 2 months on yearly billing."
+    ],
+    [
+      "Is OpusClip free?",
+      "Yes. The Free plan is $0 with 60 credits a month, clips up to 1080p, auto reframe and AI captions. Clips carry a watermark, there is no editing, and after 3 days clips can no longer be exported."
+    ]
+  ]
+}

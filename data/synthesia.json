@@ -3,13 +3,13 @@
   "tool": "Synthesia",
   "slug": "synthesia-pricing",
   "source_url": "https://www.synthesia.io/pricing",
-  "checked": "2026-11-11",
+  "checked": "2026-11-12",
   "affiliate_url": "",
   "unit_label": "Credits",
   "lede": "Every Synthesia plan, how many credits each one gives you, and the cheapest plan for the AI avatar videos you make.",
   "calc_label": "Synthesia credits you use each month",
-  "calc_note": "The calculator uses Starter and the Pro credit tiers, counted per month: on yearly billing Synthesia gives the year's credits up front (for example 72,000 a year on Pro, which is 6,000 a month). The free Basic plan has 500 credits a month. A typical finished minute of video uses about 100 credits, more if the avatar is on screen throughout.",
-  "yearly_label": "Yearly, save up to 4 months",
+  "calc_note": "The calculator uses Starter and the Pro credit tiers, counted per month: on yearly billing Synthesia gives the year's credits up front (for example 72,000 a year on Pro, which is 6,000 a month). Paid plan credits come on top of the free allowance of the Basic plan, 500 credits a month. A typical finished minute of video uses about 100 credits, more if the avatar is on screen throughout.",
+  "yearly_label": "Yearly",
   "plans": [
     {
       "name": "Basic",
@@ -132,7 +132,7 @@
       "credits": 48000
     }
   ],
-  "after_plans": "Pro on the card is for 6,000 credits a month (72,000 a year on yearly billing); more credits raise the price, as in the table. On monthly billing the first month is $9 on Starter and $49 on Pro with 6,000 credits. Studio Avatars are a paid add-on at $1,000/year.",
+  "after_plans": "Pro on the card is for 6,000 credits a month (72,000 a year on yearly billing); more credits raise the price, as in the table. On monthly billing the first month is $9 on Starter and from $49 on Pro. You can buy extra credits from Plan & billing if you run out. Studio Avatars are a paid add-on at $1,000/year.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: a typical finished minute of video uses about 100",
@@ -156,7 +156,7 @@
     ],
     [
       "Is there a first-month discount?",
-      "On monthly billing, Starter's first month is $9 (then $19/month) and Pro's first month is $49 (then $89/month) at 6,000 credits a month."
+      "On monthly billing, Starter's first month is $9 (then $19/month). Pro's first month is $49 with 6,000 credits a month (then $89/month), $95 with 12,000, $179 with 24,000, $259 with 36,000 and $329 with 48,000."
     ]
   ]
 }

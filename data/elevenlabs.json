@@ -3,174 +3,176 @@
   "tool": "ElevenLabs",
   "slug": "elevenlabs-pricing",
   "source_url": "https://elevenlabs.io/pricing",
-  "checked": "2026-11-11",
+  "checked": "2026-11-12",
   "affiliate_url": "",
-  "unit_label": "Call Minutes",
-  "lede": "Every ElevenLabs voice agent (ElevenAgents) plan, how many call minutes each one includes, and the cheapest plan for your call volume.",
-  "calc_label": "Call minutes you need each month",
-  "calc_note": "The calculator compares every ElevenAgents plan: on Creator and higher plans, which include additional minutes, it adds $0.08 for each call minute above the plan, on monthly and yearly billing, and shows the lowest total. LLM usage is billed on top, based on the model you choose, and your own telephony provider bills you separately. Enterprise is custom.",
-  "overage": {
-    "per_unit": 0.08,
-    "label": "extra minute",
-    "plans": [
-      "Creator",
-      "Pro",
-      "Scale",
-      "Business"
-    ]
-  },
+  "unit_label": "Credits",
+  "lede": "Every ElevenLabs text to speech plan (ElevenCreative), how many credits each one includes, and the cheapest plan for the audio you make each month.",
+  "calc_label": "ElevenLabs credits you need each month",
+  "calc_note": "The calculator compares the ElevenCreative plans, the default tab on ElevenLabs' pricing page, by monthly credits. On the highest quality models 1 text character uses 1 credit, and ElevenLabs puts one minute of audio at about 1,000 characters. Every product, from text to speech to music and dubbing, draws from the same credits. ElevenLabs only gives approximate prices for extra minutes, so the calculator does not add them. Enterprise is custom.",
   "yearly_label": "Yearly, 2 months free",
   "plans": [
     {
       "name": "Free",
       "monthly": 0,
       "annual_per_month": 0,
-      "credits": 15,
+      "credits": 10000,
       "rows": [
         [
-          "Call minutes",
-          "15/mo"
+          "Credits",
+          "10,000/mo"
         ],
         [
-          "Concurrent calls",
-          "4"
+          "Text to speech",
+          "~10 min/mo"
         ]
       ],
       "features": [
-        "Realtime Configs",
-        "Workflow Builder",
-        "Knowledge Base",
-        "Multilingual",
-        "Widget"
+        "Text to Speech",
+        "Speech to Text",
+        "Sound Effects",
+        "Voice Design",
+        "Music",
+        "3 Projects in Studio"
       ]
     },
     {
       "name": "Starter",
       "monthly": 6,
       "annual_per_month": 5,
-      "credits": 75,
+      "credits": 30000,
       "rows": [
         [
-          "Call minutes",
-          "75/mo"
+          "Credits",
+          "30,000/mo"
         ],
         [
-          "Concurrent calls",
-          "6"
+          "Text to speech",
+          "~30 min/mo"
         ]
       ],
       "features": [
         "Everything in Free",
-        "Text messages",
-        "Commercial License"
+        "Commercial License",
+        "Instant Voice Cloning",
+        "20 Projects in Studio",
+        "Music commercial use",
+        "Dubbing Studio"
       ]
     },
     {
       "name": "Creator",
       "monthly": 22,
       "annual_per_month": 18.33,
-      "credits": 275,
+      "credits": 121000,
       "popular": true,
       "rows": [
         [
-          "Call minutes",
-          "275/mo"
+          "Credits",
+          "121,000/mo"
         ],
         [
-          "Concurrent calls",
-          "10"
+          "Text to speech",
+          "~121 min/mo"
         ]
       ],
       "features": [
         "Everything in Starter",
-        "Additional minutes"
+        "Professional Voice Cloning",
+        "Additional Credits"
       ]
     },
     {
       "name": "Pro",
       "monthly": 99,
       "annual_per_month": 82.5,
-      "credits": 1238,
+      "credits": 600000,
       "rows": [
         [
-          "Call minutes",
-          "1,238/mo"
+          "Credits",
+          "600,000/mo"
         ],
         [
-          "Concurrent calls",
-          "20"
+          "Text to speech",
+          "~600 min/mo"
         ]
       ],
       "features": [
-        "Everything in Creator"
+        "Everything in Creator",
+        "44.1kHz PCM audio output via API",
+        "192kbps quality audio"
       ]
     },
     {
       "name": "Scale",
       "monthly": 299,
       "annual_per_month": 249.17,
-      "credits": 3738,
+      "credits": 1800000,
       "rows": [
         [
-          "Call minutes",
-          "3,738/mo"
+          "Credits",
+          "1,800,000/mo"
         ],
         [
-          "Concurrent calls",
-          "30"
+          "Text to speech",
+          "~1,800 min/mo"
         ]
       ],
       "features": [
         "Everything in Pro",
-        "3 workspace seats"
+        "3 Workspace seats",
+        "Team Collaboration",
+        "3 Professional Voice Clones"
       ]
     },
     {
       "name": "Business",
       "monthly": 990,
       "annual_per_month": 825,
-      "credits": 12375,
+      "credits": 6000000,
       "rows": [
         [
-          "Call minutes",
-          "12,375/mo"
+          "Credits",
+          "6,000,000/mo"
         ],
         [
-          "Concurrent calls",
-          "40"
+          "Text to speech",
+          "~6,000 min/mo"
         ]
       ],
       "features": [
         "Everything in Scale",
-        "10 workspace seats",
-        "10 Professional Voice Clones"
+        "Low-latency TTS as low as 5c/minute",
+        "10 Professional Voice Clones",
+        "10 Workspace seats"
       ]
     }
   ],
-  "after_plans": "Prices exclude taxes. On monthly billing, Starter's first month is $1 and Creator's first month is $11. Extra call minutes cost $0.08 each on every plan, burst calls above your concurrency limit $0.16 a minute, and text messages $0.003 each. Enterprise has custom pricing, with elevated concurrency, custom SSO and BAAs for HIPAA customers.",
+  "after_plans": "Prices exclude taxes. On monthly billing, Starter's first month is $1 and Creator's first month is $11. ElevenLabs lists an approximate price for each extra minute of text to speech: about $0.36 on Free, $0.20 on Starter, $0.18 on Creator and $0.17 on Pro, Scale and Business. Enterprise has custom pricing, with custom SSO, BAAs for HIPAA customers and more seats and voices.",
   "compare": {
-    "Pricing model": "Monthly plans with included call minutes",
-    "Price per minute": "$0.08 for each minute above your plan, LLM billed separately",
-    "Free credits": "Free plan: 15 call minutes a month",
-    "Monthly platform fee": "$0 to $990, or custom on Enterprise",
-    "Concurrent calls included": "4 on Free, up to 40 on Business"
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits shared by all products: 1 credit per text character on the highest quality models",
+    "Free option": "Free: 10,000 credits a month, about 10 minutes of speech",
+    "Cheapest paid plan": "Starter: $6/month, or $5/month billed yearly, for 30,000 credits",
+    "Most on a public plan": "Business: $990/month, or $825/month billed yearly, for 6,000,000 credits",
+    "Usage above the plan": "About $0.17 to $0.36 per extra minute of speech, depending on the plan (approximate)",
+    "Yearly billing": "2 months free"
   },
   "faq": [
     [
-      "How much does ElevenLabs cost for voice agents?",
-      "ElevenAgents plans: Free is $0 with 15 call minutes a month. Starter is $6/month ($5/month billed yearly) for 75 minutes, Creator $22/month ($18.33 yearly) for 275, Pro $99/month ($82.50 yearly) for 1,238, Scale $299/month ($249.17 yearly) for 3,738 and Business $990/month ($825 yearly) for 12,375. Enterprise is custom."
+      "How much does ElevenLabs cost?",
+      "Free is $0 with 10,000 credits a month. Starter is $6/month ($5/month billed yearly) for 30,000 credits, Creator $22/month ($18.33 yearly) for 121,000, Pro $99/month ($82.50 yearly) for 600,000, Scale $299/month ($249.17 yearly) for 1,800,000 and Business $990/month ($825 yearly) for 6,000,000. Enterprise is custom."
     ],
     [
-      "What do extra call minutes cost?",
-      "Additional call minutes cost $0.08 per minute on every plan. Burst pricing, when you go over your concurrency limit, is $0.16 per minute, and text messages cost $0.003 each."
+      "How many credits does text to speech use?",
+      "On the highest quality models 1 text character costs 1 credit, and one minute of audio is about 1,000 characters. On the Flash and Turbo models, API usage costs between 0.5 and 1 credit per character."
     ],
     [
-      "Is the AI model (LLM) included?",
-      "No. LLM usage is billed on top, based on the model you choose. ElevenLabs shows the fee in its platform and deducts it from your ElevenLabs credits."
+      "Do unused credits roll over?",
+      "On paid plans, unused credits roll over for up to two months, so your balance can reach 3 times your monthly quota while you keep an active subscription. Downgrading or cancelling forfeits them at the end of the cycle, and the Free plan has no rollover."
     ],
     [
-      "Does ElevenLabs charge extra for telephony?",
-      "No. ElevenLabs adds no telephony fee. If you connect your own provider, such as Twilio or a SIP trunk, that provider bills you directly for its own charges."
+      "Is yearly billing cheaper?",
+      "Yes. Yearly billing works out to two months free, since you pay 10 months' price for 12. The monthly equivalent is $5 on Starter, $18.33 on Creator, $82.50 on Pro, $249.17 on Scale and $825 on Business."
     ]
   ]
 }

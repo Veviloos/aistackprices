@@ -30,11 +30,11 @@ def cheapest(plans, credits_needed, annual):
 
 def cost(p, need, annual, ov):
     """Monthly cost of option p for `need` units, rounded to cents. Above its allowance only the plans in
-    ov["plans"] can buy extra units (at ov["per_unit"] each); any other plan that falls short cannot be used."""
+    ov["per_unit"] can buy extra units, each at its own rate; any other plan that falls short cannot be used."""
     extra = max(0, need - p["credits"])
-    if extra and p["name"] not in ov["plans"]:
+    if extra and p["name"] not in ov["per_unit"]:
         return math.inf
-    return round(p["annual_per_month" if annual else "monthly"] + extra * ov["per_unit"], 2)
+    return round(p["annual_per_month" if annual else "monthly"] + extra * ov["per_unit"].get(p["name"], 0), 2)
 
 
 def cheapest_with_overage(plans, need, annual, ov):
@@ -66,21 +66,24 @@ def self_check(d):
     assert cheapest(opts, opts[0]["credits"] + 1, False) is opts[1]
     assert cheapest(opts, opts[-1]["credits"], False) is opts[-1]
     assert cheapest(opts, opts[-1]["credits"] + 1, False) is None
+    # Fixed example, so a broken overage formula fails the build whatever the data says.
+    ex = [{"name": "S", "credits": 75, "monthly": 6, "annual_per_month": 5},
+          {"name": "A", "credits": 275, "monthly": 22, "annual_per_month": 18.33},
+          {"name": "B", "credits": 1238, "monthly": 99, "annual_per_month": 82.5}]
+    xo = {"per_unit": {"A": 0.08, "B": 0.08}}
+    assert cheapest_with_overage(ex, 300, False, xo)["name"] == "A" and cost(ex[1], 300, False, xo) == 24.00
+    assert cost(ex[1], 300, True, xo) == 20.33 and cost(ex[1], 100, False, xo) == 22
+    assert cost(ex[0], 76, False, xo) == math.inf and cheapest_with_overage(ex, 76, False, xo)["name"] == "A"
+    assert cheapest_with_overage(ex, 50, False, xo)["name"] == "S"
+    assert cheapest_with_overage(ex, 2000, False, xo)["name"] == "B"  # A: 22 + 1,725 x 0.08 = 160 > B: 99 + 762 x 0.08 = 159.96
+    xo = {"per_unit": {"A": 0.08, "B": 0.01}}  # each plan its own rate: A 22 + 1,000 x 0.08 = 102 > B 99 + 37 x 0.01 = 99.37
+    assert cost(ex[2], 1275, False, xo) == 99.37 and cheapest_with_overage(ex, 1275, False, xo)["name"] == "B"
     if "overage" in d:
         ov = d["overage"]
-        assert 0 < ov["per_unit"] and ov["label"] and set(ov["plans"]) <= {p["name"] for p in opts}, d["tool"]
+        rates = ov["per_unit"]
+        assert ov["label"] and rates and all(r > 0 for r in rates.values()) and set(rates) <= {p["name"] for p in opts}, d["tool"]
         names = [p["name"] for p in opts]  # the plans that can buy extra units are the top ones, so every need has a price
-        assert ov["plans"] == names[names.index(ov["plans"][0]):], d["tool"]
-        # Fixed example, so a broken formula fails the build whatever the data says.
-        ex = [{"name": "S", "credits": 75, "monthly": 6, "annual_per_month": 5},
-              {"name": "A", "credits": 275, "monthly": 22, "annual_per_month": 18.33},
-              {"name": "B", "credits": 1238, "monthly": 99, "annual_per_month": 82.5}]
-        xo = {"per_unit": 0.08, "plans": ["A", "B"]}
-        assert cheapest_with_overage(ex, 300, False, xo)["name"] == "A" and cost(ex[1], 300, False, xo) == 24.00
-        assert cost(ex[1], 300, True, xo) == 20.33 and cost(ex[1], 100, False, xo) == 22
-        assert cost(ex[0], 76, False, xo) == math.inf and cheapest_with_overage(ex, 76, False, xo)["name"] == "A"
-        assert cheapest_with_overage(ex, 50, False, xo)["name"] == "S"
-        assert cheapest_with_overage(ex, 2000, False, xo)["name"] == "B"  # A: 22 + 1,725 x 0.08 = 160 > B: 99 + 762 x 0.08 = 159.96
+        assert list(rates) == names[names.index(next(iter(rates))):], d["tool"]
         for n in (0, opts[0]["credits"], opts[-1]["credits"], opts[-1]["credits"] + 1000):
             for annual in (False, True):
                 best = cheapest_with_overage(opts, n, annual, ov)
@@ -121,8 +124,8 @@ def page(title, desc, path, body, schema=None):
  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-5">
   <a href="/" class="flex shrink-0 items-center gap-2 rounded font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-indigo-400">
    <img src="/mark.svg" alt="" width="28" height="28" class="h-7 w-7">AI Stack Prices</a>
-  <nav aria-label="Main" class="hidden items-center gap-6 text-sm whitespace-nowrap text-slate-400 lg:flex">{NAV}</nav>
-  <details class="relative lg:hidden">
+  <nav aria-label="Main" class="hidden items-center gap-6 text-sm whitespace-nowrap text-slate-400 xl:flex">{NAV}</nav>
+  <details class="relative xl:hidden">
    <summary aria-label="Menu" class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-slate-700 text-slate-200 hover:border-slate-500 focus-visible:outline-2 focus-visible:outline-indigo-400 [&::-webkit-details-marker]:hidden">
     <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 4.5h14M2 9h14M2 13.5h14"/></svg></summary>
    <nav aria-label="Main" class="absolute right-0 mt-2 flex w-56 flex-col rounded-xl border border-slate-800 bg-slate-950 p-2 text-sm text-slate-300 shadow-2xl shadow-black/60 [&>a]:rounded-lg [&>a]:px-3 [&>a]:py-2.5 [&>a:hover]:bg-slate-800/70" onclick="if(event.target.closest('a'))this.parentElement.open=false">{NAV}</nav>
@@ -146,9 +149,10 @@ def plan_card(p, link, monthly_only=False, cur="$"):
     if "price" in p:  # usage-based plans publish a text price, e.g. "$29/month" or "Custom"
         price = (f'<p class="mt-4 text-3xl font-semibold tracking-tight text-balance text-white tabular-nums">{e(p["price"])}</p>'
                  f'<p class="mt-1 text-xs text-slate-500">{e(p.get("price_note", ""))}</p>')
-    elif p["monthly"] and monthly_only:
-        a = p["annual_per_month"]
-        note = f"or {cur}{money(a)}/month billed yearly" if a != p["monthly"] else "billed monthly"
+    elif p["monthly"] and (monthly_only or "annual_per_month" not in p):
+        a = p.get("annual_per_month", p["monthly"])
+        note = (f"or {cur}{money(a)}/month billed yearly" if a != p["monthly"] else
+                "billed monthly" if monthly_only else "monthly billing only")
         price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums">{cur}{money(p["monthly"])}</span>'
                  f'<span class="text-sm text-slate-400">/month</span></p><p class="mt-1 text-xs text-slate-500">{e(note)}</p>')
     elif p["monthly"]:
@@ -331,7 +335,7 @@ const P={calc_data},O={json.dumps(d.get("overage"))},C={json.dumps(cur)},R=docum
 let yearly={'false' if monthly_only else 'true'};
 const HI=['bg-indigo-500/15','text-white'],$=v=>v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
 // Same formula as cost() in build.py: plan price plus every unit above its allowance, rounded to cents.
-const cost=(p,n,k)=>p.credits>=n||O.plans.includes(p.name)?Math.round((p[k]+Math.max(0,n-p.credits)*O.per_unit)*100)/100:Infinity;
+const cost=(p,n,k)=>p.credits>=n||p.name in O.per_unit?Math.round((p[k]+Math.max(0,n-p.credits)*(O.per_unit[p.name]||0))*100)/100:Infinity;
 function run(){{const n=Math.max(0,+N.value||0),k=yearly?'annual_per_month':'monthly',
 f=O?[...P].sort((a,b)=>cost(a,n,k)-cost(b,n,k))[0]:P.filter(p=>p.credits>=n).sort((a,b)=>a[k]-b[k])[0],x=O?Math.max(0,n-f.credits):0;
 document.querySelectorAll('article[data-plan]').forEach(c=>{{const on=!!f&&c.dataset.plan===f.name;['outline-2','outline-emerald-400','outline-offset-4'].forEach(x=>c.classList.toggle(x,on));}});
@@ -339,15 +343,18 @@ document.querySelectorAll('tr[data-tier]').forEach(r=>{{const on=!!f&&r.dataset.
 document.querySelectorAll('[data-annual]').forEach(s=>s.textContent=C+s.dataset[yearly?'annual':'monthly']);
 document.querySelectorAll('[data-note]').forEach(s=>s.textContent=s.dataset[yearly?'annualNote':'monthlyNote']);
 document.getElementById('price').textContent=f?C+$(x?cost(f,n,k):f[k])+'/mo':'Custom';
-document.getElementById('plan').textContent=x?f.label+' '+C+$(f[k])+' + '+x.toLocaleString('en-US')+' '+O.label+(x>1?'s':'')+' × '+C+O.per_unit+' = '+C+$(cost(f,n,k))+'/mo'+(yearly?', plan billed yearly.':'.'):f?(f.label+(yearly&&f[k]%1?', billed yearly.':', '+C+$(f[k]*12)+' a year'+(yearly?' paid up front.':' if you stay 12 months.'))):'Above the largest plan. Ask {tool} sales for a quote.';}}
+document.getElementById('plan').textContent=x?f.label+' '+C+$(f[k])+' + '+x.toLocaleString('en-US')+' '+O.label+(x>1&&!O.label.endsWith('s')?'s':'')+' × '+C+O.per_unit[f.name]+' = '+C+$(cost(f,n,k))+'/mo'+(yearly?', plan billed yearly.':'.'):f?(f.label+(yearly&&f[k]%1?', billed yearly.':', '+C+$(f[k]*12)+' a year'+(yearly?' paid up front.':' if you stay 12 months.'))):'Above the largest plan. Ask {tool} sales for a quote.';}}
 R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};
 function bill(y){{yearly=y;Y.setAttribute('aria-pressed',y);M.setAttribute('aria-pressed',!y);run();}}
 if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
 </script>"""
     title = f"{d['tool']} Pricing {d['checked'][:4]}: Plans, {d.get('unit_label', 'Credits')} & Cost Calculator"
     free = "Free, then " if any(p.get("monthly") == 0 for p in plans) else ""
-    desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}-{cur}{money(hi['monthly'])}/mo "
-            f"(or {cur}{money(lo['annual_per_month'])}-{cur}{money(hi['annual_per_month'])}/mo yearly). {d.get('unit_label', 'Credits')} per plan and a calculator.")
+    ys = sorted({p["annual_per_month"] for p in paid if "annual_per_month" in p})
+    yearly = ("" if all(p.get("annual_per_month", p["monthly"]) == p["monthly"] for p in paid) else f" (or {cur}{money(ys[0])}/mo yearly)" if len(ys) == 1
+              else f" (or {cur}{money(ys[0])}-{cur}{money(ys[-1])}/mo yearly)")
+    desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}-{cur}{money(hi['monthly'])}/mo"
+            f"{yearly}. {d.get('unit_label', 'Credits')} per plan and a calculator.")
     return page(title, desc, f"/{d['slug']}/", body, schema)
 
 
@@ -449,7 +456,7 @@ def compare_page(c, a, b):
         names_of = {"$": "US dollars ($)", "€": "euros (€)"}
         lede += (f' {e(a["tool"])} lists prices in {names_of.get(ca, ca)} and {e(b["tool"])} in {names_of.get(cb, cb)}.'
                  ' We show each as published and do not convert them.')
-    body = hero(checked, f"{names} pricing", "text-4xl sm:text-5xl lg:text-6xl", lede) + f"""
+    body = hero(checked, f"{names} pricing", ("text-3xl min-[400px]:text-4xl" if len(names) > 21 else "text-4xl") + " sm:text-5xl lg:text-6xl", lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
  <h2 id="cmp-h" class="text-xl font-semibold text-white">Side by side</h2>
@@ -472,9 +479,13 @@ CATEGORIES = [
     ("website-builders", "Website builders", "Design and host websites without code. Compare plans, bandwidth and AI credits, and what your site will cost.",
      ["webflow", "framer"], "webflow-vs-framer"),
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
-     ["retell", "vapi", "elevenlabs"], "vapi-vs-retell-ai"),
+     ["retell", "vapi"], "vapi-vs-retell-ai"),
     ("automation", "Automation", "Workflow automation billed by runs, credits or tasks. See what your monthly volume costs, in each vendor's own currency.",
      ["n8n", "make", "zapier"], "n8n-vs-make"),
+    ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
+     ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
+    ("ai-video", "AI video", "AI avatar videos and short clips cut from long videos. Compare credits per plan and what a month of video costs.",
+     ["synthesia", "opusclip"], "synthesia-vs-opusclip"),
 ]
 
 
@@ -504,12 +515,12 @@ def home_page(tools):
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents and automation tools. See what you would really pay before you pick a tool.</p>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents, automation, AI voices and AI video. See what you would really pay before you pick a tool.</p>
 </section>
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
- <div role="group" aria-label="Category" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-4">{cat_tabs}</div>
+ <div role="group" aria-label="Category" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-3">{cat_tabs}</div>
  <div role="group" aria-label="Tool" class="mt-2 flex gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div>
@@ -530,7 +541,7 @@ def home_page(tools):
 
 <section aria-labelledby="cat-h" class="mt-16">
  <h2 id="cat-h" class="{H2}">Pick a category</h2>
- <div class="mt-10 grid gap-5 md:grid-cols-2">{cards}</div>
+ <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">{cards}</div>
 </section>
 
 <section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
@@ -543,18 +554,18 @@ const fmt=n=>W[cur].cur+Math.round(n).toLocaleString('en-US');
 function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
  if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
   $('w-plan').textContent=w.typical?(w.typical_label+': '+fmt(n*w.typical)+' a month.'):'Pay as you go, no monthly package.';}}
- else{{const o=w.over,c=p=>p.credits>=n||o.plans.includes(p.name)?Math.round((p.monthly+Math.max(0,n-p.credits)*o.per_unit)*100)/100:Infinity,
+ else{{const o=w.over,c=p=>p.credits>=n||p.name in o.per_unit?Math.round((p.monthly+Math.max(0,n-p.credits)*(o.per_unit[p.name]||0))*100)/100:Infinity,
   f=o?[...w.options].sort((a,b)=>c(a)-c(b))[0]:w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0],x=o?Math.max(0,n-f.credits):0,
   m=v=>w.cur+v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
   $('w-price').textContent=f?m(x?c(f):f.monthly):'Custom';
-  $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1?'s':'')+' × '+w.cur+o.per_unit+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
+  $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1&&!o.label.endsWith('s')?'s':'')+' × '+w.cur+o.per_unit[f.name]+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
  $('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
 function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));pick(CATS[c][0]);}}
 K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
-                "Independent, dated pricing for AI app builders, website builders, voice agents and automation tools, with cost calculators. Copied from official pricing pages and checked daily.",
+                "Independent, dated pricing for AI app builders, website builders, voice agents, automation, AI voices and AI video tools, with cost calculators. Copied from official pricing pages and checked daily.",
                 "/", body)
 
 
@@ -575,7 +586,7 @@ def widget_data(d):
             "step": 5 if max(o["credits"] for o in opts) <= 2000 else 50, "start": 150,
             "options": [{"name": o["name"], "label": o["name"] if "tiers" in d else o["name"] + " plan", "credits": o["credits"], "monthly": o["monthly"]} for o in opts],
             "over": d.get("overage"),
-            "note": (f"Cheapest {d['tool']} option on monthly billing, counting each {d['overage']['label']} at {d.get('currency', '$')}{d['overage']['per_unit']} from the {d['overage']['plans'][0]} plan up."
+            "note": (f"Cheapest {d['tool']} option on monthly billing, counting extra usage above a plan at that plan's own published rate."
                      if "overage" in d else f"Cheapest {d['tool']} plan that covers this, on monthly billing.")}
 
 
@@ -585,7 +596,7 @@ def about_page(tools):
 <section class="mx-auto max-w-3xl pt-12 sm:pt-20">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
-  <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms and automation tools really cost, so you can compare them before you sign up.</p>
+  <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms, automation tools, AI voice (text to speech) and AI video tools really cost, so you can compare them before you sign up.</p>
   <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
   <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site.</p>
   <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
@@ -658,7 +669,7 @@ def main():
     a_cls = "hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400 rounded"
     CHROME.update(
         nav="".join(f'<a class="{a_cls}" href="{h}">{t}</a>' for t, h in
-                    [("App Builders", "/#app-builders"), ("Website Builders", "/#website-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
+                    [("App Builders", "/#app-builders"), ("Website Builders", "/#website-builders"), ("Voice Agents", "/#voice-agents"), ("Automation", "/#automation"), ("AI Voices", "/#ai-voices"), ("AI Video", "/#ai-video"), ("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     pairs = json.loads((ROOT / "data" / "compare.json").read_text())
     for c in pairs:  # each tool page links to its comparison page
