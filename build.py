@@ -229,9 +229,9 @@ def compare_btn(d):
     """Outline button from a tool page to its comparison page (set in main from data/compare.json)."""
     if not d.get("compare_with"):
         return ""
-    slug, other = d["compare_with"]
+    slug, label = d["compare_with"]
     return (f'\n <a href="/{slug}/" class="mt-8 inline-block rounded-lg border border-slate-700 bg-slate-900/60 px-5 py-2.5 text-sm font-medium text-slate-200 '
-            f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">Compare {e(d["tool"])} vs {e(other)}</a>')
+            f'hover:border-indigo-400/60 hover:text-white focus-visible:outline-2 focus-visible:outline-indigo-400">Compare {e(label)}</a>')
 
 
 def faq_block(faq):
@@ -456,12 +456,13 @@ run();
     return page(title, desc, f"/{d['slug']}/", body, schema)
 
 
-def compare_page(c, a, b):
+def compare_page(c, ds):
+    keys = list(dict.fromkeys(k for d in ds for k in d["compare"]))
     rows = "".join(
         f'<tr class="border-t border-slate-800 max-sm:block max-sm:py-3"><th scope="row" class="{TH} max-sm:block max-sm:py-1 max-sm:font-medium max-sm:text-slate-200 sm:w-1/4">{e(k)}</th>'
         + "".join(f'<td class="py-3 pr-4 align-top text-slate-300 max-sm:block max-sm:py-1"><span class="text-slate-500 sm:hidden">{e(d["tool"])}: </span>'
-                  f'{e(d["compare"].get(k, "Not listed"))}</td>' for d in (a, b))
-        + "</tr>" for k in a["compare"])
+                  f'{e(d["compare"].get(k, "Not listed"))}</td>' for d in ds)
+        + "</tr>" for k in keys)
     cards = "".join(f"""<article class="{PANEL} p-6">
   <h3 class="text-lg font-semibold text-white">{e(d['tool'])}</h3>
   <p class="mt-1 text-xs text-slate-500">Prices checked {fmt_date(d['checked'])}</p>
@@ -469,32 +470,35 @@ def compare_page(c, a, b):
    <a href="{e(link_of(d))}" rel="nofollow sponsored" class="{CTA}">See {e(d['tool'])}'s current pricing</a>
    <a href="/{e(d['slug'])}/" class="{LINK}">{e(d['tool'])} pricing and calculator</a>
   </div>
- </article>""" for d in (a, b))
-    names = f"{a['tool']} vs {b['tool']}"
-    checked = fmt_date(min(a["checked"], b["checked"]))
-    lede = f'{e(a["tool"])} and {e(b["tool"])} pricing side by side.'
-    ca, cb = a.get("currency", "$"), b.get("currency", "$")
-    if ca != cb:  # never convert: each vendor's own currency, said plainly
+ </article>""" for d in ds)
+    tools_txt = lambda xs: xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+    names = " vs ".join(d["tool"] for d in ds)
+    checked = fmt_date(min(d["checked"] for d in ds))
+    lede = f'{e(tools_txt([d["tool"] for d in ds]))} pricing side by side.'
+    curs = {d.get("currency", "$") for d in ds}
+    if len(curs) > 1:  # never convert: each vendor's own currency, said plainly
         names_of = {"$": "US dollars ($)", "€": "euros (€)"}
-        lede += (f' {e(a["tool"])} lists prices in {names_of.get(ca, ca)} and {e(b["tool"])} in {names_of.get(cb, cb)}.'
-                 ' We show each as published and do not convert them.')
+        by_cur = [f'{e(tools_txt([d["tool"] for d in ds if d.get("currency", "$") == cur]))} in {names_of.get(cur, cur)}' for cur in sorted(curs, key=lambda c: c != "€")]
+        lede += f' Prices are listed: {"; ".join(by_cur)}. We show each as published and do not convert them.'
+
     body = hero(checked, f"{names} pricing", ("text-3xl min-[400px]:text-4xl" if len(names) > 21 else "text-4xl") + " sm:text-5xl lg:text-6xl", lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
  <h2 id="cmp-h" class="text-xl font-semibold text-white">Side by side</h2>
  <table class="mt-4 {TABLE}">
-  <thead class="text-xs text-slate-500 max-sm:sr-only"><tr><th scope="col" class="py-2 pr-4 font-normal">&nbsp;</th><th scope="col" class="py-2 pr-4 font-normal">{e(a['tool'])}</th><th scope="col" class="py-2 pr-4 font-normal">{e(b['tool'])}</th></tr></thead>
+  <thead class="text-xs text-slate-500 max-sm:sr-only"><tr><th scope="col" class="py-2 pr-4 font-normal">&nbsp;</th>{"".join(f'<th scope="col" class="py-2 pr-4 font-normal">{e(d["tool"])}</th>' for d in ds)}</tr></thead>
   <tbody>{rows}</tbody>
  </table>
 </section>
 
-<section class="mx-auto mt-10 grid max-w-4xl gap-5 md:grid-cols-2">{cards}</section>
-{page_end([a, b], cta=False)}"""
-    title = f"{names} Pricing {max(a['checked'], b['checked'])[:4]}: Plans and Costs Side by Side"
+<section class="mx-auto mt-10 grid max-w-4xl gap-5 {"lg:grid-cols-3" if len(ds) == 3 else "md:grid-cols-2"}">{cards}</section>
+{page_end(ds, cta=False)}"""
+    title = f"{names} Pricing {max(d['checked'] for d in ds)[:4]}: Plans and Costs Side by Side"
     desc = f"{names} pricing side by side, copied from each official pricing page. Checked {checked}."
     return page(title, desc, f"/{c['slug']}/", body)
 
 
+COMPARES = []  # data/compare.json, filled in main()
 CATEGORIES = [
     ("app-builders", "AI app builders", "Build apps by describing them. Compare plans, credits and what a month of building really costs.",
      ["base44", "lovable"], "base44-vs-lovable"),
@@ -503,7 +507,7 @@ CATEGORIES = [
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
      ["retell", "vapi"], "vapi-vs-retell-ai"),
     ("automation", "Automation", "Workflow automation billed by runs, credits or tasks. See what your monthly volume costs, in each vendor's own currency.",
-     ["n8n", "make", "zapier"], "n8n-vs-make"),
+     ["n8n", "make", "zapier"], "n8n-vs-make-vs-zapier"),
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
     ("ai-video", "AI video", "AI avatar videos and short clips cut from long videos. Compare credits per plan and what a month of video costs.",
@@ -530,12 +534,12 @@ def home_page(tools):
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
                        f'{e(tools[k]["tool"])} pricing<span class="text-slate-500">{e(start_price(tools[k]))}</span></a></li>' for k in keys)
-        a, b = tools[keys[0]]["tool"], tools[keys[1]]["tool"]
+        vs_names = [tools[k]["tool"] for k in next(c.get("tools", [c.get("a"), c.get("b")]) for c in COMPARES if c["slug"] == vs)]
         cards += f"""<article id="{cid}" class="scroll-mt-16 {PANEL} flex flex-col p-6 transition-colors hover:border-indigo-500/50">
  <h3 class="text-lg font-semibold text-white">{e(title)}</h3>
  <p class="mt-2 text-sm text-slate-400">{e(blurb)}</p>
  <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
- <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(a)} and {e(b)}</a>
+ <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(", ".join(vs_names[:-1]) + " and " + vs_names[-1])}</a>
 </article>"""
     widget = {k: widget_data(tools[k]) for *_, keys, _ in CATEGORIES for k in keys}
     cats = {cid: keys for cid, _, _, keys, _ in CATEGORIES}
@@ -715,16 +719,19 @@ def main():
                     [("Cost Calculators", "/#calculator"), ("About", "/about/"), ("Contact", "/contact/")]),
         css_v=hashlib.sha256((ROOT / "static" / "site.css").read_bytes()).hexdigest()[:10])
     pairs = json.loads((ROOT / "data" / "compare.json").read_text())
-    for c in pairs:  # each tool page links to its comparison page
-        tools[c["a"]].setdefault("compare_with", (c["slug"], tools[c["b"]]["tool"]))
-        tools[c["b"]].setdefault("compare_with", (c["slug"], tools[c["a"]]["tool"]))
+    for c in pairs:
+        c.setdefault("tools", [c.get("a"), c.get("b")])
+    COMPARES[:] = pairs
+    for c in sorted(pairs, key=lambda c: -len(c["tools"])):  # each tool page links to its widest comparison
+        for k in c["tools"]:
+            tools[k].setdefault("compare_with", (c["slug"], " vs ".join(tools[x]["tool"] for x in c["tools"])))
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
     comps = []
     for c in pairs:
-        a, b = tools[c["a"]], tools[c["b"]]
-        comps.append((c, a, b))
-        out[f"/{c['slug']}/"] = (compare_page(c, a, b), max(a["checked"], b["checked"]))
+        ds = [tools[k] for k in c["tools"]]
+        comps.append((c, ds))
+        out[f"/{c['slug']}/"] = (compare_page(c, ds), max(d["checked"] for d in ds))
     out["/"] = (home_page(tools), max(d["checked"] for d in tools.values()))
     out["/about/"] = (about_page(tools), max(d["checked"] for d in tools.values()))
     out["/contact/"] = (contact_page(), max(d["checked"] for d in tools.values()))
