@@ -57,6 +57,9 @@ def self_check(d):
         if "monthly" in p and "annual_per_month" in p:
             assert p["annual_per_month"] <= p["monthly"], p["name"]
     assert sum(p.get("popular", False) for p in d["plans"]) <= 1
+    if d.get("calculator") is False:  # plans with no published usage unit: no calculator to check
+        assert all(0 < p["yearly"] < 12 * p["monthly"] for p in d["plans"] if "yearly" in p), d["tool"]
+        return
     opts = sorted(calc_options(d), key=lambda p: p["credits"])
     assert len(opts) >= 2, d["tool"]
     for a, b in zip(opts, opts[1:]):
@@ -149,6 +152,13 @@ def plan_card(p, link, monthly_only=False, cur="$"):
     if "price" in p:  # usage-based plans publish a text price, e.g. "$29/month" or "Custom"
         price = (f'<p class="mt-4 text-3xl font-semibold tracking-tight text-balance text-white tabular-nums">{e(p["price"])}</p>'
                  f'<p class="mt-1 text-xs text-slate-500">{e(p.get("price_note", ""))}</p>')
+    elif "yearly" in p:  # the vendor publishes a yearly total, not a per-month share, so it is shown per year
+        y = money(p["yearly"])
+        price = (f'<p class="mt-4 flex items-baseline gap-1"><span class="text-4xl font-semibold tracking-tight text-white tabular-nums" '
+                 f'data-annual="{y}" data-monthly="{money(p["monthly"])}">{cur}{y}</span>'
+                 f'<span class="text-sm text-slate-400" data-unit data-annual-unit="/year" data-monthly-unit="/month">/year</span></p>'
+                 f'<p class="mt-1 text-xs text-slate-500" data-note data-annual-note="billed yearly" '
+                 f'data-monthly-note="or {cur}{y} billed yearly">billed yearly</p>')
     elif p["monthly"] and (monthly_only or "annual_per_month" not in p):
         a = p.get("annual_per_month", p["monthly"])
         note = (f"or {cur}{money(a)}/month billed yearly" if a != p["monthly"] else
@@ -259,7 +269,8 @@ def credits_page(d):
     checked = fmt_date(d["checked"])
     monthly_only = d.get("monthly_only", False)
     cur = d.get("currency", "$")
-    top = max(p["credits"] for p in opts)
+    calc = d.get("calculator", True)  # False: the vendor publishes no usage unit, so plans and billing toggle only
+    top = max((p["credits"] for p in opts), default=0)
     paid = [p for p in plans if p.get("monthly")]  # "Custom" plans have a text price, no monthly
     lo, hi = paid[0], paid[-1]
     faq_html, schema = faq_block(d["faq"])
@@ -272,6 +283,7 @@ def credits_page(d):
             if len(plans) == 6  # 2+2+2, then 3+3, then all 6 in one row (wide screens only, where they fit)
             else "max-xl:flex-col max-xl:items-center *:w-full *:max-w-md xl:*:max-w-none xl:*:w-[calc(20%-1rem)]" if len(plans) >= 5  # 5 never splits evenly: one per row, then all 5 in one row
             else "*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if len(plans) == 4  # 2+2, then 4 in a row
+            else "mx-auto max-w-3xl *:w-full md:*:w-[calc(50%-0.625rem)]" if len(plans) == 2
             else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
     toggle = "" if monthly_only else f"""
   <div role="group" aria-label="Billing period" class="inline-flex rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">
@@ -296,7 +308,7 @@ def credits_page(d):
     else:
         hint = "The plan that fits your usage gets a green outline as you move the calculator."
         tiers = ""
-    body = hero(checked, f"{d['tool']} pricing and real costs", ("text-3xl min-[400px]:text-4xl" if len(d["tool"]) > 8 else "text-4xl") + " sm:text-5xl lg:text-6xl", source_lede(d)) + f"""
+    calc_html = "" if not calc else f"""
 
 <section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <div class="flex flex-wrap items-center justify-between gap-4">
@@ -318,11 +330,14 @@ def credits_page(d):
   </div>
  </div>
  <p class="mt-6 text-xs text-slate-500">{e(d["calc_note"])}</p>
-</section>
+</section>"""
+    plans_top = (f'<p class="mt-3 text-center text-slate-400">{hint}</p>' if calc
+                 else f'<div class="mt-6 flex justify-center">{toggle}</div>')
+    body = hero(checked, f"{d['tool']} pricing and real costs", ("text-3xl min-[400px]:text-4xl" if len(d["tool"]) > 8 else "text-4xl") + " sm:text-5xl lg:text-6xl", source_lede(d)) + calc_html + f"""
 
 <section aria-labelledby="plans-h" class="mt-16">
  <h2 id="plans-h" class="{H2}">All {tool}&nbsp;plans</h2>
- <p class="mt-3 text-center text-slate-400">{hint}</p>
+ {plans_top}
  <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
  <div class="text-center">{compare_btn(d)}</div>
@@ -336,15 +351,17 @@ let yearly={'false' if monthly_only else 'true'};
 const HI=['bg-indigo-500/15','text-white'],$=v=>v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
 // Same formula as cost() in build.py: plan price plus every unit above its allowance, rounded to cents.
 const cost=(p,n,k)=>p.credits>=n||p.name in O.per_unit?Math.round((p[k]+Math.max(0,n-p.credits)*(O.per_unit[p.name]||0))*100)/100:Infinity;
-function run(){{const n=Math.max(0,+N.value||0),k=yearly?'annual_per_month':'monthly',
+function run(){{document.querySelectorAll('[data-annual]').forEach(s=>s.textContent=C+s.dataset[yearly?'annual':'monthly']);
+document.querySelectorAll('[data-note]').forEach(s=>s.textContent=s.dataset[yearly?'annualNote':'monthlyNote']);
+document.querySelectorAll('[data-unit]').forEach(s=>s.textContent=s.dataset[yearly?'annualUnit':'monthlyUnit']);
+if(!R)return;  // page without a calculator: only the billing toggle
+const n=Math.max(0,+N.value||0),k=yearly?'annual_per_month':'monthly',
 f=O?[...P].sort((a,b)=>cost(a,n,k)-cost(b,n,k))[0]:P.filter(p=>p.credits>=n).sort((a,b)=>a[k]-b[k])[0],x=O?Math.max(0,n-f.credits):0;
 document.querySelectorAll('article[data-plan]').forEach(c=>{{const on=!!f&&c.dataset.plan===f.name;['outline-2','outline-emerald-400','outline-offset-4'].forEach(x=>c.classList.toggle(x,on));}});
 document.querySelectorAll('tr[data-tier]').forEach(r=>{{const on=!!f&&r.dataset.tier===f.name;HI.forEach(x=>r.classList.toggle(x,on));r.toggleAttribute('data-picked',on);}});
-document.querySelectorAll('[data-annual]').forEach(s=>s.textContent=C+s.dataset[yearly?'annual':'monthly']);
-document.querySelectorAll('[data-note]').forEach(s=>s.textContent=s.dataset[yearly?'annualNote':'monthlyNote']);
 document.getElementById('price').textContent=f?C+$(x?cost(f,n,k):f[k])+'/mo':'Custom';
 document.getElementById('plan').textContent=x?f.label+' '+C+$(f[k])+' + '+x.toLocaleString('en-US')+' '+O.label+(x>1&&!O.label.endsWith('s')?'s':'')+' × '+C+O.per_unit[f.name]+' = '+C+$(cost(f,n,k))+'/mo'+(yearly?', plan billed yearly.':'.'):f?(f.label+(yearly&&f[k]%1?', billed yearly.':', '+C+$(f[k]*12)+' a year'+(yearly?' paid up front.':' if you stay 12 months.'))):'Above the largest plan. Ask {tool} sales for a quote.';}}
-R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};
+if(R){{R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};}}
 function bill(y){{yearly=y;Y.setAttribute('aria-pressed',y);M.setAttribute('aria-pressed',!y);run();}}
 if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
 </script>"""
@@ -355,6 +372,10 @@ if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
               else f" (or {cur}{money(ys[0])}-{cur}{money(ys[-1])}/mo yearly)")
     desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}-{cur}{money(hi['monthly'])}/mo"
             f"{yearly}. {d.get('unit_label', 'Credits')} per plan and a calculator.")
+    if not calc:
+        title = f"{d['tool']} Pricing {d['checked'][:4]}: Plans, Monthly and Yearly Prices"
+        desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}/mo"
+                + (f" or {cur}{money(lo['yearly'])}/year" if "yearly" in lo else "") + ". What every plan includes.")
     return page(title, desc, f"/{d['slug']}/", body, schema)
 
 
@@ -523,7 +544,7 @@ def home_page(tools):
  <div role="group" aria-label="Category" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-3">{cat_tabs}</div>
  <div role="group" aria-label="Tool" class="mt-2 flex gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
-  <div>
+  <div id="w-in">
    <div class="flex items-baseline justify-between gap-3">
     <label for="w-range" id="w-label" class="text-sm text-slate-400"></label>
     <input id="w-need" type="number" min="0" inputmode="numeric" aria-labelledby="w-label" class="w-28 {NUM}">
@@ -552,7 +573,8 @@ const W={json.dumps(widget)},CATS={json.dumps(cats)},K=document.querySelectorAll
 let cur='base44';
 const fmt=n=>W[cur].cur+Math.round(n).toLocaleString('en-US');
 function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
- if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
+ if(w.kind==='plan'){{$('w-price').textContent=w.price;$('w-plan').textContent=w.plan;}}
+ else if(w.kind==='usage'){{const lo=n*w.low,hi=n*w.high;$('w-price').textContent=fmt(lo)+(Math.round(hi)>Math.round(lo)?' to '+fmt(hi):'');
   $('w-plan').textContent=w.typical?(w.typical_label+': '+fmt(n*w.typical)+' a month.'):'Pay as you go, no monthly package.';}}
  else{{const o=w.over,c=p=>p.credits>=n||p.name in o.per_unit?Math.round((p.monthly+Math.max(0,n-p.credits)*(o.per_unit[p.name]||0))*100)/100:Infinity,
   f=o?[...w.options].sort((a,b)=>c(a)-c(b))[0]:w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0],x=o?Math.max(0,n-f.credits):0,
@@ -560,7 +582,7 @@ function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
   $('w-price').textContent=f?m(x?c(f):f.monthly):'Custom';
   $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1&&!o.label.endsWith('s')?'s':'')+' × '+w.cur+o.per_unit[f.name]+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
- $('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
+ $('w-in').hidden=w.kind==='plan';$('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
 function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));pick(CATS[c][0]);}}
 K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
@@ -572,7 +594,7 @@ K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t
 def start_price(d):
     if d["kind"] == "usage":
         return f"from ${d['per_min_low']:.2f}/min"
-    return f"from {d.get('currency', '$')}{money(min(p['monthly'] for p in calc_options(d) if p['monthly']))}/mo"
+    return f"from {d.get('currency', '$')}{money(min(p['monthly'] for p in calc_options(d) or d['plans'] if p.get('monthly')))}/mo"
 
 
 def widget_data(d):
@@ -581,6 +603,12 @@ def widget_data(d):
         return {**base, "kind": "usage", "label": "Call minutes per month", "max": 20000, "step": 100, "start": 1000,
                 "low": d["per_min_low"], "high": d["per_min_high"], "typical": d.get("per_min_typical"),
                 "typical_label": d.get("typical_label", ""), "note": f"Range from {d['tool']}'s published per-minute prices."}
+    if d.get("calculator") is False:  # no usage unit to slide: show the cheapest paid plan's price as published
+        p = min((p for p in d["plans"] if p.get("monthly")), key=lambda p: p["monthly"])
+        y = f", or {base['cur']}{money(p['yearly'])} billed yearly." if "yearly" in p else ", billed monthly."
+        return {**base, "kind": "plan", "label": "", "max": 0, "step": 1, "start": 0,
+                "price": f"{base['cur']}{money(p['monthly'])}/mo", "plan": f"{p['name']} plan{y}",
+                "note": f"{d['tool']} publishes no usage limit per plan, so this is its cheapest paid plan as listed."}
     opts = calc_options(d)
     return {**base, "kind": "credits", "label": d["calc_label"], "max": max(o["credits"] for o in opts),
             "step": 5 if max(o["credits"] for o in opts) <= 2000 else 50, "start": 150,
