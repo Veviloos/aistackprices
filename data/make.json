@@ -3,7 +3,7 @@
   "tool": "Make",
   "slug": "make-pricing",
   "source_url": "https://www.make.com/pricing",
-  "checked": "2026-11-11",
+  "checked": "2026-11-12",
   "affiliate_url": "https://www.make.com/en/register?pc=aistackprices",
   "lede": "Every Make plan, what each credit tier costs, and the cheapest way to get the credits you need.",
   "calc_label": "Make credits you use each month",
@@ -35,7 +35,7 @@
     {
       "name": "Core",
       "monthly": 16,
-      "annual_per_month": 11,
+      "annual_per_month": 12,
       "credits": 10000,
       "rows": [
         [
@@ -53,13 +53,13 @@
     {
       "name": "Pro",
       "monthly": 28,
-      "annual_per_month": 20,
+      "annual_per_month": 21,
       "credits": 10000,
       "popular": true,
       "rows": [
         [
           "Credits",
-          "10,000/mo, up to 300,000"
+          "10,000/mo, up to 8,000,000"
         ]
       ],
       "features": [
@@ -72,12 +72,12 @@
     {
       "name": "Teams",
       "monthly": 51,
-      "annual_per_month": 36,
+      "annual_per_month": 38,
       "credits": 10000,
       "rows": [
         [
           "Credits",
-          "10,000/mo, up to 300,000"
+          "10,000/mo, up to 8,000,000"
         ]
       ],
       "features": [
@@ -106,55 +106,55 @@
     {
       "name": "Core, 10,000 credits",
       "monthly": 16,
-      "annual_per_month": 11,
+      "annual_per_month": 12,
       "credits": 10000
     },
     {
       "name": "Core, 20,000 credits",
       "monthly": 28,
-      "annual_per_month": 20,
+      "annual_per_month": 21,
       "credits": 20000
     },
     {
       "name": "Core, 40,000 credits",
-      "monthly": 46,
-      "annual_per_month": 37,
+      "monthly": 51,
+      "annual_per_month": 38,
       "credits": 40000
     },
     {
       "name": "Core, 80,000 credits",
-      "monthly": 81,
-      "annual_per_month": 65,
+      "monthly": 97,
+      "annual_per_month": 72,
       "credits": 80000
     },
     {
       "name": "Core, 150,000 credits",
-      "monthly": 134,
-      "annual_per_month": 107,
+      "monthly": 175,
+      "annual_per_month": 129,
       "credits": 150000
     },
     {
       "name": "Core, 300,000 credits",
-      "monthly": 236,
-      "annual_per_month": 189,
+      "monthly": 321,
+      "annual_per_month": 237,
       "credits": 300000
     }
   ],
-  "after_plans": "Plan prices above are for 10,000 credits a month. Core, Pro and Teams each have credit tiers up to 300,000 credits a month: Core $236/month, Pro $348/month and Teams $660/month at 300,000 ($189, $278 and $528 billed yearly). Extra credits can be bought in bundles of 1,000 or 10,000. Enterprise is custom. Companies under 20 employees can get the Start-up Plan at 50% off.",
+  "after_plans": "Plan prices above are for 10,000 credits a month. Core has credit tiers up to 300,000 credits a month, Pro and Teams up to 8,000,000. At 300,000 credits Core is $321/month, Pro $474/month and Teams $900/month ($237, $349 and $663 billed yearly). Extra credits can be bought in bundles of 1,000 or 10,000. Enterprise is custom. Companies under 20 employees can get the Start-up Plan at 50% off.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: most actions use 1 credit, some AI features use more",
     "Free option": "Free plan: 1,000 credits a month, runs at most every 15 minutes",
-    "Cheapest paid plan": "Core: $16/month, or $11/month billed yearly, for 10,000 credits",
-    "Most on a public plan": "300,000 credits: Core $236/month, or $189/month billed yearly",
-    "Yearly billing": "Cheaper per month, e.g. Core with 10,000 credits is $11 instead of $16",
+    "Cheapest paid plan": "Core: $16/month, or $12/month billed yearly, for 10,000 credits",
+    "Most on a public plan": "8,000,000 credits: Pro $8,491/month ($6,255/month billed yearly), Teams $14,525/month ($10,700/month billed yearly)",
+    "Yearly billing": "Cheaper per month, e.g. Core with 10,000 credits is $12 instead of $16",
     "Self-hosted plan": "Not listed on Make's pricing page",
     "Under 20 employees": "Start-up Plan: 50% off (Make says \"50% off Business\")"
   },
   "faq": [
     [
       "How much does Make cost?",
-      "Make has a free plan. With 10,000 credits a month, Core costs $16/month ($11/month billed yearly), Pro $28/month ($20/month yearly) and Teams $51/month ($36/month yearly). Core goes up to 300,000 credits for $236/month ($189/month yearly). Enterprise is custom."
+      "Make has a free plan. With 10,000 credits a month, Core costs $16/month ($12/month billed yearly), Pro $28/month ($21/month yearly) and Teams $51/month ($38/month yearly). Core goes up to 300,000 credits for $321/month ($237/month yearly); Pro and Teams go up to 8,000,000 credits. Enterprise is custom."
     ],
     [
       "Is Make free?",

@@ -19,6 +19,10 @@ from playwright.sync_api import sync_playwright
 ROOT = pathlib.Path(__file__).parent.parent
 SNAP = ROOT / "snapshots"
 GROQ_MODEL = "openai/gpt-oss-20b"
+# body.innerText skips shadow DOM; Make renders its plans in <code-island> shadow roots, so add their text after the body's.
+# shortcut: only shadow roots attached to light-DOM elements, nested ones are skipped; walk them recursively if a page needs it.
+PAGE_TEXT_JS = """() => [document.body, ...[...document.querySelectorAll('*')].filter(e => e.shadowRoot)
+  .flatMap(e => [...e.shadowRoot.children])].map(e => e.innerText || '').join('\\n')"""
 
 
 def price_lines(text):
@@ -80,7 +84,7 @@ def main():
             try:
                 page.goto(d["source_url"], wait_until="domcontentloaded", timeout=60000)
                 page.wait_for_timeout(8000)  # pricing pages render prices with JavaScript
-                lines = price_lines(page.inner_text("body"))
+                lines = price_lines(page.evaluate(PAGE_TEXT_JS))
             except Exception as exc:
                 open_issue(f"Price check failed: {d['tool']}", f"Could not read {d['source_url']}: {exc}")
                 continue
