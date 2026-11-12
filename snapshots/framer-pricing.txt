@@ -1,0 +1,13 @@
+$0
+$10
+$30
+$20
+then $20 per 100 (700 max)
+then $40 per 10 (40 max)
+then $20 per 10,000 (40,000 max)
+then $40 per 100 GB (2 TB max)
+$20 per editor
+$10 per editor
+$20 per locale
+$50
+$200

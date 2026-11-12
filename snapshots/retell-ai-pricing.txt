@@ -20,6 +20,7 @@ $0.08/minute
 Cartesia Voices $0.015/minute
 OpenAI Voices $0.015/minute
 $0.015/minute
+$0.035/minute
 $0.064/minute $0.128/minute
 $0.064/minute
 $0.16/minute $0.32/minute
@@ -56,6 +57,7 @@ $0.015/min
 +$0.01/min
 First 100 minutes free $0.10/min
 $0.01/Msg
+$0.011/AI msg
 $0.0208/AI msg
 $0.02/AI msg
 $0.05/AI msg
