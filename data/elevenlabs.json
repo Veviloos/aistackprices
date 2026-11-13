@@ -174,5 +174,17 @@
       "Is yearly billing cheaper?",
       "Yes. Yearly billing works out to two months free, since you pay 10 months' price for 12. The monthly equivalent is $5 on Starter, $18.33 on Creator, $82.50 on Pro, $249.17 on Scale and $825 on Business."
     ]
-  ]
+  ],
+  "per_minute": {
+    "slug": "elevenlabs-cost-per-minute",
+    "chars_per_min": 1000,
+    "extra_per_min": {
+      "Free": 0.36,
+      "Starter": 0.2,
+      "Creator": 0.18,
+      "Pro": 0.17,
+      "Scale": 0.17,
+      "Business": 0.17
+    }
+  }
 }

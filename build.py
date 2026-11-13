@@ -210,6 +210,10 @@ TH = "py-3 pr-4 font-normal text-slate-400"
 TD = "py-3 font-medium text-white tabular-nums"
 
 
+def poss(name):
+    return name + ("'" if name.endswith("s") else "'s")  # ElevenLabs' pricing, Make's pricing
+
+
 def link_of(d):
     return d["affiliate_url"] or d["source_url"]
 
@@ -251,7 +255,7 @@ def faq_block(faq):
 def page_end(tools, cta=True):
     """End of a tool page: an optional button to the vendor, plus the affiliate disclosure once a page has affiliate links.
     How prices are collected is explained once, on the homepage."""
-    btn = (f'<a href="{e(link_of(tools[0]))}" rel="nofollow sponsored" class="{CTA}">See {e(tools[0]["tool"])}\'s current pricing</a>'
+    btn = (f'<a href="{e(link_of(tools[0]))}" rel="nofollow sponsored" class="{CTA}">See {e(poss(tools[0]["tool"]))} current pricing</a>'
            if cta else "")
     note = ('<p class="mt-4 text-xs text-slate-500">Some links on this page are affiliate links: if you buy through them we may '
             'earn a commission, at no extra cost to you. It never changes the prices shown.</p>'
@@ -341,7 +345,8 @@ def credits_page(d):
  {plans_top}
  <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
- <div class="text-center">{compare_btn(d)}</div>
+ <div class="text-center">{compare_btn(d)}</div>{f'''
+ <p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d["per_minute"]["slug"]}/">{tool} cost per minute on every plan</a></p>''' if "per_minute" in d else ""}
 </section>
 {faq_html}
 {page_end([d], cta=False)}
@@ -467,7 +472,7 @@ def compare_page(c, ds):
   <h3 class="text-lg font-semibold text-white">{e(d['tool'])}</h3>
   <p class="mt-1 text-xs text-slate-500">Prices checked {fmt_date(d['checked'])}</p>
   <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3 text-sm">
-   <a href="{e(link_of(d))}" rel="nofollow sponsored" class="{CTA}">See {e(d['tool'])}'s current pricing</a>
+   <a href="{e(link_of(d))}" rel="nofollow sponsored" class="{CTA}">See {e(poss(d['tool']))} current pricing</a>
    <a href="/{e(d['slug'])}/" class="{LINK}">{e(d['tool'])} pricing and calculator</a>
   </div>
  </article>""" for d in ds)
@@ -583,7 +588,7 @@ def home_page(tools):
 </section>
 
 <section class="mx-auto mt-16 max-w-3xl {PANEL} p-6 text-sm text-slate-400">
- <p><span class="font-medium text-slate-200">How we get these numbers.</span> Every price on this site is copied from the vendor's official pricing page, with the date we checked it. A script reads those pages every day and flags any change, and a person updates the numbers after checking. We are not paid by any company listed. <a class="{LINK}" href="/about/">More about this site</a>.</p>
+ <p><span class="font-medium text-slate-200">How we get these numbers.</span> Every price on this site is copied from the vendor's official pricing page, with the date we checked it. A script reads those pages every day and flags any change, and a person updates the numbers after checking (<a class="{LINK}" href="/price-changes/">every price change we have found</a>). We are not paid by any company listed. <a class="{LINK}" href="/about/">More about this site</a>.</p>
 </section>
 <script>
 const W={json.dumps(widget)},CATS={json.dumps(cats)},K=document.querySelectorAll('[data-cat]'),T=document.querySelectorAll('[data-tool]'),R=document.getElementById('w-range'),N=document.getElementById('w-need'),$=id=>document.getElementById(id);
@@ -635,6 +640,133 @@ def widget_data(d):
                      if "overage" in d else f"Cheapest {d['tool']} plan that covers this, on monthly billing.")}
 
 
+def per_minute_page(d):
+    """Cost of one minute of audio on every plan, from each plan's price and credits and the vendor's own characters-per-minute estimate."""
+    pm, tool, cur = d["per_minute"], e(d["tool"]), d.get("currency", "$")
+    owner = poss(d["tool"])
+    and_list = lambda xs: xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+    cpm = pm["chars_per_min"]
+    paid = [p for p in calc_options(d) if p.get("monthly")]
+    free = next((p for p in calc_options(d) if p.get("monthly") == 0), None)
+    per = lambda price, p: price / (p["credits"] / cpm)
+    rate = lambda v: f"{cur}{v:.3f}"[:-1] if f"{v:.3f}".endswith("0") else f"{cur}{v:.3f}"  # $0.20, $0.182: at least cents, a 3rd decimal only when it is not 0
+    head = ["Plan", "Audio a month", "Monthly billing", "Yearly billing", "Extra minute"]
+    def row(p):
+        mins = f"about {p['credits'] // cpm:,} min"
+        if p.get("monthly"):
+            mo = f"{cur}{money(p['monthly'])}/mo = {rate(per(p['monthly'], p))} a minute"
+            yr = f"{cur}{money(p['annual_per_month'])}/mo = {rate(per(p['annual_per_month'], p))} a minute"
+        else:
+            mo, yr = f"{cur}0, no commercial license listed", f"{cur}0"
+        ex = pm["extra_per_min"].get(p["name"])
+        cells = [mins, mo, yr, f"about {rate(ex)}" if ex else "Not listed"]
+        return (f'<tr class="border-t border-slate-800 max-sm:block max-sm:py-3"><th scope="row" class="{TH} max-sm:block max-sm:py-1 max-sm:font-medium max-sm:text-white">{e(p["name"])}</th>'
+                + "".join(f'<td class="py-3 pr-4 align-top text-slate-300 tabular-nums max-sm:block max-sm:py-1"><span class="text-slate-500 sm:hidden">{h}: </span>{e(c)}</td>'
+                          for h, c in zip(head[1:], cells)) + "</tr>")
+    rows = "".join(row(p) for p in ([free] if free else []) + paid)
+    jobs = [("A 10-minute video voiceover", 10), ("A 30-minute podcast episode", 30), ("Two hours of course narration", 120),
+            ("A 10-hour audiobook", 600), ("A 30-hour audiobook", 1800)]
+    def job(label, mins):
+        need = mins * cpm
+        m, y = cheapest(paid, need, False), cheapest(paid, need, True)
+        txt = ("More than the largest public plan" if not m else
+               f"{m['name']}: {cur}{money(m['monthly'])}/mo, or {cur}{money(y['annual_per_month'])}/mo billed yearly"
+               + ("" if y["name"] == m["name"] else f" on {y['name']}"))
+        return (f'<tr class="border-t border-slate-800 max-sm:block max-sm:py-3"><th scope="row" class="{TH} max-sm:block max-sm:py-1 max-sm:font-medium max-sm:text-white sm:w-2/5">{e(label)} '
+                f'<span class="text-slate-500">({mins:,} min)</span></th><td class="py-3 align-top text-slate-300 tabular-nums max-sm:block max-sm:py-1">{e(txt)}</td></tr>')
+    job_rows = "".join(job(*j) for j in jobs)
+    lo_m, hi_m = max(paid, key=lambda p: per(p["monthly"], p)), min(paid, key=lambda p: per(p["monthly"], p))
+    lo_y = min(paid, key=lambda p: per(p["annual_per_month"], p))
+    at = lambda v, key: and_list([p["name"] for p in paid if rate(per(p[key], p)) == rate(v)])  # every plan that rounds to this rate
+    by_rate = {}
+    for k, v in pm["extra_per_min"].items():
+        by_rate.setdefault(rate(v), []).append(k)
+    extras = ", ".join(f"{r} on {and_list(ks)}" for r, ks in by_rate.items())
+    faq = [
+        (f"How much does {d['tool']} cost per minute?",
+         f"On monthly billing, from {rate(per(lo_m['monthly'], lo_m))} a minute on {at(per(lo_m['monthly'], lo_m), 'monthly')} down to {rate(per(hi_m['monthly'], hi_m))} on {at(per(hi_m['monthly'], hi_m), 'monthly')}. "
+         f"With yearly billing it goes down to {rate(per(lo_y['annual_per_month'], lo_y))} a minute on {at(per(lo_y['annual_per_month'], lo_y), 'annual_per_month')}. "
+         f"We divide each plan's price by its credits, at {owner} own estimate of about {cpm:,} characters per minute of audio."),
+        ("What does an extra minute cost?",
+         f"{d['tool']} lists an approximate price for each extra minute of text to speech: about {extras}. It calls these approximate, so our numbers above only use the minutes included in each plan."),
+        (f"How many minutes of audio does each {d['tool']} plan include?",
+         " ".join(f"{p['name']}: about {p['credits'] // cpm:,} minutes." for p in ([free] if free else []) + paid)),
+    ]
+    faq_html, schema = faq_block(faq)
+    calc_data = json.dumps([{"name": p["name"], "mins": p["credits"] // cpm, "monthly": p["monthly"], "yearly": p["annual_per_month"]} for p in paid])
+    top = max(p["credits"] for p in paid) // cpm
+    body = hero(fmt_date(d["checked"]), f"{d['tool']} cost per minute", "text-4xl sm:text-5xl lg:text-6xl",
+                f"What one minute of {tool} text to speech costs on every plan, and the cheapest plan for the audio you need to make.") + f"""
+
+<section aria-labelledby="calc-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+ <h2 id="calc-h" class="text-xl font-semibold text-white">Minutes to price</h2>
+ <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+  <div>
+   <div class="flex items-baseline justify-between gap-3">
+    <label for="range" class="text-sm text-slate-400">Minutes of audio you need each month</label>
+    <input id="need" type="number" min="0" inputmode="numeric" value="120" aria-label="Minutes of audio each month" class="w-24 {NUM}">
+   </div>
+   <input id="range" type="range" min="0" max="{top}" step="10" value="120" class="mt-4 w-full accent-indigo-500">
+   <div class="mt-1 flex justify-between text-xs text-slate-500 tabular-nums"><span>0</span><span>{top:,}</span></div>
+  </div>
+  <div aria-live="polite" class="md:min-w-56 md:text-right">
+   <p class="text-sm text-slate-400">Cheapest paid plan</p>
+   <p id="price" class="mt-1 text-5xl font-semibold tracking-tight text-white tabular-nums"></p>
+   <p id="plan" class="mt-2 text-sm text-slate-400"></p>
+  </div>
+ </div>
+ <p class="mt-6 text-xs text-slate-500">Minutes are {e(owner)} own estimate of about {cpm:,} characters per minute, at 1 credit per character on the highest quality models. Paid plans only, since Free does not list a commercial license.</p>
+</section>
+
+<section aria-labelledby="pm-h" class="mx-auto mt-16 max-w-4xl {PANEL} p-6 sm:p-8">
+ <h2 id="pm-h" class="text-xl font-semibold text-white">Per-minute cost by plan</h2>
+ <table class="mt-4 {TABLE}">
+  <thead class="text-xs text-slate-500 max-sm:hidden"><tr>{"".join(f'<th scope="col" class="py-2 pr-4 font-normal">{h}</th>' for h in head)}</tr></thead>
+  <tbody>{rows}</tbody>
+ </table>
+</section>
+
+<section aria-labelledby="jobs-h" class="mx-auto mt-10 max-w-4xl {PANEL} p-6 sm:p-8">
+ <h2 id="jobs-h" class="text-xl font-semibold text-white">Cost of common jobs</h2>
+ <table class="mt-4 {TABLE}"><tbody>{job_rows}</tbody></table>
+ <p class="mt-6 text-sm"><a class="{LINK}" href="/{d['slug']}/">All {tool} plans and what each one includes</a></p>
+</section>
+{faq_html}
+{page_end([d])}
+
+<script>
+const P={calc_data},R=document.getElementById('range'),N=document.getElementById('need'),C={json.dumps(cur)};
+const $=v=>C+v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
+function run(){{const n=Math.max(0,+N.value||0),m=P.filter(p=>p.mins>=n).sort((a,b)=>a.monthly-b.monthly)[0],y=P.filter(p=>p.mins>=n).sort((a,b)=>a.yearly-b.yearly)[0];
+document.getElementById('price').textContent=m?$(m.monthly)+'/mo':'Custom';
+document.getElementById('plan').textContent=m?m.name+' plan, about '+m.mins.toLocaleString('en-US')+' minutes, billed monthly. Yearly: '+$(y.yearly)+'/mo on '+y.name+'.':'Above the largest plan. Ask {tool} sales for a quote.';}}
+R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,{top});run();}};run();
+</script>"""
+    title = f"{d['tool']} Cost per Minute {d['checked'][:4]}: Every Plan Worked Out"
+    desc = (f"{d['tool']} costs {rate(per(hi_m['monthly'], hi_m))} to {rate(per(lo_m['monthly'], lo_m))} per minute of audio on monthly billing, "
+            f"checked {fmt_date(d['checked'])}. Cost per minute on every plan and the cheapest plan for your audio.")
+    return page(title, desc, f"/{pm['slug']}/", body, schema)
+
+
+def price_changes_page(changes, tools):
+    """Every price change the daily check found, newest first, each checked by hand against the official page."""
+    items = "".join(f"""<li class="{PANEL} p-6">
+  <p class="text-xs text-slate-500">Spotted {fmt_date(c['date'])}</p>
+  <h2 class="mt-1 text-lg font-semibold text-white"><a class="hover:text-indigo-300" href="/{tools[c['tool']]['slug']}/">{e(tools[c['tool']]['tool'])}</a></h2>
+  <p class="mt-2 text-slate-300">{e(c['what'])}</p>
+  <p class="mt-3 text-sm"><a class="{LINK}" href="{e(tools[c['tool']]['source_url'])}">Official pricing page</a></p>
+ </li>""" for c in sorted(changes, key=lambda c: c["date"], reverse=True))
+    latest = fmt_date(max(d["checked"] for d in tools.values()))
+    body = hero(latest, "AI tool price changes", "text-4xl sm:text-5xl lg:text-6xl",
+                "Every price change we have found on the official pricing pages of the tools on this site, newest first. "
+                "A script reads those pages every day, and a person checks each change before it goes on this list.") + f"""
+<ol class="mx-auto max-w-3xl space-y-4">{items}</ol>
+<p class="mx-auto mt-8 max-w-3xl text-center text-sm text-slate-500">Only changes to prices, plans or what a plan includes are listed. Page redesigns and banners are not.</p>"""
+    return page(f"AI Tool Price Changes {max(c['date'] for c in changes)[:4]}: Every Change We Found",
+                f"Dated log of price changes on the official pricing pages of AI tools, checked by hand. Latest: {fmt_date(max(c['date'] for c in changes))}.",
+                "/price-changes/", body)
+
+
 def about_page(tools):
     rows = "".join(f'<li><a class="{LINK}" href="{e(d["source_url"])}">{e(d["tool"])}</a>, checked {fmt_date(d["checked"])}</li>' for d in tools.values())
     body = f"""
@@ -643,7 +775,7 @@ def about_page(tools):
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
   <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms, automation tools, AI voice (text to speech) and AI video tools really cost, so you can compare them before you sign up.</p>
   <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
-  <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site.</p>
+  <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site. Every change we have found is listed on our <a class="{LINK}" href="/price-changes/">price changes</a> page.</p>
   <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
  </div>
  <h2 class="mt-12 text-xl font-semibold text-white">Sources</h2>
@@ -706,7 +838,7 @@ def main():
     out = {}  # url path -> (html, lastmod)
     tools = {}
     for f in sorted((ROOT / "data").glob("*.json")):
-        if f.stem == "compare":
+        if f.stem in ("compare", "price-changes"):
             continue
         d = json.loads(f.read_text())
         self_check(d)
@@ -727,6 +859,10 @@ def main():
             tools[k].setdefault("compare_with", (c["slug"], " vs ".join(tools[x]["tool"] for x in c["tools"])))
     for d in tools.values():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
+        if "per_minute" in d:
+            out[f"/{d['per_minute']['slug']}/"] = (per_minute_page(d), d["checked"])
+    changes = json.loads((ROOT / "data" / "price-changes.json").read_text())
+    out["/price-changes/"] = (price_changes_page(changes, tools), max(c["date"] for c in changes))
     comps = []
     for c in pairs:
         ds = [tools[k] for k in c["tools"]]

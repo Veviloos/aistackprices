@@ -1,0 +1,12 @@
+[
+  {
+    "date": "2026-11-12",
+    "tool": "make",
+    "what": "Yearly prices at 10,000 credits went up: Core from $11 to $12, Pro from $20 to $21 and Teams from $36 to $38 a month. Monthly billing stayed at $16, $28 and $51. The Pro and Teams credit tiers now go up to 8,000,000 credits a month."
+  },
+  {
+    "date": "2026-11-12",
+    "tool": "retell",
+    "what": "Added the Tell 1 (Beta) model at $0.035 a minute, and $0.011 a message for chat agents."
+  }
+]
