@@ -1,4 +1,4 @@
-Retell hits $100M run rate! Cheers to the builders
+Retell crosses $100M in revenue run rate.
 Most voice AI platforms require annual contracts before you write a single line of code. Retell starts at $0, pay only for what you use.
 Go live in minutes with $10 in free credits. Full platform access, no commitments. Just build, test, and pay as you scale.
 $0.07-$0.31
@@ -21,35 +21,17 @@ $0.08/minute
 Cartesia Voices $0.015/minute
 OpenAI Voices $0.015/minute
 $0.015/minute
-$0.035/minute
+$0.032/minute $0.064/minute
 $0.064/minute $0.128/minute
 $0.064/minute
-$0.16/minute $0.32/minute
-$0.080/minute $0.16/minute
+$0.035/minute
 $0.384/minute
-$0.032/minute $0.064/minute
 $0.32/minute $0.64/minute
 $0.0032/minute $0.0064/minute
-$0.128/minute $0.256/minute
-$0.0064/minute $0.0128/minute
-$0.024/minute $0.048/minute
-$0.0064/minute
-$0.056/minute $0.112/minute
-$0.04/minute $0.08/minute
-$0.008/minute $0.016/minute
-$0.0016/minute
-$0.045/minute $0.0675/minute
-$0.0128/minute $0.0192/minute
-$0.0032/minute $0.0048/minute
 $0.128/minute
 $0.0032/minute
 $0.16/minute
-$0.025/minute
 $0.048/minute
-$0.024/minute
-$0.0096/minute
-$0.008/minute
-$0.016/minute
 $0.015/min
 +$0.005/minute
 +$0.005/dial
@@ -58,27 +40,16 @@ $0.015/min
 +$0.01/min
 First 100 minutes free $0.10/min
 $0.01/Msg
-$0.011/AI msg
-$0.0208/AI msg
-$0.02/AI msg
-$0.05/AI msg
-$0.025/AI msg
+Optional. Calls above your concurrency limit connect instead of being rejected +$0.10/min
 $0.01/AI msg
+$0.02/AI msg
+$0.011/AI msg
 $0.10/AI msg
 $0.001/AI msg
+$0.0208/AI msg
 $0.04/AI msg
-$0.002/AI msg
-$0.0075/AI msg
-$0.0175/AI msg
-$0.0125/AI msg
-$0.0025/AI msg
-$0.0005/AI msg
+$0.05/AI msg
 $0.015/AI msg
-$0.004/AI msg
-$0.03/AI msg
-$0.007/AI msg
-$0.003/AI msg
-$0.005/AI msg
 No Charge for custom phone numbers $2.00/month
 No charge for custom telephony SMS $20.00/month
 Concurrency (Active Calls) Free for first 20 concurrency (active calls) $8.00/Concurrency/month
