@@ -195,6 +195,11 @@
     "paid": "Starter",
     "rows": [
       [
+        "Text to speech",
+        "About {free_min} min a month",
+        "About {paid_min} min a month"
+      ],
+      [
         "Commercial use",
         "No",
         "Yes"
@@ -230,6 +235,22 @@
         "No watermark"
       ]
     ],
-    "first_month": 1
+    "first_month": 1,
+    "answer": "Yes, {tool} has a free plan: {cur}0 with {free_credits} credits a month, about {free_min} minutes of text to speech. It does not include commercial use. For anything you publish or sell, the cheapest plan with a commercial license is {paid} at {paid_price}.",
+    "faq": [
+      [
+        "Can I use {tool} free for YouTube or other commercial work?",
+        "{owner} pricing page lists commercial use from the {paid} plan. The Free plan does not include it."
+      ],
+      [
+        "How long does the {tool} free plan last?",
+        "The Free plan is not a trial with an end date. It gives {free_credits} credits every month, and unused credits do not roll over to the next month."
+      ],
+      [
+        "What does the cheapest paid {tool} plan cost?",
+        "{paid} is {paid_price}, with {paid_credits} credits a month, about {paid_min} minutes of text to speech."
+      ]
+    ],
+    "desc": "{tool} Free gives {free_credits} credits a month, about {free_min} minutes of text to speech, without commercial use."
   }
 }

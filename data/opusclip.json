@@ -3,7 +3,7 @@
   "tool": "OpusClip",
   "slug": "opus-clip-pricing",
   "source_url": "https://www.opus.pro/pricing",
-  "checked": "2026-11-12",
+  "checked": "2026-11-15",
   "affiliate_url": "https://opus.pro/?via=stavros",
   "unit_label": "Credits",
   "lede": "Every OpusClip plan, what each credit pack costs, and the cheapest plan for the minutes of video you turn into clips each month.",
@@ -163,5 +163,63 @@
       "Is OpusClip free?",
       "Yes. The Free plan is $0 with 60 credits a month, clips up to 1080p, auto reframe and AI captions. Clips carry a watermark, there is no editing, and after 3 days clips can no longer be exported."
     ]
-  ]
+  ],
+  "free_page": {
+    "slug": "is-opus-clip-free",
+    "paid": "Starter",
+    "credits_per_min": 1,
+    "rows": [
+      [
+        "Video you can process",
+        "About {free_min} min a month",
+        "About {paid_min} min a month"
+      ],
+      [
+        "Watermark",
+        "Yes",
+        "Removed"
+      ],
+      [
+        "Editing",
+        "No",
+        "Yes"
+      ],
+      [
+        "Processing speed",
+        "Regular",
+        "Faster than Free"
+      ],
+      [
+        "Auto import from YouTube",
+        "No",
+        "Yes, from a verified account"
+      ],
+      [
+        "AI B-Roll",
+        "No",
+        "AI image and stock B-Roll, 3 clips a month each"
+      ],
+      [
+        "AI voice-over",
+        "No",
+        "20 per day"
+      ]
+    ],
+    "answer": "Yes, {tool} has a free plan: {cur}0 with {free_credits} credits a month, and 1 credit is 1 minute of video processing. Free clips carry a watermark, cannot be edited and can no longer be exported after 3 days. The cheapest paid plan is {paid} at {paid_price}.",
+    "faq": [
+      [
+        "Does {tool} have a free trial?",
+        "Yes. Besides the Free plan, {paid} and Pro come with a free trial, no credit card required."
+      ],
+      [
+        "How long does the {tool} free plan last?",
+        "{owner} pricing page lists the Free plan as free forever, with {free_credits} credits every month."
+      ],
+      [
+        "Is {paid} or Pro cheaper?",
+        "{paid} is {paid_price}, with {starter_credits} credits a month. On yearly billing Pro is {cur}{pro_yearly}/mo per pack of {pro_credits} credits, so it costs less than {paid} and includes twice the credits."
+      ]
+    ],
+    "desc": "{tool} Free gives {free_credits} credits a month (1 credit = 1 minute of video), with a watermark and no editing."
+  }
 }
