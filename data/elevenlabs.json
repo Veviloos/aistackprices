@@ -3,7 +3,7 @@
   "tool": "ElevenLabs",
   "slug": "elevenlabs-pricing",
   "source_url": "https://elevenlabs.io/pricing",
-  "checked": "2026-11-12",
+  "checked": "2026-11-14",
   "affiliate_url": "https://try.elevenlabs.io/aistackprices",
   "unit_label": "Credits",
   "lede": "Every ElevenLabs text to speech plan (ElevenCreative), how many credits each one includes, and the cheapest plan for the audio you make each month.",
@@ -32,6 +32,8 @@
         "Sound Effects",
         "Voice Design",
         "Music",
+        "Productions",
+        "Image",
         "3 Projects in Studio"
       ]
     },
@@ -56,7 +58,8 @@
         "Instant Voice Cloning",
         "20 Projects in Studio",
         "Music commercial use",
-        "Dubbing Studio"
+        "Dubbing Studio",
+        "Image & Video"
       ]
     },
     {
@@ -186,5 +189,47 @@
       "Scale": 0.17,
       "Business": 0.17
     }
+  },
+  "free_page": {
+    "slug": "is-elevenlabs-free",
+    "paid": "Starter",
+    "rows": [
+      [
+        "Commercial use",
+        "No",
+        "Yes"
+      ],
+      [
+        "Instant Voice Cloning",
+        "No",
+        "Yes"
+      ],
+      [
+        "Custom voice slots",
+        "3",
+        "10"
+      ],
+      [
+        "Concurrent requests",
+        "2",
+        "3"
+      ],
+      [
+        "Projects in Studio",
+        "3",
+        "20"
+      ],
+      [
+        "Unused credits",
+        "Do not roll over",
+        "Roll over for up to two months"
+      ],
+      [
+        "Video dubs",
+        "With a watermark",
+        "No watermark"
+      ]
+    ],
+    "first_month": 1
   }
 }

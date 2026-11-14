@@ -346,7 +346,8 @@ def credits_page(d):
  <div class="mt-10 flex flex-wrap justify-center gap-5 {cols}">{cards}</div>{tiers}
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
  <div class="text-center">{compare_btn(d)}</div>{f'''
- <p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d["per_minute"]["slug"]}/">{tool} cost per minute on every plan</a></p>''' if "per_minute" in d else ""}
+ <p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d["per_minute"]["slug"]}/">{tool} cost per minute on every plan</a></p>''' if "per_minute" in d else ""}{f'''
+ <p class="mt-2 text-center text-sm"><a class="{LINK}" href="/{d["free_page"]["slug"]}/">Is {tool} free?</a></p>''' if "free_page" in d else ""}
 </section>
 {faq_html}
 {page_end([d], cta=False)}
@@ -748,6 +749,59 @@ R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.val
     return page(title, desc, f"/{pm['slug']}/", body, schema)
 
 
+def free_page(d):
+    """'Is <tool> free?': the free plan next to the cheapest paid plan, so the answer comes with what paying adds."""
+    fp, tool, cur = d["free_page"], e(d["tool"]), d.get("currency", "$")
+    plans = {p["name"]: p for p in d["plans"]}
+    free, paid = next(p for p in d["plans"] if p["monthly"] == 0), plans[fp["paid"]]
+    cpm = d["per_minute"]["chars_per_min"]
+    extra = d["per_minute"]["extra_per_min"]
+    first = fp.get("first_month")  # intro price shown on the official page, if any
+    paid_price = (f"{cur}{money(paid['monthly'])}/mo" + (f" ({cur}{money(first)} first month)" if first else "")
+                  + f", or {cur}{money(paid['annual_per_month'])}/mo billed yearly")
+    rows = [["Price", f"{cur}0", paid_price],
+            ["Credits a month", f"{free['credits']:,}", f"{paid['credits']:,}"],
+            ["Text to speech", f"About {free['credits'] // cpm:,} min a month", f"About {paid['credits'] // cpm:,} min a month"],
+            *fp["rows"],
+            ["Extra minute of text to speech", f"About {cur}{extra[free['name']]:.2f}", f"About {cur}{extra[paid['name']]:.2f}"]]
+    head = ["", free["name"], paid["name"]]
+    trs = "".join(f'<tr class="border-t border-slate-800 max-sm:block max-sm:py-3"><th scope="row" class="{TH} max-sm:block max-sm:py-1 max-sm:font-medium max-sm:text-white">{e(r[0])}</th>'
+                  + "".join(f'<td class="py-3 pr-4 align-top text-slate-300 tabular-nums max-sm:block max-sm:py-1"><span class="text-slate-500 sm:hidden">{h}: </span>{e(c)}</td>'
+                            for h, c in zip(head[1:], r[1:])) + "</tr>" for r in rows)
+    answer = (f"Yes, {d['tool']} has a free plan: {cur}0 with {free['credits']:,} credits a month, about {free['credits'] // cpm:,} minutes of text to speech. "
+              f"It does not include commercial use. For anything you publish or sell, the cheapest plan with a commercial license is {paid['name']} at {paid_price}.")
+    faq = [(f"Can I use {d['tool']} free for YouTube or other commercial work?",
+            f"{poss(d['tool'])} pricing page lists commercial use from the {paid['name']} plan. The Free plan does not include it."),
+           (f"How long does the {d['tool']} free plan last?",
+            f"The Free plan is not a trial with an end date. It gives {free['credits']:,} credits every month, and unused credits do not roll over to the next month."),
+           (f"What does the cheapest paid {d['tool']} plan cost?",
+            f"{paid['name']} is {paid_price}, with {paid['credits']:,} credits a month, about {paid['credits'] // cpm:,} minutes of text to speech.")]
+    faq_html, schema = faq_block(faq)
+    body = hero(fmt_date(d["checked"]), f"Is {d['tool']} free?", "text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl",
+                f"What the {tool} Free plan includes, what it leaves out, and what the cheapest paid plan adds.") + f"""
+
+<section aria-labelledby="ans-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+ <h2 id="ans-h" class="text-xl font-semibold text-white">The short answer</h2>
+ <p class="mt-4 leading-relaxed text-slate-300">{e(answer)}</p>
+</section>
+
+<section aria-labelledby="fp-h" class="mx-auto mt-10 max-w-4xl {PANEL} p-6 sm:p-8">
+ <h2 id="fp-h" class="text-xl font-semibold text-white">Free vs {e(paid["name"])}</h2>
+ <table class="mt-4 {TABLE}">
+  <thead class="text-xs text-slate-500 max-sm:hidden"><tr>{"".join(f'<th scope="col" class="py-2 pr-4 font-normal">{h}</th>' for h in head)}</tr></thead>
+  <tbody>{trs}</tbody>
+ </table>
+ <p class="mt-6 text-sm"><a class="{LINK}" href="/{d['slug']}/">All {tool} plans and what each one includes</a></p>
+ <p class="mt-2 text-sm"><a class="{LINK}" href="/{d['per_minute']['slug']}/">{tool} cost per minute on every plan</a></p>
+</section>
+{faq_html}
+{page_end([d])}"""
+    title = f"Is {d['tool']} Free? What the Free Plan Includes ({d['checked'][:4]})"
+    desc = (f"{d['tool']} Free gives {free['credits']:,} credits a month, about {free['credits'] // cpm:,} minutes of text to speech, without commercial use. "
+            f"Free vs {paid['name']}, checked {fmt_date(d['checked'])}.")
+    return page(title, desc, f"/{fp['slug']}/", body, schema)
+
+
 def price_changes_page(changes, tools):
     """Every price change the daily check found, newest first, each checked by hand against the official page."""
     items = "".join(f"""<li class="{PANEL} p-6">
@@ -861,6 +915,8 @@ def main():
         out[f"/{d['slug']}/"] = ((credits_page if d["kind"] == "credits" else usage_page)(d), d["checked"])
         if "per_minute" in d:
             out[f"/{d['per_minute']['slug']}/"] = (per_minute_page(d), d["checked"])
+        if "free_page" in d:
+            out[f"/{d['free_page']['slug']}/"] = (free_page(d), d["checked"])
     changes = json.loads((ROOT / "data" / "price-changes.json").read_text())
     out["/price-changes/"] = (price_changes_page(changes, tools), max(c["date"] for c in changes))
     comps = []
