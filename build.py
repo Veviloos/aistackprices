@@ -867,6 +867,19 @@ def price_changes_page(changes, tools):
                 "/price-changes/", body)
 
 
+def text_page(title, desc, path, updated, sections):
+    """Plain text page (privacy, terms): a heading per section, paragraphs as given."""
+    secs = "".join(f'<h2 class="mt-10 text-xl font-semibold text-white">{e(h)}</h2>'
+                   + "".join(f'<p class="mt-4 leading-relaxed text-slate-300">{t}</p>' for t in ps) for h, ps in sections)
+    body = f"""
+<section class="mx-auto max-w-2xl pt-12 sm:pt-20">
+ <h1 class="{H1} text-4xl sm:text-5xl">{e(title)}</h1>
+ <p class="mt-4 text-sm text-slate-400">Last updated {fmt_date(updated)}</p>
+ {secs}
+</section>"""
+    return page(f"{title} | AI Stack Prices", desc, path, body)
+
+
 def about_page(tools):
     rows = "".join(f'<li><a class="{LINK}" href="{e(d["source_url"])}">{e(d["tool"])}</a>, checked {fmt_date(d["checked"])}</li>' for d in tools.values())
     body = f"""
@@ -886,6 +899,26 @@ def about_page(tools):
 
 WEB3FORMS_KEY = "7736e9fb-e54c-4060-8401-e783c4ea923e"  # Web3Forms access key; while empty the contact form renders disabled with a mailto fallback
 MAIL = "hello@aistackprices.com"
+LEGAL_DATE = "2026-11-15"
+PRIVACY = [
+    ("Who runs this site", [f'AI Stack Prices (aistackprices.com) is an independent site that lists AI tool prices. Contact: <a class="{LINK}" href="mailto:{MAIL}">{MAIL}</a>.']),
+    ("What we collect", [
+        "We do not use accounts, ads or tracking cookies.",
+        "Visitor statistics come from Cloudflare Web Analytics, which counts page views without cookies and without identifying you.",
+        "If you use the contact form, the name, email address and message you enter are sent to us through Web3Forms so that we can reply. We use them only to answer you.",
+        "If you email us, we keep the email to answer you."]),
+    ("Affiliate links", ["Some links to tools are affiliate links. When you click one you leave our site, and the tool's own website and its privacy policy apply, including any cookies it sets to record the referral."]),
+    ("Services we use", ["Cloudflare (hosting and analytics), Web3Forms (contact form) and Google Gmail (our email). They process data on our behalf only to provide these services."]),
+    ("Our Google app", ["We use a private Google API app, AI Stack Prices Mail, only to send email from our own address, hello@aistackprices.com. It accesses only our own Gmail account, never a visitor's account, and the data it handles is not shared with anyone or used for anything else. Its use of data from Google APIs follows the Google API Services User Data Policy, including the Limited Use requirements."]),
+    ("Your rights", [f'You can ask us what data we hold about you, and ask us to correct or delete it, by writing to <a class="{LINK}" href="mailto:{MAIL}">{MAIL}</a>.']),
+]
+TERMS = [
+    ("About the prices", ["Prices are copied from each tool's official pricing page and dated. They can change at any time, so always check the official page before you buy. We are not responsible for differences between our pages and the official pages."]),
+    ("Affiliate links", ["Some links are affiliate links. If you buy through them we may earn a commission, at no extra cost to you. This never changes the prices we show."]),
+    ("No warranty", ["The site is provided as it is, for information only. It is not financial or legal advice."]),
+    ("Contact", [f'Questions about these terms: <a class="{LINK}" href="mailto:{MAIL}">{MAIL}</a>.']),
+]
+
 FIELD = ("mt-2 block w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2.5 text-white placeholder:text-slate-500 "
          "focus:border-indigo-400 focus:outline-2 focus:outline-indigo-400 disabled:cursor-not-allowed disabled:opacity-60")
 
@@ -926,7 +959,7 @@ F.onsubmit=async ev=>{{ev.preventDefault();const b=F.querySelector('button[type=
   </form>
   <p id="form-status" role="status" aria-live="polite" class="mt-4 text-sm"></p>
  </div>
- <p class="mt-6 text-sm text-slate-400">You can also email us at {mail}.</p>
+ <p class="mt-6 text-sm text-slate-400">You can also email us at {mail}. Read our <a class="{LINK}" href="/privacy/">privacy policy</a> and <a class="{LINK}" href="/terms/">terms of use</a>.</p>
 </section>{script}"""
     return page("Contact AI Stack Prices", "Questions, price corrections or partnership requests for AI Stack Prices.", "/contact/", body)
 
@@ -975,6 +1008,8 @@ def main():
     out["/"] = (home_page(tools), max(d["checked"] for d in tools.values()))
     out["/about/"] = (about_page(tools), max(d["checked"] for d in tools.values()))
     out["/contact/"] = (contact_page(), max(d["checked"] for d in tools.values()))
+    out["/privacy/"] = (text_page("Privacy Policy", "How AI Stack Prices handles visitor data: no tracking cookies, cookieless analytics, and contact form messages used only to reply.", "/privacy/", LEGAL_DATE, PRIVACY), LEGAL_DATE)
+    out["/terms/"] = (text_page("Terms of Use", "Terms of use for AI Stack Prices: prices are copied from official pages and may change; some links are affiliate links.", "/terms/", LEGAL_DATE, TERMS), LEGAL_DATE)
     for path, (doc, _) in out.items():
         target = DIST / path.strip("/") / "index.html"
         target.parent.mkdir(parents=True, exist_ok=True)
