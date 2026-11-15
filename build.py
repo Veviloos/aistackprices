@@ -523,6 +523,8 @@ CATEGORIES = [
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
     ("ai-video", "AI video", "AI avatar videos, short clips cut from long videos and AI-generated video. Compare credits per plan and what a month of video costs.",
      ["synthesia", "opusclip", "higgsfield", "invideo", "descript"], "synthesia-vs-opusclip-vs-higgsfield"),
+    ("ai-presentations", "AI presentations", "AI-made slide decks, docs and simple websites. Compare credits per plan and what a year of creating costs.",
+     ["gamma"], None),
 ]
 
 
@@ -545,12 +547,13 @@ def home_page(tools):
     for cid, title, blurb, keys, vs in CATEGORIES:
         rows = "".join(f'<li><a href="/{tools[k]["slug"]}/" class="flex justify-between gap-3 rounded-lg px-3 py-2 text-slate-200 hover:bg-slate-800/60 hover:text-white">'
                        f'{e(tools[k]["tool"])} pricing<span class="text-slate-500">{e(start_price(tools[k]))}</span></a></li>' for k in keys)
-        vs_names = [tools[k]["tool"] for k in next(c.get("tools", [c.get("a"), c.get("b")]) for c in COMPARES if c["slug"] == vs)]
+        vs_names = [tools[k]["tool"] for k in next(c.get("tools", [c.get("a"), c.get("b")]) for c in COMPARES if c["slug"] == vs)] if vs else []
+        compare = f'<a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(", ".join(vs_names[:-1]) + " and " + vs_names[-1])}</a>' if vs else ""
         cards += f"""<article id="{cid}" class="scroll-mt-16 {PANEL} flex flex-col p-6 transition-colors hover:border-indigo-500/50">
  <h3 class="text-lg font-semibold text-white">{e(title)}</h3>
  <p class="mt-2 text-sm text-slate-400">{e(blurb)}</p>
  <ul class="mt-5 flex-1 space-y-1 text-sm">{rows}</ul>
- <a href="/{vs}/" class="mt-4 {LINK} text-sm">Compare {e(", ".join(vs_names[:-1]) + " and " + vs_names[-1])}</a>
+ {compare}
 </article>"""
     widget = {k: widget_data(tools[k]) for *_, keys, _ in CATEGORIES for k in keys}
     cats = {cid: keys for cid, _, _, keys, _ in CATEGORIES}
@@ -564,7 +567,7 @@ def home_page(tools):
   <span class="relative flex h-2 w-2"><span class="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-60 motion-safe:animate-ping"></span><span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span></span>
   Prices checked {latest}</p>
  <h1 class="mx-auto mt-6 {H1} text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl">Transparent pricing for AI builders</h1>
- <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents, automation, AI voices and AI video. See what you would really pay before you pick a tool.</p>
+ <p class="mx-auto mt-5 max-w-2xl text-lg text-pretty text-slate-400">Independent, dated prices for AI app builders, website builders, voice agents, automation, AI voices, AI video and AI presentations. See what you would really pay before you pick a tool.</p>
 </section>
 
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
@@ -608,14 +611,14 @@ function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
   f=o?[...w.options].sort((a,b)=>c(a)-c(b))[0]:w.options.filter(o=>o.credits>=n).sort((a,b)=>a.monthly-b.monthly)[0],x=o?Math.max(0,n-f.credits):0,
   m=v=>w.cur+v.toLocaleString('en-US',{{minimumFractionDigits:v%1?2:0,maximumFractionDigits:2}});
   $('w-price').textContent=f?m(x?c(f):f.monthly):'Custom';
-  $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1&&!o.label.endsWith('s')?'s':'')+' × '+w.cur+o.per_unit[f.name]+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
+  $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1&&!o.label.endsWith('s')?'s':'')+' × '+w.cur+o.per_unit[f.name]+' = '+m(c(f))+'/mo.':f?(f.label+', '+w.billed+'.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
  $('w-in').hidden=w.kind==='plan';$('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
 function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));$('w-tools').dataset.n=CATS[c].length;pick(CATS[c][0]);}}
 K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
-                "Independent pricing for AI app and website builders, voice agents, automation, AI voice and video tools, copied from official pricing pages.",
+                "Independent pricing for AI app and website builders, voice agents, automation, AI voice, video and presentation tools, copied from official pricing pages.",
                 "/", body)
 
 
@@ -642,8 +645,9 @@ def widget_data(d):
             "step": 5 if max(o["credits"] for o in opts) <= 2000 else 50, "start": 150,
             "options": [{"name": o["name"], "label": o["name"] if "tiers" in d else o["name"] + " plan", "credits": o["credits"], "monthly": o["monthly"]} for o in opts],
             "over": d.get("overage"),
+            "billed": "billed yearly" if d.get("yearly_only") else "billed monthly",
             "note": (f"Cheapest {d['tool']} option on monthly billing, counting extra usage above a plan at that plan's own published rate."
-                     if "overage" in d else f"Cheapest {d['tool']} plan that covers this, on monthly billing.")}
+                     if "overage" in d else f"Cheapest {d['tool']} plan that covers this, on {'yearly' if d.get('yearly_only') else 'monthly'} billing.")}
 
 
 def per_minute_page(d):
@@ -887,7 +891,7 @@ def about_page(tools):
 <section class="mx-auto max-w-3xl pt-12 sm:pt-20">
  <h1 class="{H1} text-4xl sm:text-5xl">About AI Stack Prices</h1>
  <div class="mt-8 space-y-5 text-lg leading-relaxed text-slate-300">
-  <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms, automation tools, AI voice (text to speech) and AI video tools really cost, so you can compare them before you sign up.</p>
+  <p>AI Stack Prices shows what AI app builders, website builders, voice-agent platforms, automation tools, AI voice (text to speech), AI video and AI presentation tools really cost, so you can compare them before you sign up.</p>
   <p>Every price is copied by hand from the vendor's official pricing page, with the date we checked it. Our calculators only use those published numbers. Where a vendor publishes a range or leaves something out, we say so instead of guessing.</p>
   <p>A script reads each official pricing page every day and flags any change. A person checks the change and then updates this site. Every change we have found is listed on our <a class="{LINK}" href="/price-changes/">price changes</a> page.</p>
   <p>We are independent and not affiliated with any company listed. If we join a company's affiliate program, links to it will say so next to the link. That never changes the prices we show.</p>
