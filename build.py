@@ -520,8 +520,8 @@ CATEGORIES = [
      ["n8n", "make", "zapier"], "n8n-vs-make-vs-zapier"),
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
-    ("ai-video", "AI video", "AI avatar videos and short clips cut from long videos. Compare credits per plan and what a month of video costs.",
-     ["synthesia", "opusclip"], "synthesia-vs-opusclip"),
+    ("ai-video", "AI video", "AI avatar videos, short clips cut from long videos and AI-generated video. Compare credits per plan and what a month of video costs.",
+     ["synthesia", "opusclip", "higgsfield"], "synthesia-vs-opusclip-vs-higgsfield"),
 ]
 
 

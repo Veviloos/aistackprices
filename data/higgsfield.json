@@ -1,0 +1,114 @@
+{
+  "kind": "credits",
+  "tool": "Higgsfield",
+  "slug": "higgsfield-pricing",
+  "source_url": "https://higgsfield.ai/pricing",
+  "checked": "2026-11-15",
+  "affiliate_url": "https://higgsfield.ai?fpr=aistackprices",
+  "unit_label": "Credits",
+  "lede": "Every Higgsfield plan for AI video and images, how many credits each one gives you, and the cheapest plan for what you generate each month.",
+  "calc_label": "Higgsfield credits you need each month",
+  "calc_note": "The calculator uses the Individual plans on Higgsfield's pricing page, with Ultra at 3,000, 6,000 or 9,000 credits a month. Each model uses its own number of credits: for example Seedance 2.5 at 720p uses 35 credits per 5 seconds of video and Nano Banana Pro 2 credits per image. Subscription credits do not roll over. Unlimited models and free generations are not counted, since they only work on higgsfield.ai.",
+  "yearly_label": "Yearly",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        ["Credits", "None monthly"],
+        ["Commercial use", "No"]
+      ],
+      "features": [
+        "Limited access to selected AI models",
+        "1 generation at a time",
+        "Access to characters",
+        "Higgsfield ads"
+      ]
+    },
+    {
+      "name": "Starter",
+      "monthly": 19,
+      "annual_per_month": 19,
+      "rows": [
+        ["Credits", "270/mo"],
+        ["Commercial use", "Yes"]
+      ],
+      "features": [
+        "Unlimited Seedream 5.0 Lite and Flux.2 Pro (1K)",
+        "Parallel generations: 2 videos and 4 images",
+        "Seedance 2.0 Fast and 2.0 Mini access",
+        "Access to selected models and features",
+        "Credit top-ups with discount"
+      ]
+    },
+    {
+      "name": "Plus",
+      "monthly": 59,
+      "annual_per_month": 35,
+      "popular": true,
+      "rows": [
+        ["Credits", "1,200/mo"],
+        ["Commercial use", "Yes"]
+      ],
+      "features": [
+        "7-day unlimited Nano Banana Pro, Seedream 5.0 Pro and GPT Image 2.6 (2K)",
+        "All Seedance models",
+        "All models and features",
+        "Start and end frame control, Higgsfield Speak, UGC builder",
+        "Credit top-ups with discount"
+      ]
+    },
+    {
+      "name": "Ultra",
+      "monthly": 129,
+      "annual_per_month": 65,
+      "rows": [
+        ["Credits", "3,000/mo, up to 9,000"],
+        ["Commercial use", "Yes"]
+      ],
+      "features": [
+        "Everything in Plus",
+        "Unlimited paid parallel generations",
+        "Priority access to new models and features",
+        "Credit top-ups with discount"
+      ]
+    }
+  ],
+  "tiers_title": "Higgsfield credit options",
+  "tiers": [
+    {"name": "Free, no monthly credits", "monthly": 0, "annual_per_month": 0, "credits": 0},
+    {"name": "Starter, 270 credits", "monthly": 19, "annual_per_month": 19, "credits": 270},
+    {"name": "Plus, 1,200 credits", "monthly": 59, "annual_per_month": 35, "credits": 1200},
+    {"name": "Ultra, 3,000 credits", "monthly": 129, "annual_per_month": 65, "credits": 3000},
+    {"name": "Ultra, 6,000 credits", "monthly": 250, "annual_per_month": 110, "credits": 6000},
+    {"name": "Ultra, 9,000 credits", "monthly": 375, "annual_per_month": 150, "credits": 9000}
+  ],
+  "after_plans": "Yearly prices are the ones on Higgsfield's pricing page on 15 November 2026, during its Black Friday offer (up to 60% off yearly plans); the page does not show what yearly billing costs after the offer. On monthly billing the first month of Plus is $47 and of Ultra $79 (3,000 credits), $150 (6,000) or $209 (9,000), then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits: each model uses its own number per image or per seconds of video",
+    "Free option": "Free: no monthly credits, limited models, no commercial use",
+    "Cheapest paid plan": "Starter: $19/month for 270 credits",
+    "Most on a public plan": "Ultra with 9,000 credits a month: $375/month, or $150/month billed yearly in the current offer",
+    "Yearly billing": "Up to 60% off during the Black Friday offer"
+  },
+  "faq": [
+    [
+      "How much does Higgsfield cost?",
+      "Free is $0 with no monthly credits. Starter is $19/month for 270 credits. Plus is $59/month for 1,200 credits and Ultra is $129/month for 3,000 credits, going up to $375/month for 9,000. During the Black Friday offer, yearly billing is $35/month for Plus and from $65/month for Ultra."
+    ],
+    [
+      "How do Higgsfield credits work?",
+      "Each model uses a set number of credits per generation, depending on the model, the length and the resolution. For example Seedance 2.5 at 720p uses 35 credits per 5 seconds of video, and Nano Banana Pro uses 2 credits per image. Subscription credits do not roll over and expire at the end of each credit cycle."
+    ],
+    [
+      "Is Higgsfield free?",
+      "Yes. The Free plan gives limited access to selected AI models, no monthly credits and one generation at a time. Commercial use is not included on Free."
+    ],
+    [
+      "Can I buy more credits?",
+      "Yes. You can upgrade to a plan with more credits or buy credit packs without changing your subscription. Paid plans get credit top-ups at a discount."
+    ]
+  ]
+}
