@@ -432,7 +432,8 @@ def usage_page(d):
  <h2 id="plans-h" class="{H2}">{tool} plans</h2>
  <div class="mx-auto mt-10 flex {"max-w-4xl" if n < 4 else ""} flex-wrap justify-center gap-5 {widths}">{cards}</div>
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
- <div class="text-center">{compare_btn(d)}</div>
+ <div class="text-center">{compare_btn(d)}</div>{f'''
+ <p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d["free_page"]["slug"]}/">Is {tool} free?</a></p>''' if "free_page" in d else ""}
 </section>
 
 <section aria-labelledby="comp-h" class="mx-auto mt-16 max-w-4xl">
@@ -755,19 +756,23 @@ def free_page(d):
     Facts that are not prices live in data free_page as text; {placeholders} in it are filled from the plan prices."""
     fp, tool, cur = d["free_page"], e(d["tool"]), d.get("currency", "$")
     credits = lambda p: p.get("credits") or next(t["credits"] for t in d.get("tiers", []) if t["name"].startswith(p["name"] + ","))
-    free = next(p for p in d["plans"] if p.get("monthly") == 0)
+    free = next(p for p in d["plans"] if p.get("monthly") == 0 or p.get("price") == f"{cur}0")
     paid = next(p for p in d["plans"] if p["name"] == fp["paid"])
-    per_min = d["per_minute"]["chars_per_min"] if "per_minute" in d else fp.get("credits_per_min", 1)
-    first = fp.get("first_month")  # intro price shown on the official page, if any
-    paid_price = (f"{cur}{money(paid['monthly'])}/mo" + (f" ({cur}{money(first)} first month)" if first else "")
-                  + (f", or {cur}{money(paid['annual_per_month'])}/mo billed yearly" if paid.get("annual_per_month") else ", monthly billing only"))
-    v = dict(tool=d["tool"], owner=poss(d["tool"]), paid=paid["name"], paid_price=paid_price, cur=cur,
-             free_credits=f"{credits(free):,}", paid_credits=f"{credits(paid):,}",
-             free_min=f"{credits(free) // per_min:,}", paid_min=f"{credits(paid) // per_min:,}",
-             **{f"{p['name'].lower()}_yearly": money(p["annual_per_month"]) for p in d["plans"] if p.get("annual_per_month")},
-             **{f"{p['name'].lower()}_credits": f"{credits(p):,}" for p in d["plans"] if p.get("monthly")})
-    rows = [["Price", f"{cur}0", paid_price], ["Credits a month", v["free_credits"], v["paid_credits"]],
-            *[[c.format(**v) for c in r] for r in fp["rows"]]]
+    if "price_rows" in fp:  # usage tools (Vapi) have no credit plans, so the data gives the price rows as text
+        v = dict(tool=d["tool"], owner=poss(d["tool"]), paid=paid["name"], cur=cur)
+        rows = [[c.format(**v) for c in r] for r in fp["price_rows"] + fp["rows"]]
+    else:
+        per_min = d["per_minute"]["chars_per_min"] if "per_minute" in d else fp.get("credits_per_min", 1)
+        first = fp.get("first_month")  # intro price shown on the official page, if any
+        paid_price = (f"{cur}{money(paid['monthly'])}/mo" + (f" ({cur}{money(first)} first month)" if first else "")
+                      + (f", or {cur}{money(paid['annual_per_month'])}/mo billed yearly" if paid.get("annual_per_month") else ", monthly billing only"))
+        v = dict(tool=d["tool"], owner=poss(d["tool"]), paid=paid["name"], paid_price=paid_price, cur=cur,
+                 free_credits=f"{credits(free):,}", paid_credits=f"{credits(paid):,}",
+                 free_min=f"{credits(free) // per_min:,}", paid_min=f"{credits(paid) // per_min:,}",
+                 **{f"{p['name'].lower()}_yearly": money(p["annual_per_month"]) for p in d["plans"] if p.get("annual_per_month")},
+                 **{f"{p['name'].lower()}_credits": f"{credits(p):,}" for p in d["plans"] if p.get("monthly")})
+        rows = [["Price", f"{cur}0", paid_price], ["Credits a month", v["free_credits"], v["paid_credits"]],
+                *[[c.format(**v) for c in r] for r in fp["rows"]]]
     if "per_minute" in d:
         extra = d["per_minute"]["extra_per_min"]
         rows.append(["Extra minute of text to speech", f"About {cur}{extra[free['name']]:.2f}", f"About {cur}{extra[paid['name']]:.2f}"])
@@ -779,7 +784,7 @@ def free_page(d):
     faq = [(q.format(**v), x.format(**v)) for q, x in fp["faq"]]
     faq_html, schema = faq_block(faq)
     body = hero(fmt_date(d["checked"]), f"Is {d['tool']} free?", "text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl",
-                f"What the {tool} Free plan includes, what it leaves out, and what the cheapest paid plan adds.") + f"""
+                fp.get("lede", f"What the {tool} Free plan includes, what it leaves out, and what the cheapest paid plan adds.")) + f"""
 
 <section aria-labelledby="ans-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="ans-h" class="text-xl font-semibold text-white">The short answer</h2>
@@ -797,7 +802,7 @@ def free_page(d):
 </section>
 {faq_html}
 {page_end([d])}"""
-    title = f"Is {d['tool']} Free? What the Free Plan Includes ({d['checked'][:4]})"
+    title = f"Is {d['tool']} Free? {fp.get('title', 'What the Free Plan Includes')} ({d['checked'][:4]})"
     desc = fp["desc"].format(**v) + f" Free vs {paid['name']}, checked {fmt_date(d['checked'])}."
     return page(title, desc, f"/{fp['slug']}/", body, schema)
 

@@ -3,7 +3,7 @@
   "tool": "Synthesia",
   "slug": "synthesia-pricing",
   "source_url": "https://www.synthesia.io/pricing",
-  "checked": "2026-11-12",
+  "checked": "2026-11-15",
   "affiliate_url": "https://www.synthesia.io/?via=aistackprices",
   "unit_label": "Credits",
   "lede": "Every Synthesia plan, how many credits each one gives you, and the cheapest plan for the AI avatar videos you make.",
@@ -15,6 +15,7 @@
       "name": "Basic",
       "monthly": 0,
       "annual_per_month": 0,
+      "credits": 500,
       "rows": [
         [
           "Credits",
@@ -158,5 +159,69 @@
       "Is there a first-month discount?",
       "On monthly billing, Starter's first month is $9 (then $19/month). Pro's first month is $49 with 6,000 credits a month (then $89/month), $95 with 12,000, $179 with 24,000, $259 with 36,000 and $329 with 48,000."
     ]
-  ]
+  ],
+  "free_page": {
+    "slug": "is-synthesia-free",
+    "paid": "Starter",
+    "first_month": 9,
+    "lede": "What the Synthesia Basic plan gives you for free, what it leaves out, and what the cheapest paid plan adds.",
+    "rows": [
+      [
+        "Video a month",
+        "10 minutes",
+        "Up to about 12 more minutes, on top of the free allowance"
+      ],
+      [
+        "Watermark",
+        "Synthesia logo",
+        "No watermark"
+      ],
+      [
+        "MP4 downloads in Full HD",
+        "No",
+        "Yes"
+      ],
+      [
+        "AI avatars",
+        "9",
+        "125+"
+      ],
+      [
+        "Personal avatars",
+        "No",
+        "3"
+      ],
+      [
+        "Seats",
+        "1 editor",
+        "1 editor, 3 guests"
+      ],
+      [
+        "Comments from guests",
+        "No",
+        "Yes"
+      ],
+      [
+        "AI Video Assistant",
+        "No",
+        "Yes"
+      ]
+    ],
+    "answer": "Yes, {tool} has a free plan, Basic: {cur}0 with {free_credits} credits a month. Free videos carry a Synthesia watermark and cannot be downloaded as MP4. The cheapest paid plan is {paid} at {paid_price}.",
+    "faq": [
+      [
+        "What does the {tool} free allowance cover?",
+        "10 minutes of Studio video creation or dubbing and 3 survey responses. Basic also includes 10 Roleplay sessions a month, 140+ languages and voices, 60+ templates and sharing by link."
+      ],
+      [
+        "Do {paid} credits replace the free allowance?",
+        "No. The credits of {paid} and Pro come on top of the free allowance of the Basic plan."
+      ],
+      [
+        "What do {tool} credits pay for?",
+        "Credits are one shared pool for all AI usage-based features: video, dubbing, surveys and Syren, {owner} AI video agent."
+      ]
+    ],
+    "desc": "{tool} Basic is free with {free_credits} credits a month, but videos carry a watermark and cannot be downloaded."
+  }
 }

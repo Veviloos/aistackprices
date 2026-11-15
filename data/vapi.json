@@ -126,5 +126,66 @@
       ]
     }
   ],
-  "after_plans": "Extra call lines cost $10 each a month and extra organizations $20 each, on any package. Model costs are passed through with no markup."
+  "after_plans": "Extra call lines cost $10 each a month and extra organizations $20 each, on any package. Model costs are passed through with no markup.",
+  "free_page": {
+    "slug": "is-vapi-free",
+    "paid": "Core",
+    "title": "Free Credits and What You Pay",
+    "lede": "What you get on Vapi without a package, what you pay per minute once the free credits run out, and what the Core package adds.",
+    "price_rows": [
+      [
+        "Monthly fee",
+        "{cur}0",
+        "{cur}29/month, pre-paid, renews automatically"
+      ],
+      [
+        "Per minute",
+        "{cur}0.05 Vapi hosting fee plus providers at cost",
+        "The same, a package does not change the per-minute price"
+      ]
+    ],
+    "rows": [
+      [
+        "Concurrent calls",
+        "4",
+        "10"
+      ],
+      [
+        "Included Vapi phone numbers",
+        "1",
+        "5"
+      ],
+      [
+        "Raw data retention",
+        "14 days",
+        "30 days"
+      ],
+      [
+        "Zero Data Retention (ZDR)",
+        "No",
+        "Included"
+      ],
+      [
+        "Support",
+        "Discord community, email without a response SLA",
+        "Email, 2 business day response SLA"
+      ]
+    ],
+    "answer": "Only at the start. {tool} has no monthly fee and gives you {cur}5 in free credits. After that you pay for every minute your agents run, about {cur}0.08 to {cur}0.13 per minute with the default providers. The cheapest Success Package is {paid} at {cur}29/month.",
+    "faq": [
+      [
+        "What is in the {tool} per-minute cost?",
+        "Four parts: speech-to-text, the language model, text-to-speech and transport. Each is billed at the provider's listed price with no markup, and {tool} adds its {cur}0.05 per minute hosting fee."
+      ],
+      [
+        "Can I add call lines without a package?",
+        "Yes. Add-ons work on any package, including usage only: extra concurrent call lines are {cur}10 each a month and extra organizations {cur}20 each a month."
+      ],
+      [
+        "Is there a limit on {tool} agents?",
+        "No. Every package, including usage only, includes unlimited agents."
+      ]
+    ],
+    "desc": "{tool} has no monthly fee and gives {cur}5 in free credits, then charges for every minute your voice agents run."
+  }
 }
