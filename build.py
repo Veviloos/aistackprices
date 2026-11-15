@@ -111,6 +111,7 @@ FONT = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
 
 
 def page(title, desc, path, body, schema=None):
+    assert 25 <= len(desc) <= 160, f"{path}: meta description is {len(desc)} chars, Bing wants 25-160"
     NAV, NAV_DESK, YEAR = CHROME["nav"], CHROME["nav_desk"], datetime.date.today().year
     CSS_V = CHROME["css_v"]  # changes whenever site.css changes, so browsers drop their cached copy
     ld = f'<script type="application/ld+json">{json.dumps(schema)}</script>' if schema else ""
@@ -610,7 +611,7 @@ function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));
 K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",
-                "Independent, dated pricing for AI app builders, website builders, voice agents, automation, AI voices and AI video tools, with cost calculators. Copied from official pricing pages and checked daily.",
+                "Independent pricing for AI app and website builders, voice agents, automation, AI voice and video tools, copied from official pricing pages.",
                 "/", body)
 
 
@@ -745,7 +746,7 @@ R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.val
 </script>"""
     title = f"{d['tool']} Cost per Minute {d['checked'][:4]}: Every Plan Worked Out"
     desc = (f"{d['tool']} costs {rate(per(hi_m['monthly'], hi_m))} to {rate(per(lo_m['monthly'], lo_m))} per minute of audio on monthly billing, "
-            f"checked {fmt_date(d['checked'])}. Cost per minute on every plan and the cheapest plan for your audio.")
+            f"checked {fmt_date(d['checked'])}, with the cheapest plan for your audio.")
     return page(title, desc, f"/{pm['slug']}/", body, schema)
 
 
