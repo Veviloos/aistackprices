@@ -491,7 +491,7 @@ def compare_page(c, ds):
         by_cur = [f'{e(tools_txt([d["tool"] for d in ds if d.get("currency", "$") == cur]))} in {names_of.get(cur, cur)}' for cur in sorted(curs, key=lambda c: c != "€")]
         lede += f' Prices are listed: {"; ".join(by_cur)}. We show each as published and do not convert them.'
 
-    body = hero(checked, f"{names} pricing", ("text-xl min-[400px]:text-3xl sm:text-4xl xl:text-5xl" if len(names) > 30 else ("text-3xl min-[400px]:text-4xl" if len(names) > 21 else "text-4xl") + " sm:text-5xl lg:text-6xl"), lede) + f"""
+    body = hero(checked, f"{names} pricing", ("text-xl min-[400px]:text-3xl sm:text-4xl xl:text-5xl" if len(names) > 30 else ("text-3xl min-[400px]:text-4xl" if len(names) > 20 else "text-4xl") + " sm:text-5xl lg:text-6xl"), lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
  <h2 id="cmp-h" class="text-xl font-semibold text-white">Side by side</h2>
@@ -521,7 +521,7 @@ CATEGORIES = [
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
     ("ai-video", "AI video", "AI avatar videos, short clips cut from long videos and AI-generated video. Compare credits per plan and what a month of video costs.",
-     ["synthesia", "opusclip", "higgsfield"], "synthesia-vs-opusclip-vs-higgsfield"),
+     ["synthesia", "opusclip", "higgsfield", "invideo"], "synthesia-vs-opusclip-vs-higgsfield"),
 ]
 
 
@@ -569,7 +569,7 @@ def home_page(tools):
 <section id="calculator" aria-labelledby="calc-h" class="mx-auto max-w-4xl scroll-mt-16 {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
  <h2 id="calc-h" class="text-xl font-semibold text-white">Quick cost calculator</h2>
  <div role="group" aria-label="Category" class="mt-5 grid grid-cols-2 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm sm:grid-cols-3">{cat_tabs}</div>
- <div role="group" aria-label="Tool" class="mt-2 flex gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">{tabs}</div>
+ <div role="group" aria-label="Tool" id="w-tools" class="mt-2 grid grid-cols-1 gap-1 rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm data-[n=2]:grid-cols-2 data-[n=4]:grid-cols-2 sm:flex">{tabs}</div>
  <div class="mt-8 grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
   <div id="w-in">
    <div class="flex items-baseline justify-between gap-3">
@@ -610,7 +610,7 @@ function run(){{const w=W[cur],n=Math.max(0,+N.value||0);
   $('w-plan').textContent=x?f.label+' '+m(f.monthly)+' + '+x.toLocaleString('en-US')+' '+o.label+(x>1&&!o.label.endsWith('s')?'s':'')+' × '+w.cur+o.per_unit[f.name]+' = '+m(c(f))+'/mo.':f?(f.label+', billed monthly.'):'Above the largest public plan.';}}}}
 function pick(k){{cur=k;const w=W[k];T.forEach(t=>t.setAttribute('aria-pressed',t.dataset.tool===k));
  $('w-in').hidden=w.kind==='plan';$('w-label').textContent=w.label;R.max=w.max;R.step=w.step;N.value=R.value=w.start;$('w-note').textContent=w.note;$('w-link').href=w.href;run();}}
-function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));pick(CATS[c][0]);}}
+function cat(c){{K.forEach(b=>b.setAttribute('aria-pressed',b.dataset.cat===c));T.forEach(t=>t.hidden=!CATS[c].includes(t.dataset.tool));$('w-tools').dataset.n=CATS[c].length;pick(CATS[c][0]);}}
 K.forEach(b=>b.onclick=()=>cat(b.dataset.cat));T.forEach(t=>t.onclick=()=>pick(t.dataset.tool));R.oninput=()=>{{N.value=R.value;run();}};N.oninput=()=>{{R.value=Math.min(+N.value||0,+R.max);run();}};cat(Object.keys(CATS)[0]);
 </script>"""
     return page("AI Stack Prices: The Cost and Pricing Hub for AI Builders",

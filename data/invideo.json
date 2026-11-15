@@ -1,0 +1,99 @@
+{
+  "kind": "credits",
+  "tool": "InVideo",
+  "slug": "invideo-pricing",
+  "source_url": "https://invideo.io/pricing/",
+  "checked": "2026-11-15",
+  "affiliate_url": "",
+  "unit_label": "Credits",
+  "lede": "Every invideo AI plan, how many credits each seat gets, and the cheapest plan for the AI video and images you make each month.",
+  "calc_label": "InVideo credits you need each month",
+  "calc_note": "Prices and credits are per seat. The calculator uses the plans on invideo's pricing page, with Max at 5,000, 10,000 or 15,000 credits a month. invideo puts a Seedance 2.0 Fast video at about 30 credits and a Nano Banana Pro image at about 2.5. Unused credits do not roll over to the next month.",
+  "yearly_label": "Yearly",
+  "plans": [
+    {
+      "name": "Starter",
+      "monthly": 20,
+      "annual_per_month": 10,
+      "rows": [
+        ["Credits", "400/mo per seat"],
+        ["Storage", "200 GB"]
+      ],
+      "features": [
+        "Timeline editor and multiplayer editing, up to 5 seats",
+        "Agent Two Lite only",
+        "Seedance 2.0 Fast and 2.0 Mini, no Seedance 2.5",
+        "100 premium stock footage",
+        "No guest seats"
+      ]
+    },
+    {
+      "name": "Plus",
+      "monthly": 60,
+      "annual_per_month": 30,
+      "rows": [
+        ["Credits", "2,000/mo per seat"],
+        ["Storage", "600 GB"]
+      ],
+      "features": [
+        "Multiplayer editing, up to 10 seats",
+        "Agent Two Lite, Pro and Ultra",
+        "All models and features, Seedance 2.5 at 1080p",
+        "200 premium stock footage",
+        "10 free guest seats with 190 credits each",
+        "Early access to advanced AI features"
+      ]
+    },
+    {
+      "name": "Max",
+      "monthly": 150,
+      "annual_per_month": 75,
+      "rows": [
+        ["Credits", "5,000/mo per seat, up to 15,000"],
+        ["Storage", "2,000 GB"]
+      ],
+      "features": [
+        "Everything in Plus",
+        "Multiplayer editing, up to 20 seats",
+        "500 premium stock footage",
+        "20 free guest seats with 190 credits each",
+        "Lowest cost per credit"
+      ]
+    }
+  ],
+  "tiers_title": "InVideo credits per seat",
+  "tiers": [
+    {"name": "Starter, 400 credits", "monthly": 20, "annual_per_month": 10, "credits": 400},
+    {"name": "Plus, 2,000 credits", "monthly": 60, "annual_per_month": 30, "credits": 2000},
+    {"name": "Max, 5,000 credits", "monthly": 150, "annual_per_month": 75, "credits": 5000},
+    {"name": "Max, 10,000 credits", "monthly": 300, "annual_per_month": 150, "credits": 10000},
+    {"name": "Max, 15,000 credits", "monthly": 450, "annual_per_month": 225, "credits": 15000}
+  ],
+  "after_plans": "All prices are per seat. Max on the card is for 5,000 credits a month; more credits raise the price, as in the table. Yearly prices include invideo's current 50% off promotion for yearly plans; without it, yearly billing costs the same as 12 monthly payments. invideo has no free plan on its pricing page. Team, Business and Enterprise plans are listed separately.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Credits per seat: about 30 for a Seedance 2.0 Fast video, 2.5 for a Nano Banana Pro image",
+    "Free option": "No free plan listed",
+    "Cheapest paid plan": "Starter: $20/month, or $10/month billed yearly, for 400 credits",
+    "Most on a public plan": "Max with 15,000 credits a month: $450/month, or $225/month billed yearly",
+    "Yearly billing": "50% off in the current promotion"
+  },
+  "faq": [
+    [
+      "How much does InVideo cost?",
+      "Per seat: Starter is $20/month or $10/month billed yearly for 400 credits, Plus is $60/month or $30/month billed yearly for 2,000 credits, and Max is $150/month or $75/month billed yearly for 5,000 credits, going up to $450/month ($225 yearly) for 15,000."
+    ],
+    [
+      "What is an InVideo credit?",
+      "Credits are used for video creation, generative models and other features, not for downloading content. Each model costs a different number of credits: about 30 for a Seedance 2.0 Fast video and about 2.5 for a Nano Banana Pro image."
+    ],
+    [
+      "Do unused InVideo credits roll over?",
+      "No. Unused credits don't roll over to the next month."
+    ],
+    [
+      "Is InVideo free?",
+      "invideo's pricing page lists no free plan. The cheapest plan is Starter at $20 per seat a month, or $10 billed yearly."
+    ]
+  ]
+}
