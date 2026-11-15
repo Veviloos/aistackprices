@@ -1,0 +1,104 @@
+{
+  "kind": "credits",
+  "tool": "Gamma",
+  "slug": "gamma-pricing",
+  "source_url": "https://gamma.app/pricing",
+  "checked": "2026-11-15",
+  "affiliate_url": "",
+  "unit_label": "Credits",
+  "yearly_only": true,
+  "lede": "Every Gamma plan for AI presentations, how many AI credits each one gives you, and the cheapest plan for what you create each month.",
+  "calc_label": "Gamma AI credits you need each month",
+  "calc_note": "Prices are Gamma's yearly billing prices, the default view of its pricing page; monthly billing costs more and is not shown here. Credits are used for AI features, and the number an action uses depends on what you do, the AI model and the length of the generation. Free is not in the calculator: its 400 credits come once at signup and do not refill.",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "rows": [
+        ["Credits", "400 at signup"],
+        ["Slides per prompt", "Up to 10"]
+      ],
+      "features": [
+        "Simple presentations, docs, websites, social and images",
+        "Import from PDF and PPTX",
+        "Export to PDF, PPTX, PNG and Google Slides",
+        "No credit card required"
+      ]
+    },
+    {
+      "name": "Plus",
+      "monthly": 9,
+      "annual_per_month": 9,
+      "credits": 1500,
+      "rows": [
+        ["Credits", "1,500/mo"],
+        ["Slides per prompt", "Up to 100"]
+      ],
+      "features": [
+        "Everything in Free",
+        "Remove Gamma branding",
+        "Advanced AI image models"
+      ]
+    },
+    {
+      "name": "Pro",
+      "monthly": 18,
+      "annual_per_month": 18,
+      "credits": 4000,
+      "popular": true,
+      "rows": [
+        ["Credits", "4,000/mo"],
+        ["Custom domains", "Up to 10"]
+      ],
+      "features": [
+        "Everything in Plus",
+        "Premium AI image models",
+        "Custom branding",
+        "Detailed analytics and advanced sharing"
+      ]
+    },
+    {
+      "name": "Ultra",
+      "monthly": 90,
+      "annual_per_month": 90,
+      "credits": 20000,
+      "rows": [
+        ["Credits", "20,000/mo"],
+        ["Custom domains", "Up to 100"]
+      ],
+      "features": [
+        "Everything in Pro",
+        "The most advanced AI models (text, image, video)",
+        "Early access to new features"
+      ]
+    }
+  ],
+  "after_plans": "Prices are billed yearly: $108 a year for Plus, $216 for Pro and $1,080 for Ultra. Gamma says annual billing saves up to 28% compared to monthly billing. Unused credits roll over up to 2 times the monthly amount, and paid users can buy more credits. On individual plans each extra member is charged as a seat. Business plans (10,000 credits per seat a month) are on a separate tab. Taxes may apply.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "AI credits, used by AI features",
+    "Free option": "Free: 400 credits at signup that do not refill",
+    "Cheapest paid plan": "Plus: $9/month billed yearly ($108 a year)",
+    "Most on a public plan": "Ultra: $90/month billed yearly ($1,080 a year) for 20,000 credits a month",
+    "Yearly billing": "Save up to 28%"
+  },
+  "faq": [
+    [
+      "How much does Gamma cost?",
+      "Free is $0. Billed yearly, Plus is $9/month ($108 a year), Pro is $18/month ($216 a year) and Ultra is $90/month ($1,080 a year). Gamma says yearly billing saves up to 28% compared to monthly billing."
+    ],
+    [
+      "What are Gamma AI credits?",
+      "Credits are used for AI features throughout Gamma. The number an action uses depends on what you are doing, which AI model is used and the length or complexity of the generation. Plus includes 1,500 a month, Pro 4,000 and Ultra 20,000."
+    ],
+    [
+      "Do unused Gamma credits roll over?",
+      "Yes, up to 2 times the monthly amount. For example, Plus can hold up to 3,000 credits."
+    ],
+    [
+      "Is Gamma free?",
+      "Yes. The Free plan includes 400 credits at signup that do not refill, up to 10 slides per prompt, and export to PDF, PPTX, PNG and Google Slides."
+    ]
+  ]
+}

@@ -292,7 +292,8 @@ def credits_page(d):
             else "*:w-full sm:*:w-[calc(50%-0.625rem)] lg:*:w-[calc(25%-0.9375rem)]" if len(plans) == 4  # 2+2, then 4 in a row
             else "mx-auto max-w-3xl *:w-full md:*:w-[calc(50%-0.625rem)]" if len(plans) == 2
             else "*:w-full md:*:w-[calc(33.333%-0.834rem)]")
-    toggle = "" if monthly_only else f"""
+    yearly_only = d.get("yearly_only", False)  # the vendor page shows yearly billing prices only, so no toggle
+    toggle = "" if monthly_only or yearly_only else f"""
   <div role="group" aria-label="Billing period" class="inline-flex rounded-lg border border-slate-700 bg-slate-950/60 p-1 text-sm">
    <button type="button" id="yr" aria-pressed="true" class="{SEG}">{e(d["yearly_label"])}</button>
    <button type="button" id="mo" aria-pressed="false" class="{SEG}">Monthly</button>
@@ -381,7 +382,7 @@ if(Y){{Y.onclick=()=>bill(true);M.onclick=()=>bill(false);}}run();
     yearly = ("" if all(p.get("annual_per_month", p["monthly"]) == p["monthly"] for p in paid) else f" (or {cur}{money(ys[0])}/mo yearly)" if len(ys) == 1
               else f" (or {cur}{money(ys[0])}-{cur}{money(ys[-1])}/mo yearly)")
     desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}-{cur}{money(hi['monthly'])}/mo"
-            f"{yearly}. {d.get('unit_label', 'Credits')} per plan and a calculator.")
+            f"{' billed yearly' if yearly_only else yearly}. {d.get('unit_label', 'Credits')} per plan and a calculator.")
     if not calc:
         title = f"{d['tool']} Pricing {d['checked'][:4]}: Plans, Monthly and Yearly Prices"
         desc = (f"{d['tool']} pricing checked {checked}: {free}{cur}{money(lo['monthly'])}/mo"
