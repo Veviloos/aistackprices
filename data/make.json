@@ -3,7 +3,7 @@
   "tool": "Make",
   "slug": "make-pricing",
   "source_url": "https://www.make.com/pricing",
-  "checked": "2026-11-12",
+  "checked": "2026-11-15",
   "affiliate_url": "https://www.make.com/en/register?pc=aistackprices",
   "lede": "Every Make plan, what each credit tier costs, and the cheapest way to get the credits you need.",
   "calc_label": "Make credits you use each month",
@@ -168,5 +168,57 @@
       "Core, Pro or Teams?",
       "Core gives unlimited active scenarios, scheduling down to the minute and access to the Make API. Pro adds priority scenario execution, custom variables and full-text execution log search. Teams adds teams and team roles, and creating and sharing scenario templates."
     ]
-  ]
+  ],
+  "free_page": {
+    "slug": "is-make-free",
+    "paid": "Core",
+    "rows": [
+      [
+        "Active scenarios",
+        "2",
+        "Unlimited"
+      ],
+      [
+        "Shortest interval between scheduled runs",
+        "15 minutes",
+        "1 minute"
+      ],
+      [
+        "Longest scenario run",
+        "5 minutes",
+        "40 minutes"
+      ],
+      [
+        "Largest file",
+        "5 MB",
+        "100 MB"
+      ],
+      [
+        "Execution logs kept",
+        "7 days",
+        "30 days"
+      ],
+      [
+        "Make API",
+        "No",
+        "Yes, 60 calls a minute"
+      ]
+    ],
+    "answer": "Yes, {tool} has a free plan: {cur}0 with {free_credits} credits a month. It runs up to 2 active scenarios, at most every 15 minutes. The cheapest paid plan is {paid} at {paid_price}, for {paid_credits} credits a month.",
+    "faq": [
+      [
+        "What counts as a {tool} credit?",
+        "Each module action in a scenario, such as adding a Google Sheets row or fetching Gmail data, uses 1 credit. Some AI features use more."
+      ],
+      [
+        "What happens when I run out of credits on the {tool} Free plan?",
+        "Your credits renew at the start of the next term. Before then you can upgrade your plan. Automatic top-ups of 10,000 credits are only for the Core, Pro and Teams plans."
+      ],
+      [
+        "Do unused {tool} credits roll over?",
+        "No. Credits expire at the end of the term."
+      ]
+    ],
+    "desc": "{tool} Free gives {free_credits} credits a month, 2 active scenarios and runs every 15 minutes at most."
+  }
 }
