@@ -338,7 +338,7 @@ def credits_page(d):
 </section>"""
     plans_top = (f'<p class="mt-3 text-center text-slate-400">{hint}</p>' if calc
                  else f'<div class="mt-6 flex justify-center">{toggle}</div>')
-    body = hero(checked, f"{d['tool']} pricing and real costs", ("text-3xl min-[400px]:text-4xl" if len(d["tool"]) > 8 else "text-4xl") + " sm:text-5xl lg:text-6xl", source_lede(d)) + calc_html + f"""
+    body = hero(checked, f"{d['tool']} pricing and real costs", ("text-2xl min-[400px]:text-4xl sm:text-5xl" if len(d["tool"]) > 14 else ("text-3xl min-[400px]:text-4xl" if len(d["tool"]) > 8 else "text-4xl") + " sm:text-5xl lg:text-6xl"), source_lede(d)) + calc_html + f"""
 
 <section aria-labelledby="plans-h" class="mt-16">
  <h2 id="plans-h" class="{H2}">All {tool}&nbsp;plans</h2>
@@ -487,7 +487,7 @@ def compare_page(c, ds):
         by_cur = [f'{e(tools_txt([d["tool"] for d in ds if d.get("currency", "$") == cur]))} in {names_of.get(cur, cur)}' for cur in sorted(curs, key=lambda c: c != "€")]
         lede += f' Prices are listed: {"; ".join(by_cur)}. We show each as published and do not convert them.'
 
-    body = hero(checked, f"{names} pricing", ("text-3xl min-[400px]:text-4xl" if len(names) > 21 else "text-4xl") + " sm:text-5xl lg:text-6xl", lede) + f"""
+    body = hero(checked, f"{names} pricing", ("text-xl min-[400px]:text-3xl sm:text-4xl xl:text-5xl" if len(names) > 30 else ("text-3xl min-[400px]:text-4xl" if len(names) > 21 else "text-4xl") + " sm:text-5xl lg:text-6xl"), lede) + f"""
 
 <section aria-labelledby="cmp-h" class="mx-auto max-w-4xl {PANEL} p-6 sm:p-8">
  <h2 id="cmp-h" class="text-xl font-semibold text-white">Side by side</h2>
@@ -511,7 +511,7 @@ CATEGORIES = [
     ("website-builders", "Website builders", "Design and host websites without code. Compare plans, bandwidth and AI credits, and what your site will cost.",
      ["webflow", "framer"], "webflow-vs-framer"),
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
-     ["retell", "vapi"], "vapi-vs-retell-ai"),
+     ["retell", "vapi", "elevenlabs-agents"], "vapi-vs-retell-ai-vs-elevenlabs"),
     ("automation", "Automation", "Workflow automation billed by runs, credits or tasks. See what your monthly volume costs, in each vendor's own currency.",
      ["n8n", "make", "zapier"], "n8n-vs-make-vs-zapier"),
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
