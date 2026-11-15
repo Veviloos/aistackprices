@@ -252,5 +252,155 @@
       ]
     ],
     "desc": "{tool} Free gives {free_credits} credits a month, about {free_min} minutes of text to speech, without commercial use."
-  }
+  },
+  "answer_pages": [
+    {
+      "slug": "elevenlabs-api-pricing",
+      "checked": "2026-11-15",
+      "link": "ElevenLabs API pricing per model",
+      "title": "ElevenLabs API Pricing 2026: Cost per 1,000 Characters & Plans",
+      "h1": "ElevenLabs API pricing",
+      "lede": "What the ElevenLabs API costs per model, and how much API usage each plan includes, from the ElevenAPI tab of the official pricing page.",
+      "desc": "ElevenLabs API cost: text to speech $0.04-$0.08 per 1,000 characters, speech to text from $0.20/hour, and the API usage each plan includes.",
+      "answer": "The {tool} API is billed in US dollars, not credits. Text to speech costs $0.08 per 1,000 characters on v4, v3 and v2 Multilingual, and $0.04 on v4 Turbo, v3 Conversational and Flash / Turbo. Every plan includes some API usage: Starter, at {cur}{starter_monthly}/month, includes 75,000 characters on v4.",
+      "tables": [
+        {
+          "title": "API price per model",
+          "head": [
+            "Model",
+            "Price"
+          ],
+          "rows": [
+            [
+              "Text to Speech v4",
+              "$0.08 per 1K characters"
+            ],
+            [
+              "Text to Speech v4 Turbo",
+              "$0.04 per 1K characters"
+            ],
+            [
+              "Text to Speech v3",
+              "$0.08 per 1K characters"
+            ],
+            [
+              "Text to Speech v3 Conversational",
+              "$0.04 per 1K characters"
+            ],
+            [
+              "Text to Speech v2 Multilingual",
+              "$0.08 per 1K characters"
+            ],
+            [
+              "Text to Speech Flash / Turbo",
+              "$0.04 per 1K characters"
+            ],
+            [
+              "Speech to Text Scribe v3, v2 and v2 Medical",
+              "$0.20 per hour"
+            ],
+            [
+              "Speech to Text Scribe v3 Live and v2 Realtime",
+              "$0.22 per hour"
+            ],
+            [
+              "Realtime API v1 Mini and v1 Max",
+              "$0.08 per minute, plus LLM usage"
+            ],
+            [
+              "Speech Engine",
+              "$0.08 per minute"
+            ],
+            [
+              "Music",
+              "$0.15 per minute"
+            ],
+            [
+              "Voice Isolator, Voice Changer, Sound Effects",
+              "$0.12 per minute"
+            ],
+            [
+              "Dubbing v1",
+              "$0.33 per minute with a watermark, $0.50 without"
+            ],
+            [
+              "Dubbing v2",
+              "$2.20 per minute"
+            ]
+          ],
+          "note": "Prices exclude all taxes, levies and duties."
+        },
+        {
+          "title": "API usage by plan",
+          "head": [
+            "Plan",
+            "Price, monthly billing",
+            "v4 characters",
+            "Flash / Turbo characters"
+          ],
+          "rows": [
+            [
+              "Free / Pay as you go",
+              "{cur}0",
+              "10,000 (about 10 min)",
+              "20,000 (about 20 min)"
+            ],
+            [
+              "Starter",
+              "{cur}{starter_monthly}/mo, first month $1",
+              "75,000 (about 75 min)",
+              "150,000 (about 150 min)"
+            ],
+            [
+              "Creator",
+              "{cur}{creator_monthly}/mo, first month $11",
+              "275,000 (about 275 min)",
+              "550,000 (about 550 min)"
+            ],
+            [
+              "Pro",
+              "{cur}{pro_monthly}/mo",
+              "1,238,000 (about 1,238 min)",
+              "2,475,000 (about 2,475 min)"
+            ],
+            [
+              "Scale",
+              "{cur}{scale_monthly}/mo",
+              "3,738,000 (about 3,738 min)",
+              "7,475,000 (about 7,475 min)"
+            ],
+            [
+              "Business",
+              "{cur}{business_monthly}/mo",
+              "12,375,000 (about 12,375 min)",
+              "24,750,000 (about 24,750 min)"
+            ]
+          ],
+          "note": "Minutes are {owner} own estimates. v3 and v2 Multilingual include the same characters as v4; v4 Turbo and v3 Conversational the same as Flash / Turbo. Enterprise has custom pricing."
+        }
+      ],
+      "faq": [
+        [
+          "How is {tool} API usage metered?",
+          "Text to speech is billed per character, speech to text per audio minute, music and sound effects per generation, and dubbing per minute of source audio."
+        ],
+        [
+          "What do the speech to text extras cost?",
+          "On Scribe v3, v2 and v2 Medical, keyterm prompting costs $0.05 per hour and transcript editing $0.07 per hour. On Scribe v3 Live and v2 Realtime, keyterm prompting is $0.08 per hour, the keyterm library (Scribe v3 Live only) $0.08 and transcript editing $0.12."
+        ],
+        [
+          "What does the {tool} Realtime API cost in tokens?",
+          "On top of the per-minute price, Realtime v1 Mini costs $0.20 per 1M input tokens and $6.00 per 1M output tokens, and Realtime v1 Max $1.80 and $9.00. Connected audio above your concurrency limit is billed at a burst price of $0.16 per minute."
+        ],
+        [
+          "Can I use custom voices through the API?",
+          "Yes. You can use any voice in your library by its ID, including cloned, professional and designed voices."
+        ],
+        [
+          "What happens to unused API usage if I change plans?",
+          "After an upgrade, unused credits roll over into the next billing cycle. After a downgrade or cancellation, the plan stays active until the end of the cycle, then the account moves to Free and unused paid credits expire."
+        ]
+      ]
+    }
+  ]
 }

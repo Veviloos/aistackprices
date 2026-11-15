@@ -223,5 +223,68 @@
       ]
     ],
     "desc": "{tool} Basic is free with {free_credits} credits a month, but videos carry a watermark and cannot be downloaded."
-  }
+  },
+  "answer_pages": [
+    {
+      "slug": "synthesia-cost-per-user",
+      "link": "Synthesia cost per user",
+      "title": "Synthesia Cost per User 2026: Seats and Price on Every Plan",
+      "h1": "Synthesia cost per user",
+      "lede": "What one Synthesia user costs on every plan, and how many editors and guests each plan includes.",
+      "desc": "Synthesia cost per user: Starter and Pro each include 1 editor, from {cur}{starter_monthly}/mo. Editors, guests and price on every plan.",
+      "answer": "Every self-serve {tool} plan includes one editor, so one user costs the plan price: Starter at {cur}{starter_monthly}/month with 3 guests, or Pro from {cur}{pro_monthly}/month with 5 guests. A custom number of editors is listed only on Enterprise, which has custom pricing.",
+      "tables": [
+        {
+          "title": "Seats and price by plan",
+          "head": [
+            "Plan",
+            "Seats",
+            "Monthly billing",
+            "Yearly billing"
+          ],
+          "rows": [
+            [
+              "Basic",
+              "1 editor",
+              "{cur}0",
+              "{cur}0"
+            ],
+            [
+              "Starter",
+              "1 editor, 3 guests",
+              "{cur}{starter_monthly}/mo, first month $9",
+              "{cur}{starter_yearly}/mo ({cur}{starter_year}/year)"
+            ],
+            [
+              "Pro",
+              "1 editor, 5 guests",
+              "From {cur}{pro_monthly}/mo, first month from $49",
+              "From {cur}{pro_yearly}/mo ({cur}{pro_year}/year)"
+            ],
+            [
+              "Enterprise",
+              "Custom number of editors and guests",
+              "Custom",
+              "Custom"
+            ]
+          ],
+          "note": "{owner} pricing page describes seats as the maximum number of seats your workspace includes. Pro prices are for 6,000 credits a month; more credits cost more."
+        }
+      ],
+      "faq": [
+        [
+          "Can I add more editors to {tool} Starter or Pro?",
+          "The pricing page shows a fixed 1 editor on Starter and Pro and gives no price for extra seats. For more editors, {tool} points to Enterprise, where you book a demo for a quote."
+        ],
+        [
+          "Is yearly billing cheaper per user?",
+          "Yes. Billed yearly, Starter is {cur}{starter_yearly}/month and Pro starts at {cur}{pro_yearly}/month, paid for the whole year up front."
+        ],
+        [
+          "Is there a free {tool} seat?",
+          "Yes. The Basic plan is {cur}0 with 1 editor and 10 minutes of video a month, and its videos carry a {tool} watermark."
+        ]
+      ]
+    }
+  ]
 }

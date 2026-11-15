@@ -349,7 +349,8 @@ def credits_page(d):
  <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-slate-500">{e(d["after_plans"])}</p>
  <div class="text-center">{compare_btn(d)}</div>{f'''
  <p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d["per_minute"]["slug"]}/">{tool} cost per minute on every plan</a></p>''' if "per_minute" in d else ""}{f'''
- <p class="mt-2 text-center text-sm"><a class="{LINK}" href="/{d["free_page"]["slug"]}/">Is {tool} free?</a></p>''' if "free_page" in d else ""}
+ <p class="mt-2 text-center text-sm"><a class="{LINK}" href="/{d["free_page"]["slug"]}/">Is {tool} free?</a></p>''' if "free_page" in d else ""}{"".join(f'''
+ <p class="mt-2 text-center text-sm"><a class="{LINK}" href="/{ap["slug"]}/">{e(ap["link"])}</a></p>''' for ap in d.get("answer_pages", []))}
 </section>
 {faq_html}
 {page_end([d], cta=False)}
@@ -808,6 +809,45 @@ def free_page(d):
     return page(title, desc, f"/{fp['slug']}/", body, schema)
 
 
+def answer_page(d, ap):
+    """A page that answers one search (e.g. "ElevenLabs API cost"): short answer, tables, FAQ.
+    Text lives in data answer_pages; {placeholders} are filled from the plan prices so they never drift."""
+    tool, cur = e(d["tool"]), d.get("currency", "$")
+    v = dict(tool=d["tool"], owner=poss(d["tool"]), cur=cur)
+    for p in d["plans"]:
+        n = p["name"].lower().replace(" ", "_")
+        if "monthly" in p:
+            v[f"{n}_monthly"] = money(p["monthly"])
+        if "annual_per_month" in p:
+            v.update({f"{n}_yearly": money(p["annual_per_month"]), f"{n}_year": money(p["annual_per_month"] * 12)})
+    f = lambda s: s.format(**v)
+    def table(i, t):
+        trs = "".join(f'<tr class="border-t border-slate-800 max-sm:block max-sm:py-3"><th scope="row" class="{TH} max-sm:block max-sm:py-1 max-sm:font-medium max-sm:text-white">{e(f(r[0]))}</th>'
+                      + "".join(f'<td class="py-3 pr-4 align-top text-slate-300 tabular-nums max-sm:block max-sm:py-1"><span class="text-slate-500 sm:hidden">{e(h)}: </span>{e(f(c))}</td>'
+                                for h, c in zip(t["head"][1:], r[1:])) + "</tr>" for r in t["rows"])
+        note = f'\n <p class="mt-4 text-xs text-slate-500">{e(f(t["note"]))}</p>' if "note" in t else ""
+        return f"""
+<section aria-labelledby="t{i}-h" class="mx-auto mt-10 max-w-4xl {PANEL} p-6 sm:p-8">
+ <h2 id="t{i}-h" class="text-xl font-semibold text-white">{e(f(t["title"]))}</h2>
+ <table class="mt-4 {TABLE}">
+  <thead class="text-xs text-slate-500 max-sm:hidden"><tr>{"".join(f'<th scope="col" class="py-2 pr-4 font-normal">{e(h)}</th>' for h in t["head"])}</tr></thead>
+  <tbody>{trs}</tbody>
+ </table>{note}
+</section>"""
+    faq_html, schema = faq_block([(f(q), f(x)) for q, x in ap["faq"]])
+    body = hero(fmt_date(ap.get("checked", d["checked"])), f(ap["h1"]), "text-3xl min-[400px]:text-4xl sm:text-5xl lg:text-6xl", e(f(ap["lede"]))) + f"""
+
+<section aria-labelledby="ans-h" class="mx-auto max-w-4xl {PANEL} p-6 shadow-[0_0_60px_-20px_rgba(99,102,241,0.45)] sm:p-8">
+ <h2 id="ans-h" class="text-xl font-semibold text-white">The short answer</h2>
+ <p class="mt-4 leading-relaxed text-slate-300">{e(f(ap["answer"]))}</p>
+</section>
+{"".join(table(i, t) for i, t in enumerate(ap["tables"]))}
+<p class="mt-6 text-center text-sm"><a class="{LINK}" href="/{d['slug']}/">All {tool} plans and what each one includes</a></p>
+{faq_html}
+{page_end([d])}"""
+    return page(f(ap["title"]), f(ap["desc"]), f"/{ap['slug']}/", body, schema)
+
+
 def price_changes_page(changes, tools):
     """Every price change the daily check found, newest first, each checked by hand against the official page."""
     items = "".join(f"""<li class="{PANEL} p-6">
@@ -923,6 +963,8 @@ def main():
             out[f"/{d['per_minute']['slug']}/"] = (per_minute_page(d), d["checked"])
         if "free_page" in d:
             out[f"/{d['free_page']['slug']}/"] = (free_page(d), d["checked"])
+        for ap in d.get("answer_pages", []):
+            out[f"/{ap['slug']}/"] = (answer_page(d, ap), ap.get("checked", d["checked"]))  # own date when checked on another day than the plans
     changes = json.loads((ROOT / "data" / "price-changes.json").read_text())
     out["/price-changes/"] = (price_changes_page(changes, tools), max(c["date"] for c in changes))
     comps = []
