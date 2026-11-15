@@ -1,0 +1,20 @@
+$0
+$1
+Then $6 per month
+$11
+Then $22 per month
+$99
+$299
+$990
+$0.0029/min
+$11 $22
+Includes 275 call minutes / month ($0.08/min for additional)
+$0.78 / month Gemini 2.5 Flash (deduct from ElevenLabs credits)
+$6 per month, first month $1
+$22 per month, first month $11
+$99 per month
+$299 per month
+$990 per month
+$0.080
+$0.003
+$0.160
