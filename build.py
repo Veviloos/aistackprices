@@ -10,6 +10,7 @@ import datetime
 import hashlib
 import html
 import json
+import re
 import math
 import pathlib
 import shutil
@@ -940,6 +941,16 @@ def main():
     (DIST / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n'
                                       f'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n')
     (DIST / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
+    # llms.txt: plain index of every page for AI search tools (llmstxt.org format)
+    meta = lambda doc, name: html.unescape(re.search(rf'<{name}>(.*?)</{name.split()[0]}>' if name == "title" else r'name="description" content="(.*?)"', doc).group(1))
+    lines = "".join(f"- [{meta(doc, 'title')}]({SITE}{p}): {meta(doc, 'description')} Checked {m}.\n" for p, (doc, m) in sorted(out.items()))
+    (DIST / "llms.txt").write_text("# AI Stack Prices\n\n> Independent pricing for AI tools, copied from each tool's official pricing page and dated. "
+                                   "Prices stay in the currency of the official page. Some links are affiliate links; they never change the prices shown.\n\n"
+                                   f"## Pages\n\n{lines}")
+    # real 404 so unknown URLs are not served as the homepage
+    (DIST / "404.html").write_text(page("Page not found", "This page does not exist. Every AI tool price on AI Stack Prices starts from the homepage.", "/404/",
+                                        '<section class="mx-auto max-w-2xl py-24 text-center"><h1 class="text-4xl font-semibold text-white">Page not found</h1>'
+                                        f'<p class="mt-6"><a class="{LINK}" href="/">Go to the homepage</a></p></section>').replace("<head>", '<head><meta name="robots" content="noindex">', 1))
     print(f"built {len(out)} page(s) into {DIST}: {', '.join(sorted(out))}")
 
 
