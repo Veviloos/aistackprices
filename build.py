@@ -792,7 +792,7 @@ def free_page(d):
 </section>
 
 <section aria-labelledby="fp-h" class="mx-auto mt-10 max-w-4xl {PANEL} p-6 sm:p-8">
- <h2 id="fp-h" class="text-xl font-semibold text-white">Free vs {e(paid["name"])}</h2>
+ <h2 id="fp-h" class="text-xl font-semibold text-white">{e(free["name"])} vs {e(paid["name"])}</h2>
  <table class="mt-4 {TABLE}">
   <thead class="text-xs text-slate-500 max-sm:hidden"><tr>{"".join(f'<th scope="col" class="py-2 pr-4 font-normal">{h}</th>' for h in head)}</tr></thead>
   <tbody>{trs}</tbody>
