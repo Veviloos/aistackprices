@@ -536,7 +536,7 @@ def categories_menu(tools, a_cls):
                     for cid, title, _, keys, _ in CATEGORIES)
     return (f'<details data-menu class="relative"><summary class="{a_cls} flex cursor-pointer list-none items-center gap-1 [&::-webkit-details-marker]:hidden">Categories'
             '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 4.5 6 7.5 9 4.5"/></svg></summary>'
-            '<div class="absolute right-0 z-40 mt-3 grid w-[30rem] grid-cols-2 gap-1 rounded-xl border border-slate-800 bg-slate-950 p-2 whitespace-normal shadow-2xl shadow-black/60" '
+            '<div class="absolute right-0 z-40 mt-3 grid w-72 grid-cols-1 gap-1 rounded-xl border border-slate-800 bg-slate-950 p-2 whitespace-normal shadow-2xl shadow-black/60" '
             f'onclick="if(event.target.closest(\'a\'))this.parentElement.open=false">{items}</div></details>')
 
 
