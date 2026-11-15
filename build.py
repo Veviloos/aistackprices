@@ -521,7 +521,7 @@ CATEGORIES = [
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
     ("ai-video", "AI video", "AI avatar videos, short clips cut from long videos and AI-generated video. Compare credits per plan and what a month of video costs.",
-     ["synthesia", "opusclip", "higgsfield", "invideo"], "synthesia-vs-opusclip-vs-higgsfield"),
+     ["synthesia", "opusclip", "higgsfield", "invideo", "descript"], "synthesia-vs-opusclip-vs-higgsfield"),
 ]
 
 

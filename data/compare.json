@@ -10,5 +10,6 @@
   {"slug": "elevenlabs-vs-speechify", "a": "elevenlabs", "b": "speechify"},
   {"slug": "synthesia-vs-opusclip-vs-higgsfield", "tools": ["synthesia", "opusclip", "higgsfield"]},
   {"slug": "invideo-vs-higgsfield", "a": "invideo", "b": "higgsfield"},
+  {"slug": "descript-vs-opusclip", "a": "descript", "b": "opusclip"},
   {"slug": "synthesia-vs-opusclip", "a": "synthesia", "b": "opusclip"}
 ]

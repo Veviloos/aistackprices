@@ -1,0 +1,111 @@
+{
+  "kind": "credits",
+  "tool": "Descript",
+  "slug": "descript-pricing",
+  "source_url": "https://www.descript.com/pricing",
+  "checked": "2026-11-15",
+  "affiliate_url": "",
+  "unit_label": "Media minutes",
+  "lede": "Every Descript plan, how many media hours and AI credits each one gives you, and the cheapest plan for the video and audio you edit each month.",
+  "calc_label": "Minutes of media you upload or record each month",
+  "calc_note": "The calculator compares plans by media minutes, the minutes of imported or recorded media Descript processes each month, per editor. AI features like Underlord, Studio Sound and generated media use AI credits instead: 400 a month on Hobbyist, 800 on Creator and 1,500 on Business. Enterprise is custom.",
+  "yearly_label": "Yearly, save up to 35%",
+  "plans": [
+    {
+      "name": "Free",
+      "monthly": 0,
+      "annual_per_month": 0,
+      "credits": 60,
+      "rows": [
+        ["Media", "1 hour/mo"],
+        ["AI credits", "100, one time"]
+      ],
+      "features": [
+        "Text-based editing",
+        "Limited AI tools",
+        "Export up to 720p",
+        "5 GB cloud storage"
+      ]
+    },
+    {
+      "name": "Hobbyist",
+      "monthly": 24,
+      "annual_per_month": 16,
+      "credits": 600,
+      "rows": [
+        ["Media", "10 hours/mo"],
+        ["AI credits", "400/mo"]
+      ],
+      "features": [
+        "Export 1080p, watermark-free",
+        "Access to Underlord, the AI video co-editor",
+        "AI tools including Studio Sound, Remove Filler Words and Create Clips",
+        "AI Speech with custom voice clones and video regenerate",
+        "1 person included"
+      ]
+    },
+    {
+      "name": "Creator",
+      "monthly": 35,
+      "annual_per_month": 24,
+      "credits": 1800,
+      "popular": true,
+      "rows": [
+        ["Media", "30 hours/mo"],
+        ["AI credits", "800/mo"]
+      ],
+      "features": [
+        "Export 4k, watermark-free",
+        "Full access to Underlord and 20+ more AI tools",
+        "Generate video with the latest AI models",
+        "Unlimited royalty-free stock media library",
+        "Top ups for more media hours and AI credits",
+        "Scale to a team of 3 (billed separately)"
+      ]
+    },
+    {
+      "name": "Business",
+      "monthly": 65,
+      "annual_per_month": 50,
+      "credits": 2400,
+      "rows": [
+        ["Media", "40 hours/mo"],
+        ["AI credits", "1,500/mo"]
+      ],
+      "features": [
+        "Team-wide access to Brand Studio",
+        "Translate and dub video in 30+ languages with proofread",
+        "Custom avatars from photo upload or text",
+        "Priority support (with SLA)",
+        "Scale to a team of 5 (billed separately)"
+      ]
+    }
+  ],
+  "after_plans": "Prices are per person a month. Media hours count media you upload or record in Descript, whether or not it is transcribed; AI credits pay for AI features like Underlord, Studio Sound, Green Screen, Eye Contact and generated media. Creator and Business can buy top ups for more media hours and AI credits. Enterprise has custom pricing, with AI credits and media hours sized to your team, SSO and SCIM.",
+  "compare": {
+    "Prices shown in": "US dollars ($), not converted",
+    "What you pay for": "Media hours you upload or record, plus AI credits for AI features",
+    "Free option": "Free: 1 hour of media a month and 100 AI credits once, export up to 720p",
+    "Cheapest paid plan": "Hobbyist: $24/month, or $16/month billed yearly",
+    "Most on a public plan": "Business: $65/month, or $50/month billed yearly, for 40 media hours and 1,500 AI credits a month",
+    "Yearly billing": "Save up to 35%"
+  },
+  "faq": [
+    [
+      "How much does Descript cost?",
+      "Free is $0. Hobbyist is $24/month or $16/month billed yearly, Creator $35/month or $24/month billed yearly, and Business $65/month or $50/month billed yearly, per person. Enterprise is custom."
+    ],
+    [
+      "What are media hours and AI credits?",
+      "Media hours track media files you upload or record in Descript, whether or not you transcribe them. AI credits track your use of AI features like Underlord, Studio Sound, Green Screen, Eye Contact and AI-generated media and avatars."
+    ],
+    [
+      "Is Descript free?",
+      "Yes. The Free plan includes 1 hour of media a month, 100 AI credits one time, limited AI tools and exports up to 720p. No credit card is needed."
+    ],
+    [
+      "How many people does each Descript plan include?",
+      "Hobbyist includes 1 person. Creator scales to a team of 3 and Business to a team of 5, each seat billed separately."
+    ]
+  ]
+}
