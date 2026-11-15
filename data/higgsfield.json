@@ -84,14 +84,14 @@
     {"name": "Ultra, 6,000 credits", "monthly": 250, "annual_per_month": 110, "credits": 6000},
     {"name": "Ultra, 9,000 credits", "monthly": 375, "annual_per_month": 150, "credits": 9000}
   ],
-  "after_plans": "Yearly prices are the ones on Higgsfield's pricing page on 15 November 2026, during its Black Friday offer (up to 60% off yearly plans); the page does not show what yearly billing costs after the offer. On monthly billing the first month of Plus is $47 and of Ultra $79 (3,000 credits), $150 (6,000) or $209 (9,000), then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
+  "after_plans": "Yearly prices include Higgsfield's current Black Friday discount (up to 60% off yearly plans, kept when the plan renews); without it, yearly billing costs the same as 12 monthly payments. On monthly billing the first month of Plus is $47 and of Ultra $79 (3,000 credits), $150 (6,000) or $209 (9,000), then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: each model uses its own number per image or per seconds of video",
     "Free option": "Free: no monthly credits, limited models, no commercial use",
     "Cheapest paid plan": "Starter: $19/month for 270 credits",
     "Most on a public plan": "Ultra with 9,000 credits a month: $375/month, or $150/month billed yearly in the current offer",
-    "Yearly billing": "Up to 60% off during the Black Friday offer"
+    "Yearly billing": "Up to 60% off in the current Black Friday offer"
   },
   "faq": [
     [
