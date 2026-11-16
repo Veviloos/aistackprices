@@ -517,7 +517,7 @@ CATEGORIES = [
      ["webflow", "framer"], "webflow-vs-framer"),
     ("voice-agents", "AI voice agents", "Phone agents billed by the minute. See the per-minute rate and your bill for your call volume.",
      ["retell", "vapi", "elevenlabs-agents"], "vapi-vs-retell-ai-vs-elevenlabs"),
-    ("automation", "Automation", "Workflow automation billed by runs, credits or tasks. See what your monthly volume costs, in each vendor's own currency.",
+    ("automation", "Automation", "Workflow automation billed by runs, credits or tasks. See what your monthly volume costs.",
      ["n8n", "make", "zapier"], "n8n-vs-make-vs-zapier"),
     ("ai-voices", "AI voices", "Text to speech for voiceovers and apps. Compare credits and characters per plan, and what your monthly audio costs.",
      ["elevenlabs", "speechify"], "elevenlabs-vs-speechify"),
