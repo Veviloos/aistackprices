@@ -18,6 +18,7 @@ from playwright.sync_api import sync_playwright
 
 ROOT = pathlib.Path(__file__).parent.parent
 SNAP = ROOT / "snapshots"
+UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
 GROQ_MODEL = "openai/gpt-oss-20b"
 # body.innerText skips shadow DOM; Make renders its plans in <code-island> shadow roots, so add their text after the body's.
 # shortcut: only shadow roots attached to light-DOM elements, nested ones are skipped; walk them recursively if a page needs it.
@@ -79,17 +80,26 @@ def main():
     changed = 0
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
-        for f, d in tools:
-            page = browser.new_page(viewport={"width": 1400, "height": 1000})
+        headed = None  # some sites (Gamma) answer headless Chromium with a Cloudflare challenge; retry those headed under xvfb
+
+        def read(b, **kw):
+            page = b.new_page(viewport={"width": 1400, "height": 1000}, **kw)
             try:
                 page.goto(d["source_url"], wait_until="domcontentloaded", timeout=60000)
                 page.wait_for_timeout(8000)  # pricing pages render prices with JavaScript
-                lines = price_lines(page.evaluate(PAGE_TEXT_JS))
+                return price_lines(page.evaluate(PAGE_TEXT_JS))
+            finally:
+                page.close()
+
+        for f, d in tools:
+            try:
+                lines = read(browser)
+                if not lines and os.environ.get("DISPLAY"):
+                    headed = headed or pw.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
+                    lines = read(headed, user_agent=UA)
             except Exception as exc:
                 open_issue(f"Price check failed: {d['tool']}", f"Could not read {d['source_url']}: {exc}")
                 continue
-            finally:
-                page.close()
             snap = SNAP / f"{d['slug']}.txt"
             if not lines:
                 open_issue(f"Price check found no prices: {d['tool']}",
@@ -108,6 +118,8 @@ def main():
             snap.write_text("\n".join(lines) + "\n")
             print(f"{d['tool']}: {len(lines)} price lines")
         browser.close()
+        if headed:
+            headed.close()
     print(f"{changed} page(s) changed")
     return 0
 

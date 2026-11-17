@@ -21,7 +21,7 @@ jobs:
       - run: pip install playwright==1.63.0
       # the runner's package mirrors sometimes fail to resolve; try three times before giving up
       - run: for i in 1 2 3; do python -m playwright install --with-deps chromium && exit 0; sleep 30; done; exit 1
-      - run: python scripts/check_prices.py
+      - run: xvfb-run -a python scripts/check_prices.py  # xvfb: headed retry for pages that block headless Chromium
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GH_TOKEN: ${{ github.token }}
