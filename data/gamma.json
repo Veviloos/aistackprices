@@ -3,7 +3,7 @@
   "tool": "Gamma",
   "slug": "gamma-pricing",
   "source_url": "https://gamma.app/pricing",
-  "checked": "2026-11-15",
+  "checked": "2026-11-17",
   "affiliate_url": "",
   "unit_label": "Credits",
   "yearly_only": true,
@@ -100,5 +100,101 @@
       "Is Gamma free?",
       "Yes. The Free plan includes 400 credits at signup that do not refill, up to 10 slides per prompt, and export to PDF, PPTX, PNG and Google Slides."
     ]
+  ],
+  "free_page": {
+    "slug": "is-gamma-free",
+    "paid": "Plus",
+    "title": "400 Free Credits and What Plus Adds",
+    "lede": "What the Gamma Free plan gives you, what happens when its credits run out, and what the cheapest paid plan adds.",
+    "price_rows": [
+      ["Price", "{cur}0, no credit card required", "{cur}9/month, billed yearly ({cur}108 a year)"],
+      ["AI credits", "400 at signup, they do not refill", "1,500 every month"]
+    ],
+    "rows": [
+      ["Most credits you can hold", "2,000, with referral credits", "3,000, unused credits roll over"],
+      ["Slides per prompt", "Up to 10", "Up to 100"],
+      ["Input tokens for the first generation", "50,000", "Up to 100,000"],
+      ["Image models", "Basic", "Basic and advanced"],
+      ["Remove the \"Made with Gamma\" badge", "No", "Yes"],
+      ["Buy extra credits", "No", "Yes, from {cur}6 for 1,500 credits"],
+      ["Earn credits by referring friends", "200 per friend who signs up", "No, referrals are for Free only"]
+    ],
+    "answer": "Yes. {tool} Free costs {cur}0, needs no credit card and has no time limit. It gives 400 AI credits once, at signup, and they do not refill. When they run out you can earn 200 credits per friend you refer, or upgrade. The cheapest paid plan is {paid} at {cur}9/month billed yearly, with 1,500 credits a month and no \"Made with Gamma\" badge.",
+    "faq": [
+      [
+        "Is {tool} free forever?",
+        "The Free plan has no time limit and is not a trial. Only the credits run out: AI actions use up the 400 credits you get at signup, and they do not refill. Without credits you can still edit your gammas by hand."
+      ],
+      [
+        "How do I get more {tool} credits for free?",
+        "Refer friends. You get 200 credits for each friend who signs up with your link, and a Free account can hold up to 2,000 credits at once. Referrals are only for Free users."
+      ],
+      [
+        "Can I buy {tool} credits on the Free plan?",
+        "No. Free users cannot buy credits. Buying credits needs a paid plan such as {paid}, and starts at {cur}6 for 1,500 credits."
+      ]
+    ],
+    "desc": "{tool} Free costs {cur}0 with no time limit and 400 AI credits at signup that do not refill."
+  },
+  "answer_pages": [
+    {
+      "slug": "gamma-credits",
+      "link": "How Gamma credits work",
+      "title": "Gamma Credits 2026: Credits per Plan and What Uses Them",
+      "h1": "How Gamma credits work",
+      "lede": "How many AI credits each Gamma plan gives you, which actions use them, and what you can do when they run out.",
+      "desc": "Gamma credits: Free gives 400 once, Plus 1,500 a month, Pro 4,000 and Ultra 20,000. Which actions use credits and which are free.",
+      "answer": "{tool} credits pay for AI actions, such as generating a presentation, editing with Agent or making AI images. Free gives 400 credits once, at signup, and they do not refill. Billed yearly, Plus ({cur}{plus_yearly}/month) gives 1,500 credits a month, Pro ({cur}{pro_yearly}/month) 4,000 and Ultra ({cur}{ultra_yearly}/month) 20,000. Editing by hand never uses credits.",
+      "tables": [
+        {
+          "title": "Credits by plan",
+          "head": ["Plan", "Price, billed yearly", "Credits", "Rollover"],
+          "rows": [
+            ["Free", "{cur}0", "400 at signup, no refill", "No rollover; up to 2,000 with referral credits"],
+            ["Plus", "{cur}{plus_yearly}/mo ({cur}{plus_year}/year)", "1,500 a month", "Up to 3,000"],
+            ["Pro", "{cur}{pro_yearly}/mo ({cur}{pro_year}/year)", "4,000 a month", "Up to 2× the monthly credits"],
+            ["Ultra", "{cur}{ultra_yearly}/mo ({cur}{ultra_year}/year)", "20,000 a month", "Up to 2× the monthly credits"]
+          ],
+          "note": "Unused plan credits roll over up to 2 times the monthly amount. Yearly plans get their credits each month, not all at once. Business plans give 10,000 credits per seat a month."
+        },
+        {
+          "title": "What uses credits",
+          "head": ["Action", "Credits"],
+          "rows": [
+            ["Generating with Create with AI or Agent", "Uses credits, counted per slide and per image"],
+            ["Editing with Agent, adding cards with AI, trying new layouts", "Uses credits"],
+            ["Generating or editing AI images", "Uses credits, the cost for the model is shown before you generate"],
+            ["Using the {tool} API", "Uses credits"],
+            ["Typing, moving content, picking a theme, font or color", "Free"],
+            ["An AI action that fails, shows an error or asks you a question", "Free"]
+          ],
+          "note": "{tool} does not publish a fixed number of credits per slide or image. The number depends on the action, the AI model and the length of the generation, and {tool} says these rates can change."
+        },
+        {
+          "title": "Buying more credits",
+          "head": ["", "What Gamma says"],
+          "rows": [
+            ["Who can buy", "Paid plans only"],
+            ["Price", "From {cur}6 for 1,500 credits, the same rate per credit at any amount"],
+            ["Most in one purchase", "2,000,000 credits"],
+            ["Expiry", "Never while you have a paid plan, one year after you cancel"]
+          ]
+        }
+      ],
+      "faq": [
+        [
+          "How many credits does a {tool} presentation use?",
+          "{tool} does not publish a fixed number. Create with AI counts credits per slide and per image, so longer decks and more images use more, and advanced AI models may use more than standard ones. {tool} does not yet show how many credits each gamma used."
+        ],
+        [
+          "What happens when I run out of {tool} credits?",
+          "You can still edit your gammas by hand and use every feature that is not AI. On Free you can earn 200 credits per friend you refer, or upgrade. On a paid plan you can buy more credits or wait for your monthly refill on your billing date."
+        ],
+        [
+          "What happens to my credits if I cancel?",
+          "When the paid plan ends, your account moves to Free and your plan credits reset to 400. Credits you bought separately stay for one year after you cancel."
+        ]
+      ]
+    }
   ]
 }

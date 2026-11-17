@@ -3,7 +3,7 @@
   "tool": "Base44",
   "slug": "base44-pricing",
   "source_url": "https://base44.com/pricing",
-  "checked": "2026-11-11",
+  "checked": "2026-11-17",
   "affiliate_url": "",
   "lede": "Every Base44 plan, how many credits it gives you, and the cheapest one for how much you build.",
   "calc_label": "AI message credits you use each month",
@@ -142,5 +142,52 @@
       "What is a Base44 credit?",
       "Base44 describes credits as your monthly usage allowance for AI messages and integration actions. Message credits and integration credits are counted separately, and usage per action varies with the AI model you select."
     ]
-  ]
+  ],
+  "free_page": {
+    "slug": "is-base44-free",
+    "paid": "Starter",
+    "rows": [
+      [
+        "Integration credits a month",
+        "100",
+        "2,000"
+      ],
+      [
+        "Apps",
+        "Up to 5",
+        "Unlimited"
+      ],
+      [
+        "In-app code edits",
+        "Not listed",
+        "Yes"
+      ],
+      [
+        "Connect a domain",
+        "Not listed",
+        "Yes"
+      ],
+      [
+        "Free domain for 1 year",
+        "Not listed",
+        "With yearly billing"
+      ]
+    ],
+    "answer": "Yes, {tool} has a free plan: {cur}0 with {free_credits} message credits and 100 integration credits a month, for up to 5 apps. The cheapest paid plan is {paid} at {paid_price}, with {paid_credits} message credits a month and unlimited apps.",
+    "faq": [
+      [
+        "Can I publish an app on the {tool} free plan?",
+        "Yes. {owner} pricing page says you can ship complete apps on the Free plan. It includes authentication, database functionality and analytics, for up to 5 apps."
+      ],
+      [
+        "What happens when I run out of free {tool} credits?",
+        "{owner} pricing page says you can upgrade to a paid plan when you hit your monthly credit limit or want premium integrations. {paid} gives {paid_credits} message credits and 2,000 integration credits a month."
+      ],
+      [
+        "What does every {tool} plan include, Free too?",
+        "AI app building, a built-in backend and database, a responsive visual editor, an analytics dashboard, multi-user editing, cloud storage, authentication and user management, marketing tools, and debugging tools."
+      ]
+    ],
+    "desc": "{tool} Free gives {free_credits} message credits and 100 integration credits a month, for up to 5 apps."
+  }
 }

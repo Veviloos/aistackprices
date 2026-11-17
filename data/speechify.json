@@ -4,7 +4,7 @@
   "tool": "Speechify",
   "slug": "speechify-pricing",
   "source_url": "https://speechify.com/pricing/",
-  "checked": "2026-11-12",
+  "checked": "2026-11-17",
   "affiliate_url": "",
   "yearly_label": "Yearly, save 60%",
   "lede": "The plans of the Speechify text to speech app, what Free and Premium include, and what Premium costs billed monthly or yearly.",
@@ -25,7 +25,7 @@
       "monthly": 29,
       "yearly": 139,
       "features": [
-        "1000+ high quality, natural voices",
+        "400+ high quality, natural voices",
         "60+ different languages",
         "Listen at 5x faster speeds",
         "Scan & Listen",
@@ -43,7 +43,7 @@
     "What you pay for": "A subscription to the Speechify text to speech app",
     "Free option": "Free: 10 robotic sounding voices, speeds up to 1.5x, text to speech features only",
     "Cheapest paid plan": "Premium: $29/month, or $139 billed yearly",
-    "Most on a public plan": "Premium is the only paid plan: 1000+ voices, 60+ languages, speeds up to 5x",
+    "Most on a public plan": "Premium is the only paid plan: 400+ voices, 60+ languages, speeds up to 5x",
     "Usage above the plan": "No usage limit listed on the pricing page",
     "Yearly billing": "$139 a year instead of $29 a month (Speechify says save 60%)"
   },
@@ -58,11 +58,65 @@
     ],
     [
       "What do you get with Speechify Premium?",
-      "1000+ high quality, natural voices in 60+ languages, listening at up to 5x speed, Scan & Listen, AI summaries and chats, Google Drive, Dropbox and Microsoft OneDrive integrations, voice typing, AI podcasts and the Voice AI Assistant."
+      "400+ high quality, natural voices in 60+ languages, listening at up to 5x speed, Scan & Listen, AI summaries and chats, Google Drive, Dropbox and Microsoft OneDrive integrations, voice typing, AI podcasts and the Voice AI Assistant."
     ],
     [
       "Is the Speechify app the same as the Speechify API or Studio?",
       "No. The text to speech API for developers and Speechify Studio, for voiceovers and dubbing, each have their own pricing page and are billed separately from the app."
     ]
-  ]
+  ],
+  "free_page": {
+    "slug": "is-speechify-free",
+    "paid": "Premium",
+    "price_rows": [
+      [
+        "Price",
+        "{cur}0",
+        "{cur}29/month, or {cur}139 billed yearly"
+      ]
+    ],
+    "rows": [
+      [
+        "Voices",
+        "10 robotic sounding voices",
+        "400+ high quality, natural voices"
+      ],
+      [
+        "Listening speed",
+        "Up to 1.5x",
+        "Up to 5x"
+      ],
+      [
+        "Languages",
+        "Not listed",
+        "60+"
+      ],
+      [
+        "What you can do",
+        "Text to speech features only",
+        "Text to speech, plus Scan & Listen, AI Summaries & Chats, Voice Typing, AI Podcasts and the Voice AI Assistant"
+      ],
+      [
+        "Google Drive, Dropbox, OneDrive",
+        "Not listed",
+        "Included"
+      ]
+    ],
+    "answer": "Yes. {tool} has a Free plan at {cur}0. It covers text to speech only, with 10 robotic sounding voices at speeds up to 1.5x. Natural voices, faster listening and the AI features need {paid}, the only paid plan, at {cur}29/month or {cur}139 billed yearly.",
+    "faq": [
+      [
+        "Can I scan printed pages with {tool} Free?",
+        "No. {owner} pricing page lists Scan & Listen under {paid}, not under Free."
+      ],
+      [
+        "Does {tool} Free include AI summaries or voice typing?",
+        "No. AI Summaries & Chats, Voice Typing, AI Podcasts and the Voice AI Assistant are listed only under {paid}. Free covers text to speech features only."
+      ],
+      [
+        "What does {tool} cost after the free plan?",
+        "{paid} is the next step and the only paid plan: {cur}29 a month billed monthly, or {cur}139 billed yearly."
+      ]
+    ],
+    "desc": "{tool} Free costs {cur}0 and covers text to speech only, with 10 robotic sounding voices at up to 1.5x speed."
+  }
 }

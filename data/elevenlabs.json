@@ -401,6 +401,156 @@
           "After an upgrade, unused credits roll over into the next billing cycle. After a downgrade or cancellation, the plan stays active until the end of the cycle, then the account moves to Free and unused paid credits expire."
         ]
       ]
+    },
+    {
+      "slug": "elevenlabs-credits",
+      "checked": "2026-11-17",
+      "link": "How ElevenLabs credits work",
+      "title": "How ElevenLabs Credits Work (2026): Credits per Plan, Rollover & Top Ups",
+      "h1": "How ElevenLabs credits work",
+      "lede": "How many credits each ElevenLabs plan gives you, what one credit buys, what happens to unused credits, and what happens when they run out. Taken from the official pricing page and help center.",
+      "desc": "ElevenLabs credits explained: 10,000 to 6,000,000 a month per plan, 1 credit per character on V2 Multilingual, rollover up to 3× and Pay As You Go top ups.",
+      "answer": "Every {tool} plan gives you a monthly pool of credits that all products share. Free has 10,000 a month and Starter, at {cur}{starter_monthly}/month, has 30,000. On V2 Multilingual models, 1 character of text to speech costs 1 credit. On paid plans, unused credits roll over for up to two months. When the monthly credits run out, new subscriptions can buy Pay As You Go credits.",
+      "tables": [
+        {
+          "title": "Credits per plan",
+          "head": [
+            "Plan",
+            "Price, monthly billing",
+            "Credits a month",
+            "Unused credits"
+          ],
+          "rows": [
+            [
+              "Free",
+              "{cur}0",
+              "10,000",
+              "Do not roll over"
+            ],
+            [
+              "Starter",
+              "{cur}{starter_monthly}/mo",
+              "30,000",
+              "Roll over for up to 2 months"
+            ],
+            [
+              "Creator",
+              "{cur}{creator_monthly}/mo",
+              "121,000",
+              "Roll over for up to 2 months"
+            ],
+            [
+              "Pro",
+              "{cur}{pro_monthly}/mo",
+              "600,000",
+              "Roll over for up to 2 months"
+            ],
+            [
+              "Scale",
+              "{cur}{scale_monthly}/mo",
+              "1,800,000",
+              "Roll over for up to 2 months"
+            ],
+            [
+              "Business",
+              "{cur}{business_monthly}/mo",
+              "6,000,000",
+              "Roll over for up to 2 months"
+            ]
+          ],
+          "note": "Credits reset at the start of each billing cycle, which begins on the day you subscribed. The balance limit is 3 times the monthly credits: this month plus up to two months of rollover. Enterprise has a custom number of credits."
+        },
+        {
+          "title": "What one credit buys",
+          "head": [
+            "Product",
+            "Credits used"
+          ],
+          "rows": [
+            [
+              "Text to speech, V2 Multilingual",
+              "1 credit per character"
+            ],
+            [
+              "Text to speech, V2 Flash/Turbo English and V2.5 Flash/Turbo Multilingual (API)",
+              "0.5 to 1 credit per character"
+            ],
+            [
+              "Speech to text",
+              "About 330 credits per minute"
+            ],
+            [
+              "Eleven Music",
+              "About 900 credits per minute"
+            ],
+            [
+              "Sound effects",
+              "About 200 credits per generation"
+            ],
+            [
+              "Voice Changer and Voice Isolator",
+              "About 1,000 credits per minute"
+            ],
+            [
+              "Automatic dubbing",
+              "About 2,000 credits per minute with a watermark, 3,000 without"
+            ],
+            [
+              "Dubbing Studio",
+              "About 5,000 credits per minute with a watermark, 10,000 without"
+            ]
+          ],
+          "note": "The costs for speech to text, music, sound effects, voice tools and dubbing are {owner} approximate figures. All products draw from the same credits, so using one leaves fewer for the others."
+        },
+        {
+          "title": "Running out of credits",
+          "head": [
+            "Your plan",
+            "What you can do"
+          ],
+          "rows": [
+            [
+              "New subscriptions, including Free",
+              "Buy Pay As You Go credits (Top Up), from $5. They are used after your plan credits and expire 12 months after purchase."
+            ],
+            [
+              "Legacy Starter",
+              "Wait until the billing cycle renews, or upgrade to a higher plan."
+            ],
+            [
+              "Legacy Creator, Pro, Scale and Business, and Enterprise",
+              "Turn on usage based billing and pay for extra credits, usually at the end of the billing cycle."
+            ]
+          ],
+          "note": "Without Auto Top Up, usage pauses as soon as the Pay As You Go balance reaches $0. Pay As You Go is prepaid, with no overage charges."
+        }
+      ],
+      "faq": [
+        [
+          "Do {tool} credits roll over?",
+          "On paid plans, yes. Unused credits roll over for up to two months while you keep an active paid subscription. If you downgrade or cancel, unused credits are lost at the end of the billing cycle. The Free plan has no rollover."
+        ],
+        [
+          "Do Pay As You Go credits expire?",
+          "Yes, 12 months after purchase. They are not part of the rollover limit, and top ups cannot be refunded."
+        ],
+        [
+          "Am I charged credits if I regenerate audio?",
+          "Credits are charged per generation, not per download. A limited number of free regenerations may be available if the content and certain settings do not change. {tool} shows before generating whether a regeneration is free."
+        ],
+        [
+          "What happens to my credits if I upgrade?",
+          "Unused credits from your old plan roll over into the next billing cycle."
+        ],
+        [
+          "Is there a credit limit per request?",
+          "Yes. A single generation request can use only a maximum number of credits. The limit is different on the Free tier and on paid plans."
+        ],
+        [
+          "Where can I see how many credits I have left?",
+          "Log in and open your subscription page from the profile menu."
+        ]
+      ]
     }
   ]
 }

@@ -110,5 +110,86 @@
       "Can I buy more credits?",
       "Yes. You can upgrade to a plan with more credits or buy credit packs without changing your subscription. Paid plans get credit top-ups at a discount."
     ]
+  ],
+  "free_page": {
+    "slug": "is-higgsfield-free",
+    "paid": "Starter",
+    "lede": "What the Higgsfield Free plan lets you do, what it leaves out, and what the cheapest paid plan adds.",
+    "desc": "{tool} has a Free plan at {cur}0, but it gives no monthly credits and no commercial use.",
+    "rows": [
+      ["Commercial use", "No", "Yes"],
+      ["Generations at a time", "1", "2 videos and 4 images"],
+      ["Fast-track generation", "No", "Yes"],
+      ["Character generations", "Up to 1", "Up to 108"]
+    ],
+    "answer": "Yes, {tool} has a Free plan at {cur}0. It gives limited access to selected AI models and one generation at a time, but no monthly credits and no commercial use. The cheapest paid plan is {paid} at {paid_price}, with {paid_credits} credits a month and commercial use.",
+    "faq": [
+      [
+        "Can I use {tool} Free for commercial work?",
+        "No. {owner} pricing page lists commercial use as not included on Free. It is included on {paid}, Plus and Ultra."
+      ],
+      [
+        "Does the {tool} Free plan give credits?",
+        "No. Free has no monthly credits. {paid} gives {paid_credits} credits a month, Plus {plus_credits} and Ultra from {ultra_credits}."
+      ],
+      [
+        "What is the cheapest way to get monthly credits?",
+        "{paid} at {paid_price}. It is the lowest paid plan on {owner} pricing page."
+      ]
+    ]
+  },
+  "answer_pages": [
+    {
+      "slug": "higgsfield-credits",
+      "link": "How Higgsfield credits work",
+      "title": "Higgsfield Credits 2026: Credits per Plan and Cost per Model",
+      "h1": "How Higgsfield credits work",
+      "lede": "How many credits each Higgsfield plan gives you a month, and how many credits common image and video models use.",
+      "desc": "Higgsfield credits: Starter gives 270 a month, Plus 1,200 and Ultra 3,000 to 9,000. Credit cost of common image and video models.",
+      "answer": "Credits are what you spend to generate images and videos on {tool}. Each model uses its own number of credits, set by the model, the length and the resolution. Starter gives 270 credits a month, Plus 1,200 and Ultra 3,000, 6,000 or 9,000. Free gives none. Credits do not roll over to the next cycle.",
+      "tables": [
+        {
+          "title": "Credits on each plan",
+          "head": ["Plan", "Monthly billing", "Yearly billing"],
+          "rows": [
+            ["Free", "No monthly credits", "No monthly credits"],
+            ["Starter", "270 credits a month", "270 credits every 30 days"],
+            ["Plus", "1,200 credits a month", "1,200 credits every 30 days"],
+            ["Ultra", "3,000, 6,000 or 9,000 credits a month", "3,000, 6,000 or 9,000 credits every 30 days"]
+          ],
+          "note": "On monthly billing, credits refresh on the same date each month. On yearly billing, they refresh every 30 days from the start of the subscription. Unused subscription credits expire at the end of each cycle."
+        },
+        {
+          "title": "Credits per generation",
+          "head": ["Model", "Credits"],
+          "rows": [
+            ["Seedance 2.5, 720p", "35 per 5 seconds"],
+            ["Seedance 2.5, 1080p", "80 per 5 seconds"],
+            ["Kling 3.0, 720p", "About 7 per 5 seconds"],
+            ["Google Veo 3.1, 720p", "About 40 per 4 seconds"],
+            ["Higgsfield Speak 2.0, 720p", "About 14 per 5 seconds"],
+            ["Nano Banana Pro", "2 per image"],
+            ["Nano Banana Pro 4K", "4 per image"],
+            ["GPT Image 2.6", "1 per image"],
+            ["Seedream 5.0 Lite", "1 per image"]
+          ],
+          "note": "A few examples from the full list on {owner} pricing page. Not every model is available on every plan."
+        }
+      ],
+      "faq": [
+        [
+          "Do {tool} credits roll over?",
+          "No. Subscription credits do not roll over and expire at the end of each credit cycle."
+        ],
+        [
+          "How many credits does one {tool} video use?",
+          "It depends on the model. {owner} pricing page estimates about 14 credits per video and 2 credits per image."
+        ],
+        [
+          "What if I run out of credits?",
+          "You can move to a plan with more credits, or buy credit packs without changing your subscription. Bought credits are added straight away."
+        ]
+      ]
+    }
   ]
 }
