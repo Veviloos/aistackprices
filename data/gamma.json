@@ -7,6 +7,7 @@
   "affiliate_url": "",
   "unit_label": "Credits",
   "yearly_only": true,
+  "price_check": "manual",
   "lede": "Every Gamma plan for AI presentations, how many AI credits each one gives you, and the cheapest plan for what you create each month.",
   "calc_label": "Gamma AI credits you need each month",
   "calc_note": "Prices are Gamma's yearly billing prices, the default view of its pricing page; monthly billing costs more and is not shown here. Credits are used for AI features, and the number an action uses depends on what you do, the AI model and the length of the generation. Free is not in the calculator: its 400 credits come once at signup and do not refill.",

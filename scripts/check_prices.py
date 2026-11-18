@@ -76,7 +76,8 @@ def main():
     assert price_lines("€60 /mo\n$28 /mo") == ["€60 /mo", "$28 /mo"]
     SNAP.mkdir(exist_ok=True)
     tools = [(f, json.loads(f.read_text())) for f in sorted((ROOT / "data").glob("*.json"))]
-    tools = [(f, d) for f, d in tools if isinstance(d, dict) and d.get("source_url")]
+    # "price_check": "manual" = the page blocks GitHub's servers (Gamma, Cloudflare); a weekly Claude task checks it instead
+    tools = [(f, d) for f, d in tools if isinstance(d, dict) and d.get("source_url") and d.get("price_check") != "manual"]
     changed = 0
     with sync_playwright() as pw:
         browser = pw.chromium.launch()
