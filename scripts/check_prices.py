@@ -82,11 +82,11 @@ def main():
         browser = pw.chromium.launch()
         headed = None  # some sites (Gamma) answer headless Chromium with a Cloudflare challenge; retry those headed under xvfb
 
-        def read(b, **kw):
+        def read(b, wait=8000, **kw):
             page = b.new_page(viewport={"width": 1400, "height": 1000}, **kw)
             try:
                 page.goto(d["source_url"], wait_until="domcontentloaded", timeout=60000)
-                page.wait_for_timeout(8000)  # pricing pages render prices with JavaScript
+                page.wait_for_timeout(wait)  # pricing pages render prices with JavaScript
                 return price_lines(page.evaluate(PAGE_TEXT_JS))
             finally:
                 page.close()
@@ -96,7 +96,7 @@ def main():
                 lines = read(browser)
                 if not lines and os.environ.get("DISPLAY"):
                     headed = headed or pw.chromium.launch(headless=False, args=["--disable-blink-features=AutomationControlled"])
-                    lines = read(headed, user_agent=UA)
+                    lines = read(headed, wait=25000, user_agent=UA)  # the Cloudflare check can take a while to clear
             except Exception as exc:
                 open_issue(f"Price check failed: {d['tool']}", f"Could not read {d['source_url']}: {exc}")
                 continue
