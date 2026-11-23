@@ -4,7 +4,7 @@
   "slug": "base44-pricing",
   "source_url": "https://base44.com/pricing",
   "checked": "2026-11-17",
-  "affiliate_url": "",
+  "affiliate_url": "https://base44.pxf.io/aistackprices",
   "lede": "Every Base44 plan, how many credits it gives you, and the cheapest one for how much you build.",
   "calc_label": "AI message credits you use each month",
   "calc_note": "Base44 says credit use varies by action and AI model, so treat this as an estimate.",
