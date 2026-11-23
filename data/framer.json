@@ -8,7 +8,7 @@
   "unit_label": "AI credits",
   "lede": "Every Framer plan, what each AI credit tier costs, and the cheapest plan for how much you use Framer AI.",
   "calc_label": "Framer AI credits you need each month",
-  "calc_note": "The calculator uses Framer's credit options: Basic with 1,000 or 2,000 credits, then Pro from 3,000 to 100,000. At 3,000, 5,000 and 10,000 credits, Basic and Pro cost the same on Framer's page, and Pro includes more, so the calculator picks Pro. Agents and other AI features use credits.",
+  "calc_note": "The calculator uses Framer's credit options: Basic with 1,000, 2,000, 8,000 or 15,000 credits, and Pro from 3,000 to 100,000. At 3,000, 5,000 and 10,000 credits, Basic and Pro cost the same on Framer's page, and Pro includes more, so the calculator picks Pro there. Agents and other AI features use credits.",
   "yearly_label": "Yearly",
   "plans": [
     {
@@ -135,10 +135,22 @@
       "credits": 5000
     },
     {
+      "name": "Basic, 8,000 credits",
+      "monthly": 120,
+      "annual_per_month": 80,
+      "credits": 8000
+    },
+    {
       "name": "Pro, 10,000 credits",
       "monthly": 150,
       "annual_per_month": 100,
       "credits": 10000
+    },
+    {
+      "name": "Basic, 15,000 credits",
+      "monthly": 225,
+      "annual_per_month": 150,
+      "credits": 15000
     },
     {
       "name": "Pro, 20,000 credits",
@@ -165,7 +177,7 @@
       "credits": 100000
     }
   ],
-  "after_plans": "Prices on the cards are for the smallest credit option of each plan, in US dollars, plus tax. Basic also comes with 3,000, 5,000 and 10,000 credits at the same price as Pro, and with more credit options of its own. Additional editors are $30/month, or $20/month billed yearly, and viewers are free. Framer includes a complimentary domain on yearly billing.",
+  "after_plans": "Prices on the cards are for the smallest credit option of each plan, in US dollars, plus tax. Basic also comes with 3,000, 5,000 and 10,000 credits at the same price as Pro, and with 8,000 ($120/month, or $80 billed yearly) or 15,000 credits ($225, or $150 billed yearly). Additional editors are $30/month, or $20/month billed yearly, and viewers are free. Framer includes a complimentary domain on yearly billing.",
   "compare": {
     "Free plan": "Free: Framer domain, 500 AI credits, 5 GB bandwidth",
     "Cheapest paid plan": "Basic: $15/month, or $10/month billed yearly, with 1,000 AI credits",
