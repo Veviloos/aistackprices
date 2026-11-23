@@ -3,7 +3,7 @@
   "tool": "Higgsfield",
   "slug": "higgsfield-pricing",
   "source_url": "https://higgsfield.ai/pricing",
-  "checked": "2026-11-15",
+  "checked": "2026-11-23",
   "affiliate_url": "https://higgsfield.ai?fpr=aistackprices",
   "unit_label": "Credits",
   "lede": "Every Higgsfield plan for AI video and images, how many credits each one gives you, and the cheapest plan for what you generate each month.",
@@ -45,7 +45,7 @@
     {
       "name": "Plus",
       "monthly": 59,
-      "annual_per_month": 35,
+      "annual_per_month": 59,
       "popular": true,
       "rows": [
         ["Credits", "1,200/mo"],
@@ -62,7 +62,7 @@
     {
       "name": "Ultra",
       "monthly": 129,
-      "annual_per_month": 65,
+      "annual_per_month": 129,
       "rows": [
         ["Credits", "3,000/mo, up to 9,000"],
         ["Commercial use", "Yes"]
@@ -79,24 +79,24 @@
   "tiers": [
     {"name": "Free, no monthly credits", "monthly": 0, "annual_per_month": 0, "credits": 0},
     {"name": "Starter, 270 credits", "monthly": 19, "annual_per_month": 19, "credits": 270},
-    {"name": "Plus, 1,200 credits", "monthly": 59, "annual_per_month": 35, "credits": 1200},
-    {"name": "Ultra, 3,000 credits", "monthly": 129, "annual_per_month": 65, "credits": 3000},
-    {"name": "Ultra, 6,000 credits", "monthly": 250, "annual_per_month": 110, "credits": 6000},
-    {"name": "Ultra, 9,000 credits", "monthly": 375, "annual_per_month": 150, "credits": 9000}
+    {"name": "Plus, 1,200 credits", "monthly": 59, "annual_per_month": 59, "credits": 1200},
+    {"name": "Ultra, 3,000 credits", "monthly": 129, "annual_per_month": 129, "credits": 3000},
+    {"name": "Ultra, 6,000 credits", "monthly": 250, "annual_per_month": 250, "credits": 6000},
+    {"name": "Ultra, 9,000 credits", "monthly": 375, "annual_per_month": 375, "credits": 9000}
   ],
-  "after_plans": "Yearly prices include Higgsfield's current Black Friday discount (up to 60% off yearly plans, kept when the plan renews); without it, yearly billing costs the same as 12 monthly payments. On monthly billing the first month of Plus is $47 and of Ultra $79 (3,000 credits), $150 (6,000) or $209 (9,000), then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
+  "after_plans": "Higgsfield's page shows the monthly price as the regular price on yearly plans too, so the table shows the same price for both. Black Friday offer on the page (up to 70% off, with a countdown ending on 24 November 2026): Plus at $30/month and Ultra with 3,000 credits at $45/month, billed yearly; the page does not say whether these prices stay the same when the plan renews. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: each model uses its own number per image or per seconds of video",
     "Free option": "Free: no monthly credits, limited models, no commercial use",
     "Cheapest paid plan": "Starter: $19/month for 270 credits",
-    "Most on a public plan": "Ultra with 9,000 credits a month: $375/month, or $150/month billed yearly in the current offer",
-    "Yearly billing": "Up to 60% off in the current Black Friday offer"
+    "Most on a public plan": "Ultra with 9,000 credits a month: $375/month",
+    "Yearly billing": "No regular discount; up to 70% off in the current Black Friday offer"
   },
   "faq": [
     [
       "How much does Higgsfield cost?",
-      "Free is $0 with no monthly credits. Starter is $19/month for 270 credits. Plus is $59/month for 1,200 credits and Ultra is $129/month for 3,000 credits, going up to $375/month for 9,000. During the Black Friday offer, yearly billing is $35/month for Plus and from $65/month for Ultra."
+      "Free is $0 with no monthly credits. Starter is $19/month for 270 credits. Plus is $59/month for 1,200 credits and Ultra is $129/month for 3,000 credits, going up to $375/month for 9,000. During the Black Friday offer, yearly billing is $30/month for Plus and from $45/month for Ultra."
     ],
     [
       "How do Higgsfield credits work?",

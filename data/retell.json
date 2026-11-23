@@ -3,7 +3,7 @@
   "tool": "Retell AI",
   "slug": "retell-ai-pricing",
   "source_url": "https://www.retellai.com/pricing",
-  "checked": "2026-11-14",
+  "checked": "2026-11-23",
   "affiliate_url": "",
   "lede": "What Retell AI voice agents cost per minute, what makes up that price, and your monthly bill for your call volume.",
   "per_min_low": 0.07,
@@ -32,7 +32,7 @@
     ],
     [
       "AI model (LLM), full range",
-      "$0.0016 to $0.384/min"
+      "$0.0016 to $1.536/min"
     ],
     [
       "Your own telephony (SIP)",
@@ -62,7 +62,7 @@
     ],
     [
       "What makes the price per minute go up?",
-      "The AI model is the biggest factor: from $0.0016 to $0.384 per minute. ElevenLabs voices ($0.04 to $0.10 per minute) also cost more than Retell's own voices ($0.015)."
+      "The AI model is the biggest factor: from $0.0016 to $1.536 per minute. ElevenLabs voices ($0.04 to $0.10 per minute) also cost more than Retell's own voices ($0.015)."
     ],
     [
       "How many calls can run at once?",

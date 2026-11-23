@@ -3,12 +3,12 @@
   "tool": "InVideo",
   "slug": "invideo-pricing",
   "source_url": "https://invideo.io/pricing/",
-  "checked": "2026-11-15",
+  "checked": "2026-11-23",
   "affiliate_url": "https://invideo.sjv.io/aistackprices",
   "unit_label": "Credits",
   "lede": "Every invideo AI plan, how many credits each seat gets, and the cheapest plan for the AI video and images you make each month.",
   "calc_label": "InVideo credits you need each month",
-  "calc_note": "Prices and credits are per seat. The calculator uses the plans on invideo's pricing page, with Max at 5,000, 10,000 or 15,000 credits a month. invideo puts a Seedance 2.0 Fast video at about 30 credits and a Nano Banana Pro image at about 2.5. Unused credits do not roll over to the next month.",
+  "calc_note": "Prices and credits are per seat. The calculator uses the plans on invideo's pricing page, with Max at 5,000, 8,000 or 10,000 credits a month. invideo puts a Seedance 2.0 Fast video at about 30 credits and a Nano Banana Pro image at about 2.5. Unused credits do not roll over to the next month.",
   "yearly_label": "Yearly",
   "plans": [
     {
@@ -30,7 +30,7 @@
     {
       "name": "Plus",
       "monthly": 60,
-      "annual_per_month": 30,
+      "annual_per_month": 60,
       "rows": [
         ["Credits", "2,000/mo per seat"],
         ["Storage", "600 GB"]
@@ -46,10 +46,10 @@
     },
     {
       "name": "Max",
-      "monthly": 150,
-      "annual_per_month": 75,
+      "monthly": 250,
+      "annual_per_month": 250,
       "rows": [
-        ["Credits", "5,000/mo per seat, up to 15,000"],
+        ["Credits", "8,000/mo per seat, from 5,000 to 10,000"],
         ["Storage", "2,000 GB"]
       ],
       "features": [
@@ -64,24 +64,24 @@
   "tiers_title": "InVideo credits per seat",
   "tiers": [
     {"name": "Starter, 400 credits", "monthly": 20, "annual_per_month": 10, "credits": 400},
-    {"name": "Plus, 2,000 credits", "monthly": 60, "annual_per_month": 30, "credits": 2000},
-    {"name": "Max, 5,000 credits", "monthly": 150, "annual_per_month": 75, "credits": 5000},
-    {"name": "Max, 10,000 credits", "monthly": 300, "annual_per_month": 150, "credits": 10000},
-    {"name": "Max, 15,000 credits", "monthly": 450, "annual_per_month": 225, "credits": 15000}
+    {"name": "Plus, 2,000 credits", "monthly": 60, "annual_per_month": 60, "credits": 2000},
+    {"name": "Max, 5,000 credits", "monthly": 150, "annual_per_month": 150, "credits": 5000},
+    {"name": "Max, 8,000 credits", "monthly": 250, "annual_per_month": 250, "credits": 8000},
+    {"name": "Max, 10,000 credits", "monthly": 300, "annual_per_month": 300, "credits": 10000}
   ],
-  "after_plans": "All prices are per seat. Max on the card is for 5,000 credits a month; more credits raise the price, as in the table. Yearly prices include invideo's current 50% off promotion for yearly plans; without it, yearly billing costs the same as 12 monthly payments. invideo has no free plan on its pricing page. Team, Business and Enterprise plans are listed separately.",
+  "after_plans": "All prices are per seat. Max on the card is for 8,000 credits a month; other credit options change the price, as in the table. Regular yearly billing costs the same as 12 monthly payments, except Starter at $10/month. Black Friday offers on invideo's page for new purchases: Plus at $24/month billed yearly ($288 a year), and Max with 8,000 credits at $62.50/month for 2 years ($1,500 upfront, then $3,000 a year); the sale countdown ends on 26 November 2026. invideo has no free plan on its pricing page. Team, Business and Enterprise plans are listed separately.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits per seat: about 30 for a Seedance 2.0 Fast video, 2.5 for a Nano Banana Pro image",
     "Free option": "No free plan listed",
     "Cheapest paid plan": "Starter: $20/month, or $10/month billed yearly, for 400 credits",
-    "Most on a public plan": "Max with 15,000 credits a month: $450/month, or $225/month billed yearly",
-    "Yearly billing": "50% off in the current promotion"
+    "Most on a public plan": "Max with 10,000 credits a month: $300/month",
+    "Yearly billing": "50% off on Starter; other plans cost the same as monthly, apart from limited offers"
   },
   "faq": [
     [
       "How much does InVideo cost?",
-      "Per seat: Starter is $20/month or $10/month billed yearly for 400 credits, Plus is $60/month or $30/month billed yearly for 2,000 credits, and Max is $150/month or $75/month billed yearly for 5,000 credits, going up to $450/month ($225 yearly) for 15,000."
+      "Per seat: Starter is $20/month or $10/month billed yearly for 400 credits, Plus is $60/month for 2,000 credits, and Max is $250/month for 8,000 credits, from $150/month (5,000) to $300/month (10,000). invideo also runs limited yearly offers on Plus and Max."
     ],
     [
       "What is an InVideo credit?",

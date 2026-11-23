@@ -3,7 +3,7 @@
   "tool": "Synthesia",
   "slug": "synthesia-pricing",
   "source_url": "https://www.synthesia.io/pricing",
-  "checked": "2026-11-15",
+  "checked": "2026-11-23",
   "affiliate_url": "https://www.synthesia.io/?via=aistackprices",
   "unit_label": "Credits",
   "lede": "Every Synthesia plan, how many credits each one gives you, and the cheapest plan for the AI avatar videos you make.",
@@ -133,7 +133,7 @@
       "credits": 48000
     }
   ],
-  "after_plans": "Pro on the card is for 6,000 credits a month (72,000 a year on yearly billing); more credits raise the price, as in the table. On monthly billing the first month is $9 on Starter and from $49 on Pro. You can buy extra credits from Plan & billing if you run out. Studio Avatars are a paid add-on at $1,000/year.",
+  "after_plans": "Pro on the card is for 6,000 credits a month (72,000 a year on yearly billing); more credits raise the price, as in the table. On monthly billing the first month is $9 on Starter and from $49 on Pro. You can buy extra credits from Plan & billing if you run out. Studio Avatars are a paid add-on at $1,000/year. Black Friday offer for new Pro subscribers until 7 December 2026: Pro billed yearly at $44/month ($528 a year) with 6,000 credits or $87/month ($1,044 a year) with 12,000, and a first month of $19 (6,000 credits) or $39 (12,000) on monthly billing.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: a typical finished minute of video uses about 100",
