@@ -3,7 +3,7 @@
   "tool": "Higgsfield",
   "slug": "higgsfield-pricing",
   "source_url": "https://higgsfield.ai/pricing",
-  "checked": "2026-11-23",
+  "checked": "2026-11-24",
   "affiliate_url": "https://higgsfield.ai?fpr=aistackprices",
   "unit_label": "Credits",
   "lede": "Every Higgsfield plan for AI video and images, how many credits each one gives you, and the cheapest plan for what you generate each month.",
@@ -84,14 +84,14 @@
     {"name": "Ultra, 6,000 credits", "monthly": 250, "annual_per_month": 258, "credits": 6000},
     {"name": "Ultra, 9,000 credits", "monthly": 375, "annual_per_month": 387, "credits": 9000}
   ],
-  "after_plans": "Yearly prices in the table are the regular prices Higgsfield shows crossed out on its yearly plans. Black Friday offer on the page (up to 70% off, with a countdown ending on 24 November 2026): billed yearly, Plus is $30/month and Ultra $45 (3,000 credits), $80 (6,000) or $115 (9,000) a month; the page does not say whether these prices stay the same when the plan renews. On monthly billing the first month is $40 for Plus and $75, $140 or $199 for Ultra, then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
+  "after_plans": "Yearly prices in the table are the regular prices Higgsfield shows crossed out on its yearly plans. Black Friday offer on the page (up to 69% off, with a countdown and no end date given): billed yearly, Plus is $30/month and Ultra $45 (3,000 credits), $80 (6,000) or $115 (9,000) a month; the page does not say whether these prices stay the same when the plan renews. On monthly billing the first month is $40 for Plus and $75, $140 or $199 for Ultra, then the regular prices in the table. Ultra on the card is for 3,000 credits a month. Prices exclude VAT and local taxes. Business plans for teams are priced per seat: Team from $79 and Scale from $215 per seat a month, with Enterprise on request.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits: each model uses its own number per image or per seconds of video",
     "Free option": "Free: no monthly credits, limited models, no commercial use",
     "Cheapest paid plan": "Starter: $19/month for 270 credits",
     "Most on a public plan": "Ultra with 9,000 credits a month: $375/month",
-    "Yearly billing": "No regular discount; up to 70% off in the current Black Friday offer"
+    "Yearly billing": "No regular discount; up to 69% off in the current Black Friday offer"
   },
   "faq": [
     [
