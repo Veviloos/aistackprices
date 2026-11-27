@@ -3,7 +3,7 @@
   "tool": "InVideo",
   "slug": "invideo-pricing",
   "source_url": "https://invideo.io/pricing/",
-  "checked": "2026-11-26",
+  "checked": "2026-11-27",
   "affiliate_url": "https://invideo.sjv.io/aistackprices",
   "unit_label": "Credits",
   "lede": "Every invideo AI plan, how many credits each seat gets, and the cheapest plan for the AI video and images you make each month.",
@@ -69,7 +69,7 @@
     {"name": "Max, 8,000 credits", "monthly": 250, "annual_per_month": 250, "credits": 8000},
     {"name": "Max, 10,000 credits", "monthly": 300, "annual_per_month": 300, "credits": 10000}
   ],
-  "after_plans": "All prices are per seat. Plus also comes with 5,000 credits at $150/month, the same price as Max with 5,000. Max on the card is for 8,000 credits a month; other credit options change the price, as in the table. Regular yearly billing costs the same as 12 monthly payments, except Starter at $10/month. Black Friday offers on invideo's page, billed yearly: Plus at $24/month with 2,000 credits ($288 a year) and Max at $60/month with 5,000 credits ($720 a year); the sale countdown ends on 27 November 2026. On monthly billing the first month of Max is $135, $220 or $265, then the regular price. invideo has no free plan on its pricing page. Team, Business and Enterprise plans are listed separately.",
+  "after_plans": "All prices are per seat. Plus also comes with 5,000 credits at $150/month, the same price as Max with 5,000. Max on the card is for 8,000 credits a month; other credit options change the price, as in the table. Regular yearly billing costs the same as 12 monthly payments, except Starter at $10/month. Black Friday offers on invideo's page, billed yearly: Plus at $24/month with 2,000 credits ($288 a year) and Max at $60/month with 5,000 credits ($720 a year); the page shows a sale countdown and no end date. On monthly billing the first month of Max is $135, $220 or $265, then the regular price. invideo has no free plan on its pricing page. Team, Business and Enterprise plans are listed separately.",
   "compare": {
     "Prices shown in": "US dollars ($), not converted",
     "What you pay for": "Credits per seat: about 30 for a Seedance 2.0 Fast video, 2.5 for a Nano Banana Pro image",
