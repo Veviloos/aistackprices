@@ -3,7 +3,7 @@
   "tool": "ElevenLabs Agents",
   "slug": "elevenlabs-agents-pricing",
   "source_url": "https://elevenlabs.io/pricing/agents",
-  "checked": "2026-11-15",
+  "checked": "2026-11-28",
   "affiliate_url": "https://try.elevenlabs.io/aistackprices",
   "unit_label": "Call Minutes",
   "lede": "Every ElevenLabs voice agent plan (ElevenAgents), how many call minutes each one includes, and the cheapest plan for your call volume.",
@@ -146,7 +146,7 @@
       ]
     }
   ],
-  "after_plans": "Prices exclude taxes. On monthly billing, Starter's first month is $1 and Creator's first month is $11. Additional call minutes cost $0.08, burst calls above your concurrency limit $0.16 a minute (up to 3 times your limit), and text messages $0.003 each. Enterprise has custom pricing, with elevated concurrency, custom SSO and BAAs for HIPAA customers.",
+  "after_plans": "Prices exclude taxes. On monthly billing, Starter's first month is $1 and Creator's first month is $11. Additional call minutes cost $0.08, burst calls above your concurrency limit $0.16 a minute (up to 3 times your limit), and text messages $0.010 each. Enterprise has custom pricing, with elevated concurrency, custom SSO and BAAs for HIPAA customers.",
   "compare": {
     "Pricing model": "Monthly plans with included call minutes",
     "Price per minute": "$0.08 for each minute above your plan, AI model (LLM) billed on top",
@@ -162,7 +162,7 @@
     ],
     [
       "What do extra call minutes cost?",
-      "Additional call minutes cost $0.08 each, from the Creator plan up. Burst pricing lets calls go up to 3 times your concurrency limit, at $0.16 a minute, and text messages cost $0.003 each."
+      "Additional call minutes cost $0.08 each, from the Creator plan up. Burst pricing lets calls go up to 3 times your concurrency limit, at $0.16 a minute, and text messages cost $0.010 each."
     ],
     [
       "Is the AI model (LLM) included?",
